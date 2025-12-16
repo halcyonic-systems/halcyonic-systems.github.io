@@ -11,7 +11,10 @@ This is the halcyonic.systems website - a minimal Astro + Tailwind site for Shin
 | File | Purpose |
 |------|---------|
 | `src/pages/research.astro` | Project cards - edit `projects` array to add/modify |
-| `src/pages/index.astro` | Homepage hero + CTA |
+| `src/pages/glossary.astro` | Systems science glossary - grouped foundational terms |
+| `src/pages/index.astro` | Homepage hero + dual CTAs |
+| `src/pages/writing.astro` | Writing page - add essays here |
+| `src/pages/about.astro` | About page - personal + org info |
 | `src/styles/global.css` | Colors, animations, dark mode CSS |
 | `src/components/Header.astro` | Navigation + dark mode toggle |
 
@@ -59,10 +62,19 @@ npm run build   # Build for production
 
 Push to `main` → GitHub Actions auto-deploys to GitHub Pages.
 
-## Hidden Content (ready to restore)
+## Future Work
 
-- **Research areas** (Cryptoeconomics, Political Economy, Neuromorphics) - commented out in `research.astro`
-- **Interstate Trade Viz** - not yet added, lives at ~/Desktop/interstate-trade-viz
+### Ready to add
+- **Research areas** (Cryptoeconomics, Political Economy, Neuromorphics) - commented out in `research.astro`, restore when ready to show broader scope
+- **Interstate Trade Viz** - lives at ~/Desktop/interstate-trade-viz
+
+### Content to create
+- **Writing/essays** - page structure ready, needs content
+- **Glossary expansion** - add terms as feedback comes in; grouped structure scales well
+
+### Reference material
+- **Mobus chapters** - ~/Desktop/halcyonic/operations/systems-science/system-language/mobus-chapters/ (used for glossary alignment)
+- **Halcyonic glossary** - ~/Desktop/halcyonic/glossary.md (comprehensive source)
 
 ## Contact Info
 
