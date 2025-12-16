@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const sections = [
+  {
+    title: 'The Basics',
+    color: 'ocean',
+    terms: [
+      {
+        term: 'System',
+        definition: 'An organized set of interacting components forming a coherent whole, with identifiable boundaries separating it from its environment.',
+      },
+      {
+        term: 'Boundary',
+        definition: 'The demarcation separating a system from its environment, including the interfaces where exchanges occur. Controls what flows in and out.',
+      },
+      {
+        term: 'Environment',
+        definition: 'Everything outside the system boundary — the sources providing inputs, the sinks receiving outputs, and the channels through which flows occur.',
+      },
+    ],
+  },
+  {
+    title: 'The Parts',
+    color: 'teal',
+    terms: [
+      {
+        term: 'Component',
+        definition: 'A distinct part within a system that performs specific functions and interacts with other components through defined interfaces.',
+      },
+      {
+        term: 'Subsystem',
+        definition: 'A component inside a system that is itself a system — with its own boundaries, components, and behaviors. Systems nest within systems.',
+      },
+      {
+        term: 'Interface',
+        definition: 'A connection point where a system meets its environment or where components connect to each other. Where exchanges happen.',
+      },
+    ],
+  },
+  {
+    title: 'The Dynamics',
+    color: 'warm',
+    terms: [
+      {
+        term: 'Flow',
+        definition: 'The movement of matter, energy, or messages between components or across boundaries. The substance transfers that keep systems functioning.',
+      },
+      {
+        term: 'State',
+        definition: 'The configuration of a system at a specific moment — the values of its variables and relationships between components right now.',
+      },
+      {
+        term: 'Feedback Loop',
+        definition: "A circular process where a system's output returns to influence its input. Can amplify (positive) or stabilize (negative) system behavior.",
+      },
+      {
+        term: 'Adaptation',
+        definition: 'How a system modifies itself in response to changes — adjusting structure or behavior to maintain functionality or improve fitness.',
+      },
+    ],
+  },
+  {
+    title: 'The Patterns',
+    color: 'ocean',
+    terms: [
+      {
+        term: 'Structure',
+        definition: 'The arrangement and relationships between components — how the system is organized. Structure enables and constrains what the system can do.',
+      },
+      {
+        term: 'Function',
+        definition: 'What a system or component does — its role, purpose, or activity. Different structures can perform the same function.',
+      },
+      {
+        term: 'Emergence',
+        definition: "When complex patterns or behaviors arise from simpler component interactions — properties the whole has that the parts don't have alone.",
+      },
+    ],
+  },
+];
+
+const colorClasses = {
+  ocean: {
+    border: 'border-l-ocean-400',
+    bg: 'hover:bg-ocean-50/50',
+    title: 'text-ocean-700',
+  },
+  teal: {
+    border: 'border-l-teal-400',
+    bg: 'hover:bg-teal-50/50',
+    title: 'text-teal-700',
+  },
+  warm: {
+    border: 'border-l-warm-400',
+    bg: 'hover:bg-warm-50/50',
+    title: 'text-warm-700',
+  },
+};
+---
+
+<BaseLayout title="Glossary" description="Core concepts for understanding systems science">
+  <section class="mx-auto max-w-4xl px-6 py-16">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Glossary</h1>
+
+    <p class="mt-4 text-lg text-gray-600">
+      New to systems science? These are the foundational concepts — the shared language for analyzing any complex system.
+    </p>
+
+    <div class="mt-12 space-y-12">
+      {sections.map((section) => (
+        <div>
+          <h2 class={`text-sm font-semibold uppercase tracking-wide ${colorClasses[section.color].title}`}>
+            {section.title}
+          </h2>
+          <div class="mt-4 space-y-3">
+            {section.terms.map((item) => (
+              <div class={`pl-4 py-3 pr-4 border-l-2 ${colorClasses[section.color].border} ${colorClasses[section.color].bg} rounded-r-lg transition-colors`}>
+                <dt class="font-semibold text-gray-900">{item.term}</dt>
+                <dd class="mt-1 text-gray-600 text-sm">{item.definition}</dd>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-14 p-6 rounded-xl bg-gradient-to-r from-ocean-50 to-teal-50 border border-ocean-100">
+      <p class="text-gray-700">
+        Want to see these concepts in practice? <a href="https://bert.systems" target="_blank" rel="noopener noreferrer" class="font-medium text-ocean-600 hover:text-ocean-500">BERT</a> is an open-source toolkit for applying rigorous systems analysis to any domain.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
