@@ -1,0 +1,34 @@
+---
+const navItems = [
+  { href: '/research', label: 'Research' },
+  { href: '/writing', label: 'Writing' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="border-b border-ocean-100/50 bg-white/60 backdrop-blur-sm sticky top-0 z-50">
+  <nav class="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
+    <a href="/" class="flex items-center gap-3 group">
+      <img
+        src="/logo.png"
+        alt="Halcyonic Systems logo"
+        class="w-10 h-10 rounded-full shadow-sm group-hover:shadow-md transition-shadow"
+      />
+      <span class="text-lg font-semibold text-ocean-800 group-hover:text-ocean-600 transition-colors">
+        Halcyonic Systems
+      </span>
+    </a>
+    <ul class="flex items-center gap-8">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="text-gray-600 hover:text-ocean-600 transition-colors font-medium"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
