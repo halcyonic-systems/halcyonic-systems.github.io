@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 const navItems = [
   { href: '/research', label: 'Research' },
   { href: '/writing', label: 'Writing' },
@@ -18,17 +20,20 @@ const navItems = [
         Halcyonic Systems
       </span>
     </a>
-    <ul class="flex items-center gap-8">
-      {navItems.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class="text-gray-600 hover:text-ocean-600 transition-colors font-medium"
-          >
-            {item.label}
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class="flex items-center gap-6">
+      <ul class="flex items-center gap-8">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="link-hover text-gray-600 hover:text-ocean-600 transition-colors font-medium"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <ThemeToggle />
+    </div>
   </nav>
 </header>
