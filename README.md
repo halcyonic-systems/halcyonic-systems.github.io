@@ -1,43 +1,68 @@
-# Astro Starter Kit: Minimal
+# Halcyonic Systems Website
 
-```sh
-npm create astro@latest -- --template minimal
+**Live**: https://halcyonic.systems (or https://halcyonic-systems.github.io)
+
+Minimal research organization website built with Astro + Tailwind CSS.
+
+## Stack
+
+- **Framework**: [Astro](https://astro.build) (static site generator)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
+- **Fonts**: Fraunces (headings) + Inter (body)
+- **Hosting**: GitHub Pages
+- **Domain**: halcyonic.systems (via Namecheap DNS)
+
+## Structure
+
+```
+src/
+├── components/
+│   ├── Header.astro      # Nav + logo + dark mode toggle
+│   ├── Footer.astro      # Copyright + contact links
+│   └── ThemeToggle.astro # Dark/light mode switcher
+├── layouts/
+│   └── BaseLayout.astro  # HTML wrapper, fonts, meta
+├── pages/
+│   ├── index.astro       # Home - tagline + CTA
+│   ├── research.astro    # Project cards (BERT, Bitcoin, Ontologies)
+│   ├── writing.astro     # Substack link
+│   └── about.astro       # One-liner + contact
+├── styles/
+│   └── global.css        # Tailwind config, animations, dark mode
+public/
+├── logo.png              # Kingfisher logo
+├── favicon.svg           # Simple favicon
+└── CNAME                  # Custom domain config
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Development
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm install
+npm run dev     # http://localhost:4321
+npm run build   # Build to ./dist
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Push to `main` → GitHub Actions builds and deploys automatically.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Workflow: `.github/workflows/deploy.yml`
 
-## 🧞 Commands
+## Design Notes
 
-All commands are run from the root of the project, from a terminal:
+- **Philosophy**: Minimal, depth on click. Homepage is just tagline + CTA.
+- **Colors**: Ocean blue gradient background with subtle animation
+- **Dark mode**: System preference detection + manual toggle
+- **Micro-interactions**: Link underlines, card lifts
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Content Updates
 
-## 👀 Want to learn more?
+- **Add project**: Edit `src/pages/research.astro`, add to `projects` array
+- **Update links**: Edit relevant `.astro` file directly
+- **Styling**: `src/styles/global.css` for global, inline Tailwind for components
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Related
+
+- **Main vault**: ~/Desktop/halcyonic/ (research notes, planning docs)
+- **Old planning**: halcyonic/operations/website/MIGRATION-PLAN.md
