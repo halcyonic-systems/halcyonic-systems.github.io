@@ -1,0 +1,1220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const iconEducation = {
+  'subsystem': {
+    title: 'Subsystem — Hierarchical Components',
+    quote: 'Every object within the system boundary, including the interfaces, channels, stocks, sensors, and regulators, are components of the system. At higher levels of organization, components will be found to be complex objects themselves — subsystems.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'boundary': {
+    title: 'Boundary — System Enclosure',
+    quote: 'A boundary demarks the difference between the inside of a system and the outside, or environment. A boundary exists whenever components of a system are restrained in time and space to a particular location.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.3'
+  },
+  'source': {
+    title: 'Source — Environmental Supply',
+    quote: 'The environment contains all of the sources of inputs (matter, energy, and messages) and the sinks for outputs. The entities of the environment connect directly with the boundary of the SOI.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.1'
+  },
+  'sink': {
+    title: 'Sink — Environmental Disposal',
+    quote: 'The environment contains all of the sources of inputs and the sinks for outputs (same substances). It also contains all of the channels through which flows occur.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.1'
+  },
+  'stock': {
+    title: 'Stock/Reservoir — Substance Storage',
+    quote: 'Stocks are invariably bounded; they are contained and containers have capacity attributes determined by physical dimensions. You cannot force more of a non-compressible fluid into a closed container than it can hold.',
+    source: 'Mobus & Kalton, Ch. 4.2.4'
+  },
+  'atomic': {
+    title: 'Atomic — Indivisible Elements',
+    quote: 'Atomic components are those subsystems that need no further deconstruction in order to understand the SOI internals. What makes them atomic is that they involve a minimum of inputs and outputs and their transformative work is easily handled as an opaque box.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'complex': {
+    title: 'Complex — Emergent Properties',
+    quote: 'Complexity is a measure related to the degree to which a system has both a multiplicity of components (subsystems) at any given level of organization and the number of such levels forming a hierarchy.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.5.2'
+  },
+  'multiset': {
+    title: 'Multiset — Multiple Instances',
+    quote: 'Multisets are allowed. The component with the tilde represents a set of components with many instances of that type. For example, it could represent the water molecules in a cell.',
+    source: 'Mobus & Kalton, Ch. 4.3.3.1'
+  },
+  'interface': {
+    title: 'Interface — Boundary Protocol',
+    quote: 'The biggest single mistake that system scientists make is to ignore or trivialize the concept of an interface. Interfaces do not typically alter the substance of the flow but enforce protocols for letting flows cross the boundary in an ordered fashion.',
+    source: 'Mobus & Kalton, Ch. 4.3.3.3'
+  },
+  'import': {
+    title: 'Import — Input Boundary',
+    quote: 'In the case of interfaces as subsystems, the φ object is called a protocol which is an algorithm for letting the flow across the boundary in an ordered fashion.',
+    source: 'Mobus & Kalton, Ch. 4.3.3.3'
+  },
+  'export': {
+    title: 'Export — Output Boundary',
+    quote: 'Interfaces do not typically alter the substance of the flow, that is, do not transform the substances as a process does to create products.',
+    source: 'Mobus & Kalton, Ch. 4.3.3.3'
+  },
+  'inflow': {
+    title: 'Inflow — System Input',
+    quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'outflow': {
+    title: 'Outflow — System Output',
+    quote: 'The work produces a "product" or high-quality material. In doing work, according to the Second Law of Thermodynamics, some energy is transformed to waste heat.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'sensor': {
+    title: 'Sensor — Information Transduction',
+    quote: 'Sensing responds to a modulated force or energy flow, where the modulation is a kind of pattern. It outputs a modulated energy flow, usually very low power, which encodes the modulation.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'energy': {
+    title: 'Energy — Transformative Potential',
+    quote: 'Energy transformations involve work done on a low-grade energy form to boost its potential or quality (with some loss as heat) so that the energy flow becomes available to other work processes.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'material': {
+    title: 'Material — Physical Substance',
+    quote: 'Material transformations involve processes that reduce the entropy of the material, such as refining or shaping matter for a new use. The work could be mechanical, electrical, thermal, or chemical.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'message': {
+    title: 'Message — Information Flows',
+    quote: 'Messages are specialized versions of energy flows. They are characterized by using very little energy in their transmission. Messages are flows that are modulated in a way that encodes symbols.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.5.4'
+  },
+  'interaction': {
+    title: 'Interaction — Flow Networks',
+    quote: 'The interactions between internal components are generally characterized as flows of substance, either channelized (through channels) or broadcast as fields.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.5'
+  },
+  'resource': {
+    title: 'Resource — Beneficial Inputs',
+    quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages, converting some portion of the energy into a lower form.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'disruption': {
+    title: 'Disruption — Harmful Inputs',
+    quote: 'Systems eventually simply fall apart. More likely scenarios involve systems being disrupted by other systems as when galaxies collide or a prey animal is eaten by a predator.',
+    source: 'Mobus & Kalton, Ch. 3.5.1.2'
+  },
+  'product': {
+    title: 'Product — Beneficial Outputs',
+    quote: 'In general, the imported material, energy, or messages will be transformed from a high-entropy form into a lower-entropy form — a product.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'waste': {
+    title: 'Waste — Harmful Outputs',
+    quote: 'In doing work, according to the Second Law of Thermodynamics, some of the energy does not accomplish work, but is transformed to a low-potential form — waste heat.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+  },
+  'combiner': {
+    title: 'Combiner — Atomic Work Process',
+    quote: 'Simple work includes: combining two substances into a more complex substance (a product) with the loss of some heat and waste substance.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'splitter': {
+    title: 'Splitter — Atomic Work Process',
+    quote: 'Simple work includes splitting a single substance flow into two (or more) products with some loss of energy and substance.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'copying': {
+    title: 'Copying — Pattern Replication',
+    quote: 'Copying takes a patterned input substance and an un-patterned one, outputting the original input (think of it as a template) and a copy of the pattern in the second output.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'impeder': {
+    title: 'Impeder — Flow Restriction',
+    quote: 'Simple work includes impeding a flow or slowing the rate of flow with a consequent back-pressure. All simple work processes involve the consumption of energy and the loss of energy as waste heat.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'buffer': {
+    title: 'Buffer — Flow Smoothing',
+    quote: 'Simple work includes buffering a flow, used to smooth out the flow volumes over time. A fifth simple component is a "raw" stock being used simply as a buffer.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'propeller': {
+    title: 'Propeller — Gradient Work',
+    quote: 'Propelling is work done to push a substance against a gradient, like a pump pushing water through a pipe.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'amplifier': {
+    title: 'Amplifier — Signal Boosting',
+    quote: 'Amplification adds energy (power) to a weak but modulated energy input to produce a "copied" modulated high-powered energy flow output.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  },
+  'modulator': {
+    title: 'Modulator — Signal Control',
+    quote: 'A modulator applies a modulated energy flow (signal) to a substance flow to produce a modulated output substance flow.',
+    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+  }
+};
+---
+
+<BaseLayout title="The System Language Palette" description="An evolving visual vocabulary for systems science">
+  <style>
+    .icon-page {
+      --energy-red: #E74C3C;
+      --energy-red-light: #FADBD8;
+      --material-green: #27AE60;
+      --material-green-light: #D5F5E3;
+      --info-blue: #0ea5e9;
+      --info-blue-light: #e0f2fe;
+      --process-purple: #9B59B6;
+      --process-purple-light: #EBDEF0;
+      --neutral-gray: #64748b;
+      --neutral-gray-light: #f1f5f9;
+      --ocean-500: #0ea5e9;
+      --ocean-600: #0284c7;
+      --ocean-700: #0369a1;
+      --ocean-100: #e0f2fe;
+      --ocean-50: #f0f9ff;
+      --teal-500: #14b8a6;
+      --teal-100: #ccfbf1;
+      --teal-50: #f0fdfa;
+      --bg-white: rgba(255,255,255,0.85);
+      --text-primary: #0c4a6e;
+      --text-secondary: #64748b;
+      --shadow-hover: 0 12px 40px rgba(14, 165, 233, 0.2);
+    }
+
+    .icon-page {
+      background: linear-gradient(
+        135deg,
+        var(--ocean-100) 0%,
+        var(--ocean-50) 25%,
+        var(--teal-100) 50%,
+        var(--teal-50) 75%,
+        var(--ocean-100) 100%
+      );
+      background-size: 400% 400%;
+      animation: gradient-shift 20s ease infinite;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .icon-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .icon-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .icon-header h1 {
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .status-legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 12px;
+      font-size: 0.85rem;
+      border: 1px solid var(--ocean-100);
+    }
+
+    .status-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid var(--ocean-100);
+    }
+
+    .section-header h2 {
+      color: var(--text-primary);
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header h2::before {
+      content: '';
+      width: 6px;
+      height: 36px;
+      border-radius: 3px;
+    }
+
+    .section.structure .section-header h2::before { background: var(--neutral-gray); }
+    .section.interfaces .section-header h2::before { background: var(--info-blue); }
+    .section.flows .section-header h2::before { background: var(--energy-red); }
+    .section.processes .section-header h2::before { background: var(--process-purple); }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .subsection {
+      margin-bottom: 30px;
+    }
+
+    .subsection-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      perspective: 1000px;
+    }
+
+    .icon-card {
+      background: var(--bg-white);
+      border: 2px solid var(--ocean-100);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .icon-card:hover {
+      border-color: var(--ocean-500);
+      transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: var(--shadow-hover), 0 0 0 4px var(--ocean-100);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .icon-card.active {
+      background: var(--info-blue-light);
+      border-color: var(--info-blue);
+    }
+
+    .icon-status {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .icon-status.png {
+      background: var(--material-green-light);
+      color: #1E8449;
+    }
+
+    .icon-status.bevy {
+      background: var(--info-blue-light);
+      color: #2471A3;
+    }
+
+    .icon-status.svg {
+      background: var(--process-purple-light);
+      color: #7D3C98;
+    }
+
+    .icon-name {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .icon-sizes {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 12px;
+      min-height: 56px;
+    }
+
+    .size-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .size-group img {
+      border-radius: 6px;
+      padding: 4px;
+      background: var(--neutral-gray-light);
+    }
+
+    .icon-size-label {
+      font-size: 9px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .icon-description {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .has-alts {
+      border-left: 3px solid var(--process-purple);
+    }
+
+    .alt-badge {
+      font-size: 0.7rem;
+      color: var(--process-purple);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .tooltip {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ocean-700);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(14, 165, 233, 0.3);
+      z-index: 1000;
+      width: 320px;
+      max-width: 90vw;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .tooltip.show { display: block; }
+
+    .tooltip::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid var(--ocean-700);
+    }
+
+    .tooltip-title {
+      font-weight: 600;
+      color: var(--teal-100);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .tooltip-quote {
+      font-style: italic;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--teal-500);
+      padding-left: 12px;
+      opacity: 0.9;
+    }
+
+    .tooltip-source {
+      font-size: 11px;
+      opacity: 0.6;
+      text-align: right;
+    }
+
+    .click-hint {
+      font-size: 11px;
+      color: var(--info-blue);
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    .icon-footer {
+      text-align: center;
+      margin-top: 80px;
+      padding: 30px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-top: 2px solid var(--ocean-100);
+    }
+
+    .icon-footer strong {
+      color: var(--ocean-700);
+    }
+
+    @media (max-width: 600px) {
+      .icon-header h1 { font-size: 1.8rem; }
+      .icon-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+      .status-legend { gap: 12px; padding: 16px; }
+    }
+  </style>
+
+  <div class="icon-page">
+    <div class="icon-container">
+      <header class="icon-header">
+        <h1>The System Language Palette</h1>
+        <p class="subtitle">
+          An evolving visual vocabulary for systems science — built collaboratively, grounded in Mobus.
+          Click any icon to explore its theoretical foundations.
+        </p>
+
+        <div class="status-legend">
+          <div class="status-chip">
+            <span>&#10003;</span>
+            <span><strong>PNG</strong> — In BERT UI</span>
+          </div>
+          <div class="status-chip">
+            <span>&#9889;</span>
+            <span><strong>Bevy</strong> — Rendered in engine</span>
+          </div>
+          <div class="status-chip">
+            <span>&#9998;</span>
+            <span><strong>SVG</strong> — Design exploration</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SECTION 1: System Structure -->
+      <section class="section structure">
+        <div class="section-header">
+          <h2>System Structure</h2>
+          <p class="section-desc">What defines a system — boundaries, hierarchy, and environmental connections.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Core Elements</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="subsystem">
+              <span class="icon-status png">&#10003; PNG</span>
+              <div class="icon-name">Subsystem</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/palette-icons/subsystem-icon.png" width="32" alt="Subsystem">
+                  <div class="icon-size-label">palette</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/create-button/interface-subsystem.png" width="32" alt="Subsystem">
+                  <div class="icon-size-label">create</div>
+                </div>
+              </div>
+              <div class="icon-description">Main decomposition unit for hierarchical modeling</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="boundary">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Boundary</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/boundary.svg" width="32" alt="Boundary">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/boundary.svg" width="48" alt="Boundary">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Inside/outside demarcation with selective permeability</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="source">
+              <span class="icon-status png">&#10003; PNG</span>
+              <div class="icon-name">Source</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/palette-icons/source.png" width="32" alt="Source">
+                  <div class="icon-size-label">palette</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/create-button/source.png" width="32" alt="Source">
+                  <div class="icon-size-label">create</div>
+                </div>
+              </div>
+              <div class="icon-description">Environmental entity providing inputs</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="sink">
+              <span class="icon-status png">&#10003; PNG</span>
+              <div class="icon-name">Sink</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/palette-icons/sink.png" width="32" alt="Sink">
+                  <div class="icon-size-label">palette</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/create-button/sink.png" width="32" alt="Sink">
+                  <div class="icon-size-label">create</div>
+                </div>
+              </div>
+              <div class="icon-description">Environmental entity receiving outputs</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="stock">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Stock / Reservoir</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/stock.svg" width="32" alt="Stock">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/stock.svg" width="48" alt="Stock">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Substance storage with capacity limits</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Complexity Classification</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="atomic">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Atomic</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/complexity-types/atomic.svg" width="32" alt="Atomic">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/complexity-types/atomic.svg" width="48" alt="Atomic">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Indivisible — no internal structure needed</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="complex">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Complex</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/complexity-types/complex.svg" width="32" alt="Complex">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/complexity-types/complex.svg" width="48" alt="Complex">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Internal components with emergent properties</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="multiset">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Multiset</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/complexity-types/multiset.svg" width="32" alt="Multiset">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/complexity-types/multiset.svg" width="48" alt="Multiset">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Multiple identical instances with scaling behavior</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: Interfaces -->
+      <section class="section interfaces">
+        <div class="section-header">
+          <h2>Interfaces</h2>
+          <p class="section-desc">Where and how things cross boundaries — ports, connections, and transduction.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Boundary Crossings</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="interface">
+              <span class="icon-status png">&#10003; PNG</span>
+              <div class="icon-name">Interface</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/palette-icons/interface-icon.png" width="32" alt="Interface">
+                  <div class="icon-size-label">palette</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/create-button/interface.png" width="32" alt="Interface">
+                  <div class="icon-size-label">create</div>
+                </div>
+              </div>
+              <div class="icon-description">Generic boundary crossing point</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="import">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Import</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/interface-types/import.svg" width="32" alt="Import">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/interface-types/import.svg" width="48" alt="Import">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Input interface — inward through boundary</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="export">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Export</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/interface-types/export.svg" width="32" alt="Export">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/interface-types/export.svg" width="48" alt="Export">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Output interface — outward through boundary</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Flow Ports</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="inflow">
+              <span class="icon-status png">&#10003; PNG</span>
+              <div class="icon-name">Inflow</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/palette-icons/inflow.png" width="32" alt="Inflow">
+                  <div class="icon-size-label">palette</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/create-button/inflow.png" width="32" alt="Inflow">
+                  <div class="icon-size-label">create</div>
+                </div>
+              </div>
+              <div class="icon-description">Flow entering a system</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="outflow">
+              <span class="icon-status png">&#10003; PNG</span>
+              <div class="icon-name">Outflow</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/palette-icons/outflow.png" width="32" alt="Outflow">
+                  <div class="icon-size-label">palette</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/create-button/outflow.png" width="32" alt="Outflow">
+                  <div class="icon-size-label">create</div>
+                </div>
+              </div>
+              <div class="icon-description">Flow leaving a system</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="sensor">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Sensor</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/sensor.svg" width="32" alt="Sensor">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/sensor.svg" width="48" alt="Sensor">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Transduces physical phenomena to signals</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: Flows -->
+      <section class="section flows">
+        <div class="section-header">
+          <h2>Flows</h2>
+          <p class="section-desc">What moves through systems — substance types and their characteristics.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Substance Types</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="energy">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Energy</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/energy.svg" width="32" alt="Energy">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/energy.svg" width="48" alt="Energy">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Power and transformative potential</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card has-alts" data-icon="material">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Material</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/material.svg" width="32" alt="Material">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/material.svg" width="48" alt="Material">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Physical substance and matter</div>
+              <div class="alt-badge">+ 2 design alternatives</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card has-alts" data-icon="message">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Message</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/message.svg" width="32" alt="Message">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/message.svg" width="48" alt="Message">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Information and encoded signals</div>
+              <div class="alt-badge">+ 2 design alternatives</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="interaction">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Interaction</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/interaction.svg" width="32" alt="Interaction">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/system-elements/interaction.svg" width="48" alt="Interaction">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">The flow connection itself</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Flow Characteristics (Usability)</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="resource">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Resource</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/resource.svg" width="32" alt="Resource">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/resource.svg" width="48" alt="Resource">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Beneficial input — useful to receiver</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="disruption">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Disruption</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/disruption.svg" width="32" alt="Disruption">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/disruption.svg" width="48" alt="Disruption">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Harmful input — detrimental to receiver</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="product">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Product</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/product.svg" width="32" alt="Product">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/product.svg" width="48" alt="Product">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Beneficial output — useful to environment</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="waste">
+              <span class="icon-status bevy">&#9889; Bevy</span>
+              <div class="icon-name">Waste</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/waste.svg" width="32" alt="Waste">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/interaction-usability/waste.svg" width="48" alt="Waste">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Harmful output — detrimental to environment</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Design Alternatives</div>
+          <div class="icon-grid">
+            <div class="icon-card">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Message — Speech Bubble</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/message-original.svg" width="32" alt="Message Original">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/message-original.svg" width="48" alt="Message Original">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Conversational feel — human communication</div>
+            </div>
+
+            <div class="icon-card">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Message — Wave</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/message-alt1.svg" width="32" alt="Message Wave">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/message-alt1.svg" width="48" alt="Message Wave">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Signal/waveform — technical systems</div>
+            </div>
+
+            <div class="icon-card">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Material — 3D Cube</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/material-original.svg" width="32" alt="Material 3D">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/material-original.svg" width="48" alt="Material 3D">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Isometric cube — physical presence</div>
+            </div>
+
+            <div class="icon-card">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Material — Hexagon</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/material-alt2.svg" width="32" alt="Material Hex">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/substance-types/material-alt2.svg" width="48" alt="Material Hex">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Molecular structure — scientific feel</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: Work Processes -->
+      <section class="section processes">
+        <div class="section-header">
+          <h2>Work Processes</h2>
+          <p class="section-desc">Atomic operations that transform substances — the fundamental units of work.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Assembly & Disassembly</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="combiner">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Combiner</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/combiner.svg" width="32" alt="Combiner">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/combiner.svg" width="48" alt="Combiner">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Two inputs merge into one output</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="splitter">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Splitter</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/splitter.svg" width="32" alt="Splitter">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/splitter.svg" width="48" alt="Splitter">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">One input splits into two outputs</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="copying">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Copying</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/copying.svg" width="32" alt="Copying">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/copying.svg" width="48" alt="Copying">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Pattern replication from template</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Flow Regulation</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="impeder">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Impeder</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/impeder.svg" width="32" alt="Impeder">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/impeder.svg" width="48" alt="Impeder">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Flow restriction creating back-pressure</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="buffer">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Buffer</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/buffer.svg" width="32" alt="Buffer">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/buffer.svg" width="48" alt="Buffer">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Smooths flow volumes over time</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="propeller">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Propeller / Pump</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/propeller.svg" width="32" alt="Propeller">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/propeller.svg" width="48" alt="Propeller">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Pushes substance against gradient</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Signal Processing</div>
+          <div class="icon-grid">
+            <div class="icon-card" data-icon="amplifier">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Amplifier</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/amplifier.svg" width="32" alt="Amplifier">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/amplifier.svg" width="48" alt="Amplifier">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Boosts weak signal with energy input</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+
+            <div class="icon-card" data-icon="modulator">
+              <span class="icon-status svg">&#9998; SVG</span>
+              <div class="icon-name">Modulator</div>
+              <div class="icon-sizes">
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/modulator.svg" width="32" alt="Modulator">
+                  <div class="icon-size-label">32px</div>
+                </div>
+                <div class="size-group">
+                  <img src="/icons/svg/atomic-processes/modulator.svg" width="48" alt="Modulator">
+                  <div class="icon-size-label">48px</div>
+                </div>
+              </div>
+              <div class="icon-description">Applies control signal to substance flow</div>
+              <div class="click-hint">Click for Mobus insights</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="icon-footer">
+        Based on <strong>Mobus, <em>Systems Science</em> (2022)</strong>
+      </footer>
+    </div>
+  </div>
+
+  <script define:vars={{ iconEducation }}>
+    document.addEventListener('DOMContentLoaded', function() {
+      const iconCards = document.querySelectorAll('.icon-card[data-icon]');
+
+      iconCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          e.stopPropagation();
+
+          // Close any open tooltips
+          document.querySelectorAll('.tooltip.show').forEach(t => t.classList.remove('show'));
+          document.querySelectorAll('.icon-card.active').forEach(c => c.classList.remove('active'));
+
+          const iconName = card.dataset.icon;
+          const education = iconEducation[iconName];
+
+          if (education) {
+            let tooltip = card.querySelector('.tooltip');
+            if (!tooltip) {
+              tooltip = document.createElement('div');
+              tooltip.className = 'tooltip';
+              card.appendChild(tooltip);
+            }
+
+            tooltip.innerHTML = `
+              <div class="tooltip-title">${education.title}</div>
+              <div class="tooltip-quote">"${education.quote}"</div>
+              <div class="tooltip-source">— ${education.source}</div>
+            `;
+
+            tooltip.classList.add('show');
+            card.classList.add('active');
+          }
+        });
+      });
+
+      // Close tooltips when clicking outside
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.tooltip.show').forEach(t => t.classList.remove('show'));
+        document.querySelectorAll('.icon-card.active').forEach(c => c.classList.remove('active'));
+      });
+    });
+  </script>
+</BaseLayout>

@@ -32,6 +32,17 @@ const projects = [
     border: 'border-teal-100 hover:border-teal-300',
     hover: 'group-hover:text-teal-600',
   },
+  {
+    title: 'The System Language Palette',
+    description: "An evolving visual vocabulary for systems science. Click any icon to explore its theoretical foundations in Mobus.",
+    link: '/icons',
+    linkText: 'Browse the palette',
+    icon: '◉',
+    gradient: 'from-purple-500 to-purple-600',
+    border: 'border-purple-100 hover:border-purple-300',
+    hover: 'group-hover:text-purple-600',
+    internal: true,
+  },
 ];
 
 // Hidden until more outputs to show - uncomment when ready
@@ -73,8 +84,8 @@ const projects = [
       {projects.map((project) => (
         <a
           href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={project.internal ? undefined : "_blank"}
+          rel={project.internal ? undefined : "noopener noreferrer"}
           class={`group card-lift p-6 rounded-xl bg-white/70 border ${project.border} hover:bg-white shadow-sm hover:shadow-md transition-all`}
         >
           <div class="flex gap-5">
