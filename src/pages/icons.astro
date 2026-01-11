@@ -3,154 +3,154 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const iconEducation = {
   'subsystem': {
-    title: 'Subsystem — Hierarchical Components',
-    quote: 'Every object within the system boundary, including the interfaces, channels, stocks, sensors, and regulators, are components of the system. At higher levels of organization, components will be found to be complex objects themselves — subsystems.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    title: 'Subsystem: Hierarchical Components',
+    quote: 'Every object within the system boundary, including the interfaces, channels, stocks, sensors, and regulators, are components of the system. At higher levels of organization, components will be found to be complex objects themselves, that is, subsystems.',
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'boundary': {
-    title: 'Boundary — System Enclosure',
+    title: 'Boundary: System Enclosure',
     quote: 'A boundary demarks the difference between the inside of a system and the outside, or environment. A boundary exists whenever components of a system are restrained in time and space to a particular location.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.3'
+    source: 'Mobus, Ch. 3.5.2.2.3'
   },
   'source': {
-    title: 'Source — Environmental Supply',
+    title: 'Source: Environmental Supply',
     quote: 'The environment contains all of the sources of inputs (matter, energy, and messages) and the sinks for outputs. The entities of the environment connect directly with the boundary of the SOI.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.1'
+    source: 'Mobus, Ch. 3.5.2.1'
   },
   'sink': {
-    title: 'Sink — Environmental Disposal',
+    title: 'Sink: Environmental Disposal',
     quote: 'The environment contains all of the sources of inputs and the sinks for outputs (same substances). It also contains all of the channels through which flows occur.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.1'
+    source: 'Mobus, Ch. 3.5.2.1'
   },
   'stock': {
-    title: 'Stock/Reservoir — Substance Storage',
+    title: 'Stock/Reservoir: Substance Storage',
     quote: 'Stocks are invariably bounded; they are contained and containers have capacity attributes determined by physical dimensions. You cannot force more of a non-compressible fluid into a closed container than it can hold.',
-    source: 'Mobus & Kalton, Ch. 4.2.4'
+    source: 'Mobus, Ch. 4.2.4'
   },
   'atomic': {
-    title: 'Atomic — Indivisible Elements',
+    title: 'Atomic: Indivisible Elements',
     quote: 'Atomic components are those subsystems that need no further deconstruction in order to understand the SOI internals. What makes them atomic is that they involve a minimum of inputs and outputs and their transformative work is easily handled as an opaque box.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'complex': {
-    title: 'Complex — Emergent Properties',
+    title: 'Complex: Emergent Properties',
     quote: 'Complexity is a measure related to the degree to which a system has both a multiplicity of components (subsystems) at any given level of organization and the number of such levels forming a hierarchy.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.5.2'
+    source: 'Mobus, Ch. 3.5.2.2.5.2'
   },
   'multiset': {
-    title: 'Multiset — Multiple Instances',
+    title: 'Multiset: Multiple Instances',
     quote: 'Multisets are allowed. The component with the tilde represents a set of components with many instances of that type. For example, it could represent the water molecules in a cell.',
-    source: 'Mobus & Kalton, Ch. 4.3.3.1'
+    source: 'Mobus, Ch. 4.3.3.1'
   },
   'interface': {
-    title: 'Interface — Boundary Protocol',
+    title: 'Interface: Boundary Protocol',
     quote: 'The biggest single mistake that system scientists make is to ignore or trivialize the concept of an interface. Interfaces do not typically alter the substance of the flow but enforce protocols for letting flows cross the boundary in an ordered fashion.',
-    source: 'Mobus & Kalton, Ch. 4.3.3.3'
+    source: 'Mobus, Ch. 4.3.3.3'
   },
   'import': {
-    title: 'Import — Input Boundary',
+    title: 'Import: Input Boundary',
     quote: 'In the case of interfaces as subsystems, the φ object is called a protocol which is an algorithm for letting the flow across the boundary in an ordered fashion.',
-    source: 'Mobus & Kalton, Ch. 4.3.3.3'
+    source: 'Mobus, Ch. 4.3.3.3'
   },
   'export': {
-    title: 'Export — Output Boundary',
+    title: 'Export: Output Boundary',
     quote: 'Interfaces do not typically alter the substance of the flow, that is, do not transform the substances as a process does to create products.',
-    source: 'Mobus & Kalton, Ch. 4.3.3.3'
+    source: 'Mobus, Ch. 4.3.3.3'
   },
   'inflow': {
-    title: 'Inflow — System Input',
+    title: 'Inflow: System Input',
     quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'outflow': {
-    title: 'Outflow — System Output',
+    title: 'Outflow: System Output',
     quote: 'The work produces a "product" or high-quality material. In doing work, according to the Second Law of Thermodynamics, some energy is transformed to waste heat.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'sensor': {
-    title: 'Sensor — Information Transduction',
+    title: 'Sensor: Information Transduction',
     quote: 'Sensing responds to a modulated force or energy flow, where the modulation is a kind of pattern. It outputs a modulated energy flow, usually very low power, which encodes the modulation.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'energy': {
-    title: 'Energy — Transformative Potential',
+    title: 'Energy: Transformative Potential',
     quote: 'Energy transformations involve work done on a low-grade energy form to boost its potential or quality (with some loss as heat) so that the energy flow becomes available to other work processes.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'material': {
-    title: 'Material — Physical Substance',
+    title: 'Material: Physical Substance',
     quote: 'Material transformations involve processes that reduce the entropy of the material, such as refining or shaping matter for a new use. The work could be mechanical, electrical, thermal, or chemical.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'message': {
-    title: 'Message — Information Flows',
+    title: 'Message: Information Flows',
     quote: 'Messages are specialized versions of energy flows. They are characterized by using very little energy in their transmission. Messages are flows that are modulated in a way that encodes symbols.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.5.4'
+    source: 'Mobus, Ch. 3.5.2.2.5.4'
   },
   'interaction': {
-    title: 'Interaction — Flow Networks',
+    title: 'Interaction: Flow Networks',
     quote: 'The interactions between internal components are generally characterized as flows of substance, either channelized (through channels) or broadcast as fields.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.5'
+    source: 'Mobus, Ch. 3.5.2.2.5'
   },
   'resource': {
-    title: 'Resource — Beneficial Inputs',
+    title: 'Resource: Beneficial Inputs',
     quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages, converting some portion of the energy into a lower form.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'disruption': {
-    title: 'Disruption — Harmful Inputs',
+    title: 'Disruption: Harmful Inputs',
     quote: 'Systems eventually simply fall apart. More likely scenarios involve systems being disrupted by other systems as when galaxies collide or a prey animal is eaten by a predator.',
-    source: 'Mobus & Kalton, Ch. 3.5.1.2'
+    source: 'Mobus, Ch. 3.5.1.2'
   },
   'product': {
-    title: 'Product — Beneficial Outputs',
-    quote: 'In general, the imported material, energy, or messages will be transformed from a high-entropy form into a lower-entropy form — a product.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    title: 'Product: Beneficial Outputs',
+    quote: 'In general, the imported material, energy, or messages will be transformed from a high-entropy form into a lower-entropy form, a product.',
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'waste': {
-    title: 'Waste — Harmful Outputs',
-    quote: 'In doing work, according to the Second Law of Thermodynamics, some of the energy does not accomplish work, but is transformed to a low-potential form — waste heat.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.1'
+    title: 'Waste: Harmful Outputs',
+    quote: 'In doing work, according to the Second Law of Thermodynamics, some of the energy does not accomplish work, but is transformed to a low-potential form, waste heat.',
+    source: 'Mobus, Ch. 3.5.2.2.1'
   },
   'combiner': {
-    title: 'Combiner — Atomic Work Process',
+    title: 'Combiner: Atomic Work Process',
     quote: 'Simple work includes: combining two substances into a more complex substance (a product) with the loss of some heat and waste substance.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'splitter': {
-    title: 'Splitter — Atomic Work Process',
+    title: 'Splitter: Atomic Work Process',
     quote: 'Simple work includes splitting a single substance flow into two (or more) products with some loss of energy and substance.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'copying': {
-    title: 'Copying — Pattern Replication',
+    title: 'Copying: Pattern Replication',
     quote: 'Copying takes a patterned input substance and an un-patterned one, outputting the original input (think of it as a template) and a copy of the pattern in the second output.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'impeder': {
-    title: 'Impeder — Flow Restriction',
+    title: 'Impeder: Flow Restriction',
     quote: 'Simple work includes impeding a flow or slowing the rate of flow with a consequent back-pressure. All simple work processes involve the consumption of energy and the loss of energy as waste heat.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'buffer': {
-    title: 'Buffer — Flow Smoothing',
+    title: 'Buffer: Flow Smoothing',
     quote: 'Simple work includes buffering a flow, used to smooth out the flow volumes over time. A fifth simple component is a "raw" stock being used simply as a buffer.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'propeller': {
-    title: 'Propeller — Gradient Work',
+    title: 'Propeller: Gradient Work',
     quote: 'Propelling is work done to push a substance against a gradient, like a pump pushing water through a pipe.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'amplifier': {
-    title: 'Amplifier — Signal Boosting',
+    title: 'Amplifier: Signal Boosting',
     quote: 'Amplification adds energy (power) to a weak but modulated energy input to produce a "copied" modulated high-powered energy flow output.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   },
   'modulator': {
-    title: 'Modulator — Signal Control',
+    title: 'Modulator: Signal Control',
     quote: 'A modulator applies a modulated energy flow (signal) to a substance flow to produce a modulated output substance flow.',
-    source: 'Mobus & Kalton, Ch. 3.5.2.2.4'
+    source: 'Mobus, Ch. 3.5.2.2.4'
   }
 };
 ---
@@ -228,9 +228,9 @@ const iconEducation = {
 
     .status-legend {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
       padding: 16px 24px;
       background: rgba(255,255,255,0.6);
       border-radius: 12px;
@@ -238,10 +238,29 @@ const iconEducation = {
       border: 1px solid var(--ocean-100);
     }
 
+    .legend-context {
+      color: var(--gray-500);
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    .status-chips {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     .status-chip {
       display: flex;
       align-items: center;
       gap: 6px;
+    }
+
+    .arrow {
+      color: var(--gray-400);
+      font-size: 0.9rem;
     }
 
     .section {
@@ -491,22 +510,27 @@ const iconEducation = {
       <header class="icon-header">
         <h1>The System Language Palette</h1>
         <p class="subtitle">
-          An evolving visual vocabulary for systems science — built collaboratively, grounded in Mobus.
+          An evolving visual vocabulary for systems science, built collaboratively, grounded in Mobus.
           Click any icon to explore its theoretical foundations.
         </p>
 
         <div class="status-legend">
-          <div class="status-chip">
-            <span>&#10003;</span>
-            <span><strong>PNG</strong> — In BERT UI</span>
-          </div>
-          <div class="status-chip">
-            <span>&#9889;</span>
-            <span><strong>Bevy</strong> — Rendered in engine</span>
-          </div>
-          <div class="status-chip">
-            <span>&#9998;</span>
-            <span><strong>SVG</strong> — Design exploration</span>
+          <p class="legend-context">Where each icon is in its journey to the modeling tool:</p>
+          <div class="status-chips">
+            <div class="status-chip">
+              <span>&#9998;</span>
+              <span>Concept</span>
+            </div>
+            <span class="arrow">→</span>
+            <div class="status-chip">
+              <span>&#9889;</span>
+              <span>Rendered live</span>
+            </div>
+            <span class="arrow">→</span>
+            <div class="status-chip">
+              <span>&#10003;</span>
+              <span>In BERT now</span>
+            </div>
           </div>
         </div>
       </header>
@@ -515,14 +539,14 @@ const iconEducation = {
       <section class="section structure">
         <div class="section-header">
           <h2>System Structure</h2>
-          <p class="section-desc">What defines a system — boundaries, hierarchy, and environmental connections.</p>
+          <p class="section-desc">What defines a system: boundaries, hierarchy, and environmental connections.</p>
         </div>
 
         <div class="subsection">
           <div class="subsection-title">Core Elements</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="subsystem">
-              <span class="icon-status png">&#10003; PNG</span>
+              <span class="icon-status png">&#10003;</span>
               <div class="icon-name">Subsystem</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -539,7 +563,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="boundary">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Boundary</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -556,7 +580,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="source">
-              <span class="icon-status png">&#10003; PNG</span>
+              <span class="icon-status png">&#10003;</span>
               <div class="icon-name">Source</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -573,7 +597,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="sink">
-              <span class="icon-status png">&#10003; PNG</span>
+              <span class="icon-status png">&#10003;</span>
               <div class="icon-name">Sink</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -590,7 +614,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="stock">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Stock / Reservoir</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -612,7 +636,7 @@ const iconEducation = {
           <div class="subsection-title">Complexity Classification</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="atomic">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Atomic</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -624,12 +648,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Indivisible — no internal structure needed</div>
+              <div class="icon-description">Indivisible, no internal structure needed</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
 
             <div class="icon-card" data-icon="complex">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Complex</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -646,7 +670,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="multiset">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Multiset</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -669,14 +693,14 @@ const iconEducation = {
       <section class="section interfaces">
         <div class="section-header">
           <h2>Interfaces</h2>
-          <p class="section-desc">Where and how things cross boundaries — ports, connections, and transduction.</p>
+          <p class="section-desc">Where and how things cross boundaries: ports, connections, and transduction.</p>
         </div>
 
         <div class="subsection">
           <div class="subsection-title">Boundary Crossings</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="interface">
-              <span class="icon-status png">&#10003; PNG</span>
+              <span class="icon-status png">&#10003;</span>
               <div class="icon-name">Interface</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -693,7 +717,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="import">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Import</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -705,12 +729,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Input interface — inward through boundary</div>
+              <div class="icon-description">Input interface, inward through boundary</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
 
             <div class="icon-card" data-icon="export">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Export</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -722,7 +746,7 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Output interface — outward through boundary</div>
+              <div class="icon-description">Output interface, outward through boundary</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
           </div>
@@ -732,7 +756,7 @@ const iconEducation = {
           <div class="subsection-title">Flow Ports</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="inflow">
-              <span class="icon-status png">&#10003; PNG</span>
+              <span class="icon-status png">&#10003;</span>
               <div class="icon-name">Inflow</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -749,7 +773,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="outflow">
-              <span class="icon-status png">&#10003; PNG</span>
+              <span class="icon-status png">&#10003;</span>
               <div class="icon-name">Outflow</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -766,7 +790,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="sensor">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Sensor</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -789,14 +813,14 @@ const iconEducation = {
       <section class="section flows">
         <div class="section-header">
           <h2>Flows</h2>
-          <p class="section-desc">What moves through systems — substance types and their characteristics.</p>
+          <p class="section-desc">What moves through systems: substance types and their characteristics.</p>
         </div>
 
         <div class="subsection">
           <div class="subsection-title">Substance Types</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="energy">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Energy</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -813,7 +837,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card has-alts" data-icon="material">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Material</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -831,7 +855,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card has-alts" data-icon="message">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Message</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -849,7 +873,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="interaction">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Interaction</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -871,7 +895,7 @@ const iconEducation = {
           <div class="subsection-title">Flow Characteristics (Usability)</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="resource">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Resource</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -883,12 +907,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Beneficial input — useful to receiver</div>
+              <div class="icon-description">Beneficial input, useful to receiver</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
 
             <div class="icon-card" data-icon="disruption">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Disruption</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -900,12 +924,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Harmful input — detrimental to receiver</div>
+              <div class="icon-description">Harmful input, detrimental to receiver</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
 
             <div class="icon-card" data-icon="product">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Product</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -917,12 +941,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Beneficial output — useful to environment</div>
+              <div class="icon-description">Beneficial output, useful to environment</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
 
             <div class="icon-card" data-icon="waste">
-              <span class="icon-status bevy">&#9889; Bevy</span>
+              <span class="icon-status bevy">&#9889;</span>
               <div class="icon-name">Waste</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -934,7 +958,7 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Harmful output — detrimental to environment</div>
+              <div class="icon-description">Harmful output, detrimental to environment</div>
               <div class="click-hint">Click for Mobus insights</div>
             </div>
           </div>
@@ -944,8 +968,8 @@ const iconEducation = {
           <div class="subsection-title">Design Alternatives</div>
           <div class="icon-grid">
             <div class="icon-card">
-              <span class="icon-status svg">&#9998; SVG</span>
-              <div class="icon-name">Message — Speech Bubble</div>
+              <span class="icon-status svg">&#9998;</span>
+              <div class="icon-name">Message (Speech Bubble)</div>
               <div class="icon-sizes">
                 <div class="size-group">
                   <img src="/icons/svg/substance-types/message-original.svg" width="32" alt="Message Original">
@@ -956,12 +980,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Conversational feel — human communication</div>
+              <div class="icon-description">Conversational feel, human communication</div>
             </div>
 
             <div class="icon-card">
-              <span class="icon-status svg">&#9998; SVG</span>
-              <div class="icon-name">Message — Wave</div>
+              <span class="icon-status svg">&#9998;</span>
+              <div class="icon-name">Message (Wave)</div>
               <div class="icon-sizes">
                 <div class="size-group">
                   <img src="/icons/svg/substance-types/message-alt1.svg" width="32" alt="Message Wave">
@@ -972,12 +996,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Signal/waveform — technical systems</div>
+              <div class="icon-description">Signal/waveform, technical systems</div>
             </div>
 
             <div class="icon-card">
-              <span class="icon-status svg">&#9998; SVG</span>
-              <div class="icon-name">Material — 3D Cube</div>
+              <span class="icon-status svg">&#9998;</span>
+              <div class="icon-name">Material (3D Cube)</div>
               <div class="icon-sizes">
                 <div class="size-group">
                   <img src="/icons/svg/substance-types/material-original.svg" width="32" alt="Material 3D">
@@ -988,12 +1012,12 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Isometric cube — physical presence</div>
+              <div class="icon-description">Isometric cube, physical presence</div>
             </div>
 
             <div class="icon-card">
-              <span class="icon-status svg">&#9998; SVG</span>
-              <div class="icon-name">Material — Hexagon</div>
+              <span class="icon-status svg">&#9998;</span>
+              <div class="icon-name">Material (Hexagon)</div>
               <div class="icon-sizes">
                 <div class="size-group">
                   <img src="/icons/svg/substance-types/material-alt2.svg" width="32" alt="Material Hex">
@@ -1004,7 +1028,7 @@ const iconEducation = {
                   <div class="icon-size-label">48px</div>
                 </div>
               </div>
-              <div class="icon-description">Molecular structure — scientific feel</div>
+              <div class="icon-description">Molecular structure, scientific feel</div>
             </div>
           </div>
         </div>
@@ -1014,14 +1038,14 @@ const iconEducation = {
       <section class="section processes">
         <div class="section-header">
           <h2>Work Processes</h2>
-          <p class="section-desc">Atomic operations that transform substances — the fundamental units of work.</p>
+          <p class="section-desc">Atomic operations that transform substances: the fundamental units of work.</p>
         </div>
 
         <div class="subsection">
           <div class="subsection-title">Assembly & Disassembly</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="combiner">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Combiner</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1038,7 +1062,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="splitter">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Splitter</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1055,7 +1079,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="copying">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Copying</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1077,7 +1101,7 @@ const iconEducation = {
           <div class="subsection-title">Flow Regulation</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="impeder">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Impeder</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1094,7 +1118,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="buffer">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Buffer</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1111,7 +1135,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="propeller">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Propeller / Pump</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1133,7 +1157,7 @@ const iconEducation = {
           <div class="subsection-title">Signal Processing</div>
           <div class="icon-grid">
             <div class="icon-card" data-icon="amplifier">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Amplifier</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1150,7 +1174,7 @@ const iconEducation = {
             </div>
 
             <div class="icon-card" data-icon="modulator">
-              <span class="icon-status svg">&#9998; SVG</span>
+              <span class="icon-status svg">&#9998;</span>
               <div class="icon-name">Modulator</div>
               <div class="icon-sizes">
                 <div class="size-group">
@@ -1177,36 +1201,36 @@ const iconEducation = {
 
   <script is:inline>
     const iconEducation = {
-      'subsystem': { title: 'Subsystem — Hierarchical Components', quote: 'Every object within the system boundary, including the interfaces, channels, stocks, sensors, and regulators, are components of the system.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'boundary': { title: 'Boundary — System Enclosure', quote: 'A boundary demarks the difference between the inside of a system and the outside, or environment.', source: 'Mobus & Kalton, Ch. 3.5.2.2.3' },
-      'source': { title: 'Source — Environmental Supply', quote: 'The environment contains all of the sources of inputs (matter, energy, and messages) and the sinks for outputs.', source: 'Mobus & Kalton, Ch. 3.5.2.1' },
-      'sink': { title: 'Sink — Environmental Disposal', quote: 'The environment contains all of the sources of inputs and the sinks for outputs.', source: 'Mobus & Kalton, Ch. 3.5.2.1' },
-      'stock': { title: 'Stock/Reservoir — Substance Storage', quote: 'Stocks are invariably bounded; containers have capacity attributes determined by physical dimensions.', source: 'Mobus & Kalton, Ch. 4.2.4' },
-      'atomic': { title: 'Atomic — Indivisible Elements', quote: 'Atomic components are those subsystems that need no further deconstruction in order to understand the SOI internals.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'complex': { title: 'Complex — Emergent Properties', quote: 'Complexity is a measure related to the degree to which a system has both a multiplicity of components at any given level of organization.', source: 'Mobus & Kalton, Ch. 3.5.2.2.5.2' },
-      'multiset': { title: 'Multiset — Multiple Instances', quote: 'Multisets are allowed. The component with the tilde represents a set of components with many instances of that type.', source: 'Mobus & Kalton, Ch. 4.3.3.1' },
-      'interface': { title: 'Interface — Boundary Protocol', quote: 'The biggest single mistake that system scientists make is to ignore or trivialize the concept of an interface.', source: 'Mobus & Kalton, Ch. 4.3.3.3' },
-      'import': { title: 'Import — Input Boundary', quote: 'In the case of interfaces as subsystems, the φ object is called a protocol which is an algorithm for letting the flow across the boundary.', source: 'Mobus & Kalton, Ch. 4.3.3.3' },
-      'export': { title: 'Export — Output Boundary', quote: 'Interfaces do not typically alter the substance of the flow, that is, do not transform the substances as a process does.', source: 'Mobus & Kalton, Ch. 4.3.3.3' },
-      'inflow': { title: 'Inflow — System Input', quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'outflow': { title: 'Outflow — System Output', quote: 'The work produces a "product" or high-quality material. In doing work, some energy is transformed to waste heat.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'sensor': { title: 'Sensor — Information Transduction', quote: 'Sensing responds to a modulated force or energy flow, where the modulation is a kind of pattern.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'energy': { title: 'Energy — Transformative Potential', quote: 'Energy transformations involve work done on a low-grade energy form to boost its potential or quality.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'material': { title: 'Material — Physical Substance', quote: 'Material transformations involve processes that reduce the entropy of the material, such as refining or shaping matter.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'message': { title: 'Message — Information Flows', quote: 'Messages are specialized versions of energy flows, characterized by using very little energy in their transmission.', source: 'Mobus & Kalton, Ch. 3.5.2.2.5.4' },
-      'interaction': { title: 'Interaction — Flow Networks', quote: 'The interactions between internal components are generally characterized as flows of substance.', source: 'Mobus & Kalton, Ch. 3.5.2.2.5' },
-      'resource': { title: 'Resource — Beneficial Inputs', quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'disruption': { title: 'Disruption — Harmful Inputs', quote: 'Systems eventually simply fall apart. More likely scenarios involve systems being disrupted by other systems.', source: 'Mobus & Kalton, Ch. 3.5.1.2' },
-      'product': { title: 'Product — Beneficial Outputs', quote: 'In general, the imported material will be transformed from a high-entropy form into a lower-entropy form — a product.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'waste': { title: 'Waste — Harmful Outputs', quote: 'In doing work, according to the Second Law of Thermodynamics, some energy is transformed to waste heat.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
-      'combiner': { title: 'Combiner — Atomic Work Process', quote: 'Simple work includes: combining two substances into a more complex substance with the loss of some heat.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'splitter': { title: 'Splitter — Atomic Work Process', quote: 'Simple work includes splitting a single substance flow into two or more products.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'copying': { title: 'Copying — Pattern Replication', quote: 'Copying takes a patterned input substance and an un-patterned one, outputting the original and a copy.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'impeder': { title: 'Impeder — Flow Restriction', quote: 'Simple work includes impeding a flow or slowing the rate of flow with a consequent back-pressure.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'buffer': { title: 'Buffer — Flow Smoothing', quote: 'Simple work includes buffering a flow, used to smooth out the flow volumes over time.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'propeller': { title: 'Propeller — Gradient Work', quote: 'Propelling is work done to push a substance against a gradient, like a pump pushing water.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'amplifier': { title: 'Amplifier — Signal Boosting', quote: 'Amplification adds energy to a weak but modulated energy input to produce a high-powered output.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
-      'modulator': { title: 'Modulator — Signal Control', quote: 'A modulator applies a modulated energy flow (signal) to a substance flow to produce a modulated output.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' }
+      'subsystem': { title: 'Subsystem: Hierarchical Components', quote: 'Every object within the system boundary, including the interfaces, channels, stocks, sensors, and regulators, are components of the system.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'boundary': { title: 'Boundary: System Enclosure', quote: 'A boundary demarks the difference between the inside of a system and the outside, or environment.', source: 'Mobus, Ch. 3.5.2.2.3' },
+      'source': { title: 'Source: Environmental Supply', quote: 'The environment contains all of the sources of inputs (matter, energy, and messages) and the sinks for outputs.', source: 'Mobus, Ch. 3.5.2.1' },
+      'sink': { title: 'Sink: Environmental Disposal', quote: 'The environment contains all of the sources of inputs and the sinks for outputs.', source: 'Mobus, Ch. 3.5.2.1' },
+      'stock': { title: 'Stock/Reservoir: Substance Storage', quote: 'Stocks are invariably bounded; containers have capacity attributes determined by physical dimensions.', source: 'Mobus, Ch. 4.2.4' },
+      'atomic': { title: 'Atomic: Indivisible Elements', quote: 'Atomic components are those subsystems that need no further deconstruction in order to understand the SOI internals.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'complex': { title: 'Complex: Emergent Properties', quote: 'Complexity is a measure related to the degree to which a system has both a multiplicity of components at any given level of organization.', source: 'Mobus, Ch. 3.5.2.2.5.2' },
+      'multiset': { title: 'Multiset: Multiple Instances', quote: 'Multisets are allowed. The component with the tilde represents a set of components with many instances of that type.', source: 'Mobus, Ch. 4.3.3.1' },
+      'interface': { title: 'Interface: Boundary Protocol', quote: 'The biggest single mistake that system scientists make is to ignore or trivialize the concept of an interface.', source: 'Mobus, Ch. 4.3.3.3' },
+      'import': { title: 'Import: Input Boundary', quote: 'In the case of interfaces as subsystems, the φ object is called a protocol which is an algorithm for letting the flow across the boundary.', source: 'Mobus, Ch. 4.3.3.3' },
+      'export': { title: 'Export: Output Boundary', quote: 'Interfaces do not typically alter the substance of the flow, that is, do not transform the substances as a process does.', source: 'Mobus, Ch. 4.3.3.3' },
+      'inflow': { title: 'Inflow: System Input', quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'outflow': { title: 'Outflow: System Output', quote: 'The work produces a "product" or high-quality material. In doing work, some energy is transformed to waste heat.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'sensor': { title: 'Sensor: Information Transduction', quote: 'Sensing responds to a modulated force or energy flow, where the modulation is a kind of pattern.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'energy': { title: 'Energy: Transformative Potential', quote: 'Energy transformations involve work done on a low-grade energy form to boost its potential or quality.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'material': { title: 'Material: Physical Substance', quote: 'Material transformations involve processes that reduce the entropy of the material, such as refining or shaping matter.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'message': { title: 'Message: Information Flows', quote: 'Messages are specialized versions of energy flows, characterized by using very little energy in their transmission.', source: 'Mobus, Ch. 3.5.2.2.5.4' },
+      'interaction': { title: 'Interaction: Flow Networks', quote: 'The interactions between internal components are generally characterized as flows of substance.', source: 'Mobus, Ch. 3.5.2.2.5' },
+      'resource': { title: 'Resource: Beneficial Inputs', quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'disruption': { title: 'Disruption: Harmful Inputs', quote: 'Systems eventually simply fall apart. More likely scenarios involve systems being disrupted by other systems.', source: 'Mobus, Ch. 3.5.1.2' },
+      'product': { title: 'Product: Beneficial Outputs', quote: 'In general, the imported material will be transformed from a high-entropy form into a lower-entropy form, a product.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'waste': { title: 'Waste: Harmful Outputs', quote: 'In doing work, according to the Second Law of Thermodynamics, some energy is transformed to waste heat.', source: 'Mobus, Ch. 3.5.2.2.1' },
+      'combiner': { title: 'Combiner: Atomic Work Process', quote: 'Simple work includes: combining two substances into a more complex substance with the loss of some heat.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'splitter': { title: 'Splitter: Atomic Work Process', quote: 'Simple work includes splitting a single substance flow into two or more products.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'copying': { title: 'Copying: Pattern Replication', quote: 'Copying takes a patterned input substance and an un-patterned one, outputting the original and a copy.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'impeder': { title: 'Impeder: Flow Restriction', quote: 'Simple work includes impeding a flow or slowing the rate of flow with a consequent back-pressure.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'buffer': { title: 'Buffer: Flow Smoothing', quote: 'Simple work includes buffering a flow, used to smooth out the flow volumes over time.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'propeller': { title: 'Propeller: Gradient Work', quote: 'Propelling is work done to push a substance against a gradient, like a pump pushing water.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'amplifier': { title: 'Amplifier: Signal Boosting', quote: 'Amplification adds energy to a weak but modulated energy input to produce a high-powered output.', source: 'Mobus, Ch. 3.5.2.2.4' },
+      'modulator': { title: 'Modulator: Signal Control', quote: 'A modulator applies a modulated energy flow (signal) to a substance flow to produce a modulated output.', source: 'Mobus, Ch. 3.5.2.2.4' }
     };
 
     function closeAllTooltips() {
@@ -1240,7 +1264,7 @@ const iconEducation = {
           tooltip.innerHTML = `
             <div class="tooltip-title">${education.title}</div>
             <div class="tooltip-quote">"${education.quote}"</div>
-            <div class="tooltip-source">— ${education.source}</div>
+            <div class="tooltip-source">${education.source}</div>
           `;
 
           tooltip.classList.add('show');
