@@ -1183,9 +1183,16 @@ const iconEducation = {
         card.addEventListener('click', function(e) {
           e.stopPropagation();
 
+          const wasActive = card.classList.contains('active');
+
           // Close any open tooltips
           document.querySelectorAll('.tooltip.show').forEach(t => t.classList.remove('show'));
           document.querySelectorAll('.icon-card.active').forEach(c => c.classList.remove('active'));
+
+          // If this card was already active, just close it (toggle off)
+          if (wasActive) {
+            return;
+          }
 
           const iconName = card.dataset.icon;
           const education = iconEducation[iconName];
