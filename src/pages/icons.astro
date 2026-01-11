@@ -422,10 +422,10 @@ const iconEducation = {
       font-size: 13px;
       line-height: 1.6;
       margin-top: 12px;
-      display: none;
+      display: none !important;
     }
 
-    .tooltip.show { display: block; }
+    .tooltip.show { display: block !important; }
 
     .tooltip::before {
       content: '';
@@ -1175,53 +1175,81 @@ const iconEducation = {
     </div>
   </div>
 
-  <script define:vars={{ iconEducation }}>
-    document.addEventListener('DOMContentLoaded', function() {
-      const iconCards = document.querySelectorAll('.icon-card[data-icon]');
+  <script is:inline>
+    const iconEducation = {
+      'subsystem': { title: 'Subsystem — Hierarchical Components', quote: 'Every object within the system boundary, including the interfaces, channels, stocks, sensors, and regulators, are components of the system.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'boundary': { title: 'Boundary — System Enclosure', quote: 'A boundary demarks the difference between the inside of a system and the outside, or environment.', source: 'Mobus & Kalton, Ch. 3.5.2.2.3' },
+      'source': { title: 'Source — Environmental Supply', quote: 'The environment contains all of the sources of inputs (matter, energy, and messages) and the sinks for outputs.', source: 'Mobus & Kalton, Ch. 3.5.2.1' },
+      'sink': { title: 'Sink — Environmental Disposal', quote: 'The environment contains all of the sources of inputs and the sinks for outputs.', source: 'Mobus & Kalton, Ch. 3.5.2.1' },
+      'stock': { title: 'Stock/Reservoir — Substance Storage', quote: 'Stocks are invariably bounded; containers have capacity attributes determined by physical dimensions.', source: 'Mobus & Kalton, Ch. 4.2.4' },
+      'atomic': { title: 'Atomic — Indivisible Elements', quote: 'Atomic components are those subsystems that need no further deconstruction in order to understand the SOI internals.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'complex': { title: 'Complex — Emergent Properties', quote: 'Complexity is a measure related to the degree to which a system has both a multiplicity of components at any given level of organization.', source: 'Mobus & Kalton, Ch. 3.5.2.2.5.2' },
+      'multiset': { title: 'Multiset — Multiple Instances', quote: 'Multisets are allowed. The component with the tilde represents a set of components with many instances of that type.', source: 'Mobus & Kalton, Ch. 4.3.3.1' },
+      'interface': { title: 'Interface — Boundary Protocol', quote: 'The biggest single mistake that system scientists make is to ignore or trivialize the concept of an interface.', source: 'Mobus & Kalton, Ch. 4.3.3.3' },
+      'import': { title: 'Import — Input Boundary', quote: 'In the case of interfaces as subsystems, the φ object is called a protocol which is an algorithm for letting the flow across the boundary.', source: 'Mobus & Kalton, Ch. 4.3.3.3' },
+      'export': { title: 'Export — Output Boundary', quote: 'Interfaces do not typically alter the substance of the flow, that is, do not transform the substances as a process does.', source: 'Mobus & Kalton, Ch. 4.3.3.3' },
+      'inflow': { title: 'Inflow — System Input', quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter, energy, or messages.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'outflow': { title: 'Outflow — System Output', quote: 'The work produces a "product" or high-quality material. In doing work, some energy is transformed to waste heat.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'sensor': { title: 'Sensor — Information Transduction', quote: 'Sensing responds to a modulated force or energy flow, where the modulation is a kind of pattern.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'energy': { title: 'Energy — Transformative Potential', quote: 'Energy transformations involve work done on a low-grade energy form to boost its potential or quality.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'material': { title: 'Material — Physical Substance', quote: 'Material transformations involve processes that reduce the entropy of the material, such as refining or shaping matter.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'message': { title: 'Message — Information Flows', quote: 'Messages are specialized versions of energy flows, characterized by using very little energy in their transmission.', source: 'Mobus & Kalton, Ch. 3.5.2.2.5.4' },
+      'interaction': { title: 'Interaction — Flow Networks', quote: 'The interactions between internal components are generally characterized as flows of substance.', source: 'Mobus & Kalton, Ch. 3.5.2.2.5' },
+      'resource': { title: 'Resource — Beneficial Inputs', quote: 'Every real system imports material and/or messages and energy. It does work on the imported matter.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'disruption': { title: 'Disruption — Harmful Inputs', quote: 'Systems eventually simply fall apart. More likely scenarios involve systems being disrupted by other systems.', source: 'Mobus & Kalton, Ch. 3.5.1.2' },
+      'product': { title: 'Product — Beneficial Outputs', quote: 'In general, the imported material will be transformed from a high-entropy form into a lower-entropy form — a product.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'waste': { title: 'Waste — Harmful Outputs', quote: 'In doing work, according to the Second Law of Thermodynamics, some energy is transformed to waste heat.', source: 'Mobus & Kalton, Ch. 3.5.2.2.1' },
+      'combiner': { title: 'Combiner — Atomic Work Process', quote: 'Simple work includes: combining two substances into a more complex substance with the loss of some heat.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'splitter': { title: 'Splitter — Atomic Work Process', quote: 'Simple work includes splitting a single substance flow into two or more products.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'copying': { title: 'Copying — Pattern Replication', quote: 'Copying takes a patterned input substance and an un-patterned one, outputting the original and a copy.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'impeder': { title: 'Impeder — Flow Restriction', quote: 'Simple work includes impeding a flow or slowing the rate of flow with a consequent back-pressure.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'buffer': { title: 'Buffer — Flow Smoothing', quote: 'Simple work includes buffering a flow, used to smooth out the flow volumes over time.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'propeller': { title: 'Propeller — Gradient Work', quote: 'Propelling is work done to push a substance against a gradient, like a pump pushing water.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'amplifier': { title: 'Amplifier — Signal Boosting', quote: 'Amplification adds energy to a weak but modulated energy input to produce a high-powered output.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' },
+      'modulator': { title: 'Modulator — Signal Control', quote: 'A modulator applies a modulated energy flow (signal) to a substance flow to produce a modulated output.', source: 'Mobus & Kalton, Ch. 3.5.2.2.4' }
+    };
 
-      iconCards.forEach(card => {
+    function closeAllTooltips() {
+      document.querySelectorAll('.tooltip').forEach(t => {
+        t.classList.remove('show');
+        t.style.display = 'none';
+      });
+      document.querySelectorAll('.icon-card.active').forEach(c => c.classList.remove('active'));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.icon-card[data-icon]').forEach(card => {
         card.addEventListener('click', function(e) {
           e.stopPropagation();
 
           const wasActive = card.classList.contains('active');
+          closeAllTooltips();
 
-          // Close any open tooltips
-          document.querySelectorAll('.tooltip.show').forEach(t => t.classList.remove('show'));
-          document.querySelectorAll('.icon-card.active').forEach(c => c.classList.remove('active'));
+          if (wasActive) return;
 
-          // If this card was already active, just close it (toggle off)
-          if (wasActive) {
-            return;
+          const education = iconEducation[card.dataset.icon];
+          if (!education) return;
+
+          let tooltip = card.querySelector('.tooltip');
+          if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            card.appendChild(tooltip);
           }
 
-          const iconName = card.dataset.icon;
-          const education = iconEducation[iconName];
+          tooltip.innerHTML = `
+            <div class="tooltip-title">${education.title}</div>
+            <div class="tooltip-quote">"${education.quote}"</div>
+            <div class="tooltip-source">— ${education.source}</div>
+          `;
 
-          if (education) {
-            let tooltip = card.querySelector('.tooltip');
-            if (!tooltip) {
-              tooltip = document.createElement('div');
-              tooltip.className = 'tooltip';
-              card.appendChild(tooltip);
-            }
-
-            tooltip.innerHTML = `
-              <div class="tooltip-title">${education.title}</div>
-              <div class="tooltip-quote">"${education.quote}"</div>
-              <div class="tooltip-source">— ${education.source}</div>
-            `;
-
-            tooltip.classList.add('show');
-            card.classList.add('active');
-          }
+          tooltip.classList.add('show');
+          tooltip.style.display = 'block';
+          card.classList.add('active');
         });
       });
 
-      // Close tooltips when clicking outside
-      document.addEventListener('click', function() {
-        document.querySelectorAll('.tooltip.show').forEach(t => t.classList.remove('show'));
-        document.querySelectorAll('.icon-card.active').forEach(c => c.classList.remove('active'));
-      });
+      document.addEventListener('click', closeAllTooltips);
     });
   </script>
 </BaseLayout>
