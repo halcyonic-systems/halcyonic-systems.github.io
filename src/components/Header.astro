@@ -5,6 +5,7 @@ const navItems = [
   { href: '/research', label: 'Research' },
   { href: 'https://garden.halcyonic.systems', label: 'Garden' },
   { href: '/writing', label: 'Writing' },
+  { href: '/experiments', label: 'Experiments' },
   { href: '/about', label: 'About' },
 ];
 ---
@@ -28,7 +29,7 @@ const navItems = [
           <li>
             <a
               href={item.href}
-              class="link-hover text-gray-600 hover:text-ocean-600 transition-colors font-medium"
+              class="link-hover text-sm sm:text-base text-gray-600 hover:text-ocean-600 transition-colors font-medium"
             >
               {item.label}
             </a>

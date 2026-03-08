@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seven Windows, One Person | Halcyonic Systems</title>
+<meta property="og:title" content="Seven Windows, One Person">
+<meta property="og:description" content="Six therapeutic frameworks and one diagnostic lens examine the same person speaking. What does each one hear? An interactive systems science exploration.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://halcyonic.systems/experiments/seven-windows/">
+<meta property="og:site_name" content="Halcyonic Systems">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --bg: #F5F0E8;
+    --surface: #EDE6D9;
+    --card: #FFFFFF;
+    --border: #D4C9B5;
+    --border-light: #E2DAD0;
+    --text: #2A1F14;
+    --text-muted: #7D7060;
+    --text-faint: #ADA08E;
+    --accent: #4A6741;
+    --accent-pale: #EBF0E7;
+    --warm: #B5501E;
+    --warm-pale: #F5EAE2;
+    --r: 10px;
+    --r-pill: 99px;
+
+    --c-ifs: #7B5EA7;
+    --c-llf: #4A6741;
+    --c-poly: #B5801E;
+    --c-narr: #2E7D7B;
+    --c-attach: #B54A6F;
+    --c-coher: #5A6FA7;
+    --c-dsm: #6B7280;
+
+    --c-ifs-bg: rgba(123,94,167,0.14);
+    --c-llf-bg: rgba(74,103,65,0.14);
+    --c-poly-bg: rgba(181,128,30,0.14);
+    --c-narr-bg: rgba(46,125,123,0.14);
+    --c-attach-bg: rgba(181,74,111,0.14);
+    --c-coher-bg: rgba(90,111,167,0.14);
+    --c-dsm-bg: rgba(107,114,128,0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 32px 18px 80px; }
+  }
+
+  /* ── Opening ── */
+  .opening {
+    text-align: center;
+    padding: 60px 0 48px;
+  }
+  .opening h1 {
+    font-family: var(--serif);
+    font-size: 1.65rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .opening .subtitle {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  /* ── Section labels ── */
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    margin-bottom: 14px;
+  }
+
+  /* ── The Voice ── */
+  .voice-section { margin-bottom: 40px; }
+  .voice-card {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--r);
+    padding: 28px 26px;
+  }
+  .voice-text {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    line-height: 1.9;
+    color: var(--text);
+  }
+  .voice-text .hl {
+    transition: background 0.3s ease, color 0.15s ease;
+    border-radius: 3px;
+    padding: 1px 2px;
+    margin: 0 -2px;
+  }
+  .voice-text .hl.active {
+    color: var(--text);
+  }
+  .voice-text .hl.dimmed {
+    opacity: 0.3;
+    transition: opacity 0.4s ease;
+  }
+  /* Overlay backgrounds set via inline JS for gradient blending */
+
+  /* ── Framework selector ── */
+  .framework-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .fw-pill {
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .fw-pill:hover {
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+  .fw-pill.active {
+    color: #fff;
+    border-color: transparent;
+  }
+  .fw-pill[data-fw="ifs"].active     { background: var(--c-ifs); }
+  .fw-pill[data-fw="llf"].active     { background: var(--c-llf); }
+  .fw-pill[data-fw="poly"].active    { background: var(--c-poly); }
+  .fw-pill[data-fw="narr"].active    { background: var(--c-narr); }
+  .fw-pill[data-fw="attach"].active  { background: var(--c-attach); }
+  .fw-pill[data-fw="coher"].active   { background: var(--c-coher); }
+  .fw-pill[data-fw="dsm"]           { border-style: dashed; }
+  .fw-pill[data-fw="dsm"].active    { background: var(--c-dsm); }
+
+  .fw-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--border);
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* visited dot */
+  .fw-pill .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-left: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    vertical-align: middle;
+  }
+  .fw-pill.visited .dot { opacity: 1; background: var(--accent); }
+  .fw-pill.visited.active .dot { background: #fff; }
+
+  /* ── Interpretation card ── */
+  .interp-card {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--r);
+    padding: 24px 26px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+  }
+  .interp-card.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .interp-card .fw-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .interp-card .fw-sees,
+  .interp-card .fw-hears,
+  .interp-card .fw-does {
+    margin-bottom: 14px;
+  }
+  .interp-card .label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .interp-card .content {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .interp-card .axis-tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-light);
+  }
+  .interp-card .axis-tag {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+  }
+  .interp-card .axis-tag strong {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .interp-card .left-border {
+    border-left: 3px solid transparent;
+    padding-left: 14px;
+  }
+
+  /* ── Pull-back ── */
+  /* ── Overlay section ── */
+  .overlay-section {
+    display: block;
+    padding-top: 24px;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Boundary diagram ── */
+  .diagram-container {
+    margin: 32px 0;
+    text-align: center;
+  }
+  .diagram-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ── 8-tuple accordion ── */
+  .tuple-accordion {
+    margin: 0 0 8px;
+  }
+  .tuple-row {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--r);
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+  .tuple-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .tuple-header:hover {
+    background: var(--accent-pale);
+  }
+  .tuple-sym {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text);
+    width: 24px;
+    flex-shrink: 0;
+  }
+  .tuple-question {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    flex: 1;
+  }
+  .tuple-chevron {
+    font-size: 0.88rem;
+    color: var(--text-faint);
+    width: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .tuple-row.open .tuple-chevron {
+    transform: rotate(45deg);
+  }
+  .tuple-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s ease;
+    padding: 0 18px;
+  }
+  .tuple-row.open .tuple-body {
+    max-height: 700px;
+    padding: 0 18px 16px;
+  }
+  .tuple-entry {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: 8px 0 8px 14px;
+    border-left: 3px solid var(--border-light);
+    margin-bottom: 4px;
+  }
+  .tuple-entry:last-child { margin-bottom: 0; }
+  .tuple-entry strong {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
+  .tuple-entry em {
+    font-style: italic;
+  }
+
+  /* ── Insight closing ── */
+  .insight-section {
+    padding-top: 40px;
+  }
+  .insight-text {
+    font-family: var(--serif);
+    font-size: 0.97rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .insight-text.muted {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  /* ── Comparison table ── */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 28px;
+    font-size: 0.78rem;
+  }
+  .comparison-table th {
+    font-size: 0.66rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-table td {
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-muted);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .comparison-table td:first-child {
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .comparison-table tr:last-child td { border-bottom: none; }
+
+  @media (max-width: 480px) {
+    .comparison-table { font-size: 0.72rem; }
+    .comparison-table td:first-child { white-space: normal; }
+    .framework-bar { gap: 6px; }
+    .fw-pill { font-size: 0.68rem; padding: 5px 12px; }
+  }
+
+  /* ── Color key strip ── */
+  .color-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0 8px;
+    justify-content: center;
+  }
+  .color-key-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: opacity 0.2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .color-key-item:hover { opacity: 0.8; }
+  .color-key-item .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+  .color-key-item.active {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ── Diagram interactivity ── */
+  .fw-ellipse {
+    transition: stroke-width 0.3s, opacity 0.3s;
+  }
+  .fw-ellipse.highlighted {
+    stroke-width: 3.5;
+    opacity: 1 !important;
+  }
+  .fw-ellipse.dimmed {
+    opacity: 0.15 !important;
+  }
+  .fw-label {
+    transition: opacity 0.3s;
+  }
+  .fw-label.dimmed {
+    opacity: 0.15;
+  }
+  .fw-annotation {
+    transition: opacity 0.3s;
+  }
+  .fw-annotation.dimmed {
+    opacity: 0.08;
+  }
+
+  /* ── Vignette card ── */
+  .vignette-card {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--r);
+    padding: 24px 26px;
+    margin: 28px 0;
+  }
+  .vignette-card .vignette-title {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .vignette-entry {
+    margin-bottom: 16px;
+    padding-left: 14px;
+    border-left: 3px solid var(--border-light);
+  }
+  .vignette-entry:last-child { margin-bottom: 0; }
+  .vignette-entry .v-who {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .vignette-entry .v-text {
+    font-size: 0.84rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .breadcrumb {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+  .breadcrumb a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+  .breadcrumb .sep {
+    margin: 0 6px;
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <nav class="breadcrumb">
+    <a href="/experiments/">← Experiments</a>
+    <span class="sep">·</span>
+    <a href="/">Halcyonic Systems</a>
+  </nav>
+
+  <!-- ── Stage 1: Opening ── -->
+  <div class="opening">
+    <h1>Seven Windows, One Person</h1>
+    <p class="subtitle">Six frameworks and one diagnostic lens. One person. What does each one hear?</p>
+  </div>
+
+  <!-- ── Stage 2: The Voice ── -->
+  <div class="voice-section">
+    <div class="section-label">The voice</div>
+    <div class="voice-card">
+      <div class="voice-text" id="passage">
+        <span class="hl" data-fw="ifs attach">Part of me wants to reach out, but something inside holds me back</span> — like there's a guard at the door who won't let me through. <span class="hl" data-fw="llf">I just want to feel like I belong somewhere</span>, like someone actually sees me. But <span class="hl" data-fw="attach narr dsm">people always leave eventually</span>. <span class="hl" data-fw="narr">It's always been this way</span>, even when I was little — <span class="hl" data-fw="narr coher">I learned early that needing people was dangerous</span>. <span class="hl" data-fw="poly dsm">When I think about opening up, my chest gets tight and I go kind of numb</span>, like my body just shuts the whole thing down before I can even try. <span class="hl" data-fw="coher">I know it doesn't make sense — I have people in my life who care</span>. <span class="hl" data-fw="coher ifs dsm">But I can't stop pulling away</span>. <span class="hl" data-fw="llf poly">There's this longing underneath all of it, but the moment I get close to it, everything freezes</span>. <span class="hl" data-fw="narr attach dsm">I tell myself I'm fine alone, but I don't think that's really true</span>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stage 3: Six Windows ── -->
+  <div class="section-label">Choose a lens</div>
+  <div class="framework-bar" id="fwBar">
+    <button class="fw-pill" data-fw="ifs">IFS<span class="dot"></span></button>
+    <button class="fw-pill" data-fw="llf">Lichtenberg<span class="dot"></span></button>
+    <button class="fw-pill" data-fw="poly">Polyvagal<span class="dot"></span></button>
+    <button class="fw-pill" data-fw="narr">Narrative<span class="dot"></span></button>
+    <button class="fw-pill" data-fw="attach">Attachment<span class="dot"></span></button>
+    <button class="fw-pill" data-fw="coher">Coherence<span class="dot"></span></button>
+    <span class="fw-divider"></span>
+    <button class="fw-pill" data-fw="dsm">DSM<span class="dot"></span></button>
+  </div>
+
+  <!-- Interpretation cards (one per framework, toggled by JS) -->
+  <div id="interpCards">
+
+    <div class="interp-card" data-fw="ifs">
+      <div class="fw-name" style="color:var(--c-ifs)">Internal Family Systems</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-ifs)">A <strong>protector part</strong> (the "guard at the door") blocking access to a vulnerable exile. The pull-away behavior is a Manager keeping the system safe. The longing belongs to an Exile carrying unmet childhood need.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"Part of me… something holds me back" — textbook parts language. Two distinct voices: one that wants connection, one that prevents it. Not confusion — multiplicity.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Help the client access Self-energy. Get curious about the protector: <em>What is it afraid would happen if it let you reach out?</em> Eventually, witness the Exile's pain so the protector can relax.</div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> Internal parts & their relationships</div>
+        <div class="axis-tag"><strong>Works through:</strong> Intrapsychic witnessing</div>
+      </div>
+    </div>
+
+    <div class="interp-card" data-fw="llf">
+      <div class="fw-name" style="color:var(--c-llf)">Lichtenberg Motivational Systems</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-llf)">A starving <strong>attachment/affiliation system</strong> ("I want to belong") with a chronically activated <strong>aversive system</strong> suppressing it. Exploration is shut down. The motivational landscape is tilted — longing high, approach capacity low.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"I just want to feel like I belong" — a direct statement of unmet need across at least two motivational systems (attachment + affiliation). The breadth of the longing suggests no single framework captures it; the need is wide.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Provide the relational experience that was developmentally missed. Be consistently interested, curious, non-punishing. The therapist IS the corrective input — not through technique, but through reliable attunement.</div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> The full landscape of unmet needs</div>
+        <div class="axis-tag"><strong>Works through:</strong> Corrective relational experience</div>
+      </div>
+    </div>
+
+    <div class="interp-card" data-fw="poly">
+      <div class="fw-name" style="color:var(--c-poly)">Polyvagal Theory</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-poly)">A nervous system toggling between <strong>sympathetic activation</strong> (chest tightness) and <strong>dorsal vagal shutdown</strong> (going numb). The social engagement system (ventral vagal) can't come online — neuroception reads connection as danger.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"My chest gets tight and I go kind of numb" — a classic sympathetic-to-dorsal cascade. The body shuts down <em>before cognition can intervene</em>. This isn't a choice; it's an autonomic reflex.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Co-regulation first. Prosodic voice, calm presence, no demand to "process." Breathwork and somatic resourcing to widen the ventral vagal window. <em>Nothing else works until the body feels safe.</em></div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> Autonomic nervous system state</div>
+        <div class="axis-tag"><strong>Works through:</strong> Co-regulation & somatic safety</div>
+      </div>
+    </div>
+
+    <div class="interp-card" data-fw="narr">
+      <div class="fw-name" style="color:var(--c-narr)">Narrative Therapy</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-narr)">A <strong>dominant story</strong> running on repeat: "People leave. I've always been alone. Needing is dangerous." The problem-saturated narrative has colonized identity — it crowds out moments when connection <em>did</em> work.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"It's always been this way" and "people always leave" — absolute, totalizing language that fuses person with problem. Also: "I tell myself I'm fine alone, but I don't think that's really true" — a sparkling moment. A crack in the dominant story.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Externalize the problem: <em>When did "The Pulling Away" first show up in your life?</em> Map its influence, then hunt for unique outcomes — times the person connected despite it. Build a preferred story from those moments.</div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> The dominant narrative & identity</div>
+        <div class="axis-tag"><strong>Works through:</strong> Linguistic re-authoring</div>
+      </div>
+    </div>
+
+    <div class="interp-card" data-fw="attach">
+      <div class="fw-name" style="color:var(--c-attach)">Attachment Theory</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-attach)">A <strong>dismissive-avoidant working model</strong>: "I am not safe needing others" (self-schema) + "Others will leave" (other-schema). The pull-away is a <strong>deactivating strategy</strong> — suppress attachment needs to preempt abandonment pain.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"People always leave" — the other-model, spoken plainly. "Part of me wants to reach out" — the attachment system is still active beneath the deactivation. The longing-then-freezing cycle is approach-avoidance oscillation.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Provide consistent, reliable responsiveness over time. Don't push for closeness — let the client set the distance while demonstrating that the therapist stays. Earned security accumulates through repeated rupture-and-repair.</div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> Relational blueprint (working model)</div>
+        <div class="axis-tag"><strong>Works through:</strong> Consistent safe relating</div>
+      </div>
+    </div>
+
+    <div class="interp-card" data-fw="coher">
+      <div class="fw-name" style="color:var(--c-coher)">Coherence Therapy</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-coher)">A <strong>specific emotional truth</strong> generating a coherent symptom: "Needing people is dangerous" → withdrawal is the perfectly logical response. The symptom isn't a malfunction — it <em>makes sense</em> given the implicit belief.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"I know it doesn't make sense — but I can't stop" — the signature of an emotional truth that rational knowledge can't override. Two memory systems running in parallel: one knows people care, the other <em>knows</em> needing is dangerous. The gap between them is the problem.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Surface the emotional truth explicitly: <em>"So it sounds like deep down, something in you learned that needing people leads to pain — and pulling away is how you stay safe."</em> Then engineer a juxtaposition — a felt experience that vividly contradicts the belief within the reconsolidation window.</div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> The symptom-generating belief</div>
+        <div class="axis-tag"><strong>Works through:</strong> Memory reconsolidation</div>
+      </div>
+    </div>
+
+    <div class="interp-card" data-fw="dsm">
+      <div class="fw-name" style="color:var(--c-dsm)">DSM-5-TR (Diagnostic Lens)</div>
+      <div class="fw-sees">
+        <div class="label">What this lens sees</div>
+        <div class="content left-border" style="border-left-color:var(--c-dsm)"><strong>Symptom clusters</strong> mapping to possible diagnostic categories: somatic complaints (chest tightness, numbness), social withdrawal, persistent interpersonal dysfunction, and compulsive avoidance behavior. A clinician might flag criteria for Major Depressive Episode, Social Anxiety Disorder, or Avoidant Personality features.</div>
+      </div>
+      <div class="fw-hears">
+        <div class="label">What it hears</div>
+        <div class="content">"My chest gets tight and I go numb" — somatic symptom criteria. "People always leave" — interpersonal dysfunction. "I can't stop pulling away" — compulsive avoidance. "I'm fine alone" — withdrawal consistent with depressive criteria. The DSM hears duration, severity, and functional impairment — <em>not meaning</em>.</div>
+      </div>
+      <div class="fw-does">
+        <div class="label">Intervention direction</div>
+        <div class="content">Pharmacological intervention (SSRI for depressive/anxiety features), possibly CBT referral for behavioral activation and cognitive restructuring. The treatment follows the diagnosis: label → protocol → medication. <em>What's missing: why the symptom exists, what it protects, who it's about.</em></div>
+      </div>
+      <div class="fw-does">
+        <div class="label">What DSM doesn't see</div>
+        <div class="content">Environmental context, meaning-making, protective function of the withdrawal, relational dynamics driving the pattern, developmental history as resource (not just risk factor). The DSM draws the tightest boundary — individual symptoms severed from everything that gives them sense.</div>
+      </div>
+      <div class="axis-tags">
+        <div class="axis-tag"><strong>Focuses on:</strong> Symptom classification</div>
+        <div class="axis-tag"><strong>Works through:</strong> Pharmacological correction</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Stage 4: The whole picture ── -->
+  <div class="overlay-section" id="overlaySection">
+
+    <div class="section-label">All seven lenses — simultaneously</div>
+    <div class="color-key" id="colorKey">
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-ifs)"></span>IFS</div>
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-llf)"></span>Lichtenberg</div>
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-poly)"></span>Polyvagal</div>
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-narr)"></span>Narrative</div>
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-attach)"></span>Attachment</div>
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-coher)"></span>Coherence</div>
+      <div class="color-key-item"><span class="swatch" style="background:var(--c-dsm)"></span>DSM</div>
+    </div>
+
+    <!-- Boundary diagram -->
+    <p style="font-size:0.78rem; color:var(--text-faint); text-align:center; margin-bottom:6px;">Tap any label to highlight its boundary</p>
+    <div class="diagram-container">
+      <svg viewBox="0 0 580 370" xmlns="http://www.w3.org/2000/svg" style="max-width:540px" id="boundaryDiagram">
+        <!-- Shared center -->
+        <circle cx="175" cy="180" r="8" fill="var(--text)" opacity="0.15"/>
+        <text x="175" y="183" text-anchor="middle" font-family="'Lora', serif" font-size="8" fill="var(--text-muted)" font-style="italic">person</text>
+
+        <!-- Ellipses: widest → tightest -->
+        <ellipse id="el-llf" class="fw-ellipse" cx="175" cy="175" rx="170" ry="125" fill="none" stroke="var(--c-llf)" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+        <ellipse id="el-ifs" class="fw-ellipse" cx="162" cy="170" rx="135" ry="100" fill="none" stroke="var(--c-ifs)" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+        <ellipse id="el-attach" class="fw-ellipse" cx="190" cy="178" rx="115" ry="88" fill="none" stroke="var(--c-attach)" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+        <ellipse id="el-narr" class="fw-ellipse" cx="172" cy="183" rx="95" ry="72" fill="none" stroke="var(--c-narr)" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+        <ellipse id="el-poly" class="fw-ellipse" cx="180" cy="173" rx="65" ry="50" fill="none" stroke="var(--c-poly)" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+        <ellipse id="el-coher" class="fw-ellipse" cx="175" cy="177" rx="36" ry="28" fill="none" stroke="var(--c-coher)" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+        <ellipse id="el-dsm" class="fw-ellipse" cx="175" cy="180" rx="20" ry="15" fill="none" stroke="var(--c-dsm)" stroke-width="1.5" opacity="0.6"/>
+
+        <!-- Right-side labels: leader line → dot → name → annotation -->
+
+        <!-- LLF (widest) -->
+        <line class="fw-label" data-fw="llf" x1="415" y1="55" x2="223" y2="55" stroke="var(--c-llf)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="llf" cx="418" cy="55" r="3.5" fill="var(--c-llf)" opacity="0.7"/>
+        <text class="fw-label" data-fw="llf" x="426" y="58" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-llf)" font-weight="500">Lichtenberg</text>
+        <text class="fw-annotation" x="426" y="70" font-family="'DM Sans', sans-serif" font-size="7" fill="var(--c-llf)" opacity="0.55">all needs + environment</text>
+
+        <!-- IFS -->
+        <line class="fw-label" data-fw="ifs" x1="415" y1="100" x2="258" y2="100" stroke="var(--c-ifs)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="ifs" cx="418" cy="100" r="3.5" fill="var(--c-ifs)" opacity="0.7"/>
+        <text class="fw-label" data-fw="ifs" x="426" y="103" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-ifs)" font-weight="500">IFS</text>
+
+        <!-- Attachment -->
+        <line class="fw-label" data-fw="attach" x1="415" y1="140" x2="294" y2="140" stroke="var(--c-attach)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="attach" cx="418" cy="140" r="3.5" fill="var(--c-attach)" opacity="0.7"/>
+        <text class="fw-label" data-fw="attach" x="426" y="143" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-attach)" font-weight="500">Attachment</text>
+
+        <!-- Narrative -->
+        <line class="fw-label" data-fw="narr" x1="415" y1="180" x2="267" y2="180" stroke="var(--c-narr)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="narr" cx="418" cy="180" r="3.5" fill="var(--c-narr)" opacity="0.7"/>
+        <text class="fw-label" data-fw="narr" x="426" y="183" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-narr)" font-weight="500">Narrative</text>
+
+        <!-- Polyvagal -->
+        <line class="fw-label" data-fw="poly" x1="415" y1="218" x2="215" y2="218" stroke="var(--c-poly)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="poly" cx="418" cy="218" r="3.5" fill="var(--c-poly)" opacity="0.7"/>
+        <text class="fw-label" data-fw="poly" x="426" y="221" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-poly)" font-weight="500">Polyvagal</text>
+        <text class="fw-annotation" x="426" y="233" font-family="'DM Sans', sans-serif" font-size="7" fill="var(--c-poly)" opacity="0.55">nervous system</text>
+
+        <!-- Coherence -->
+        <line class="fw-label" data-fw="coher" x1="415" y1="258" x2="211" y2="196" stroke="var(--c-coher)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="coher" cx="418" cy="258" r="3.5" fill="var(--c-coher)" opacity="0.7"/>
+        <text class="fw-label" data-fw="coher" x="426" y="261" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-coher)" font-weight="500">Coherence</text>
+        <text class="fw-annotation" x="426" y="273" font-family="'DM Sans', sans-serif" font-size="7" fill="var(--c-coher)" opacity="0.55">one belief</text>
+
+        <!-- DSM (tightest) -->
+        <line class="fw-label" data-fw="dsm" x1="415" y1="298" x2="195" y2="184" stroke="var(--c-dsm)" stroke-width="0.7" opacity="0.3"/>
+        <circle class="fw-label" data-fw="dsm" cx="418" cy="298" r="3.5" fill="var(--c-dsm)" opacity="0.7"/>
+        <text class="fw-label" data-fw="dsm" x="426" y="301" font-family="'DM Sans', sans-serif" font-size="9.5" fill="var(--c-dsm)" font-weight="500">DSM</text>
+        <text class="fw-annotation" x="426" y="313" font-family="'DM Sans', sans-serif" font-size="7" fill="var(--c-dsm)" opacity="0.55">symptoms only</text>
+
+        <!-- Caption -->
+        <text x="280" y="348" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--text-faint)">Each boundary selects a different system-of-interest from the same person.</text>
+        <text x="280" y="363" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--text-faint)">Change the boundary, change what you see.</text>
+      </svg>
+    </div>
+
+    <!-- Vignette: Same person, different intake -->
+    <div class="vignette-card">
+      <div class="vignette-title">Same person, three different offices</div>
+      <div class="vignette-entry" style="border-left-color:var(--c-dsm)">
+        <div class="v-who" style="color:var(--c-dsm)">DSM CLINICIAN</div>
+        <div class="v-text">Runs a structured interview. Checks symptom duration (2+ weeks?), severity (functional impairment?), frequency. Writes: <em>"R/O MDD, single episode; GAD features; avoidant personality traits."</em> Prescribes an SSRI. Schedules a 15-minute med check in 4 weeks. The withdrawal, the longing, the guard at the door — none of that enters the chart.</div>
+      </div>
+      <div class="vignette-entry" style="border-left-color:var(--c-ifs)">
+        <div class="v-who" style="color:var(--c-ifs)">IFS THERAPIST</div>
+        <div class="v-text">Asks: <em>"Can we get curious about the part that holds you back — the guard at the door? What is it afraid would happen if it stepped aside?"</em> No diagnosis. No medication. The first 10 minutes are about building a relationship with the protector, not labeling it.</div>
+      </div>
+      <div class="vignette-entry" style="border-left-color:var(--c-poly)">
+        <div class="v-who" style="color:var(--c-poly)">POLYVAGAL-INFORMED SOMATIC THERAPIST</div>
+        <div class="v-text">Notices the chest tightness and numbness before asking a single question. Slows their voice. Offers a long exhale together. Asks: <em>"What does your body need right now to feel safe enough to be here?"</em> The words matter less than the co-regulation happening in the room.</div>
+      </div>
+    </div>
+
+    <!-- 8-tuple deep mapping -->
+    <div class="section-label" style="margin-top:28px">The 8-tuple — how every lens answers the same eight questions</div>
+    <p class="insight-text muted" style="margin-bottom:20px; font-size:0.85rem;">Click any row to see what each framework puts in that slot.</p>
+
+    <div class="tuple-accordion" id="tupleAccordion">
+
+      <div class="tuple-row" data-tuple="C">
+        <div class="tuple-header">
+          <span class="tuple-sym">C</span>
+          <span class="tuple-question">Components — what's inside the boundary (the parts each lens names)</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> Self (core awareness), Exiles (wounded parts), Managers (proactive protectors), Firefighters (reactive protectors)</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> 7 motivational systems: physiological regulation, attachment, affiliation, caregiving, exploration, sensuality, aversion</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> Three circuits: ventral vagal (social engagement), sympathetic (fight/flight), dorsal vagal (shutdown/freeze)</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> The dominant story, suppressed alternative narratives, sparkling moments (unique outcomes), the preferred story</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> Coupled schemas: self-model (am I worthy?) + other-model (are others reliable?) producing 4 patterns</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> Three elements: the emotional truth (implicit belief), the symptom it generates, and disconfirming rational knowledge</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Symptom clusters, neurotransmitter levels, behavioral markers — observable, countable, classifiable</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="N">
+        <div class="tuple-header">
+          <span class="tuple-sym">N</span>
+          <span class="tuple-question">Network — how the parts connect to each other</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> Protection topology: Managers guard Exiles, Firefighters activate when Managers fail. Parts form alliances and polarizations</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> Dense mutual modulation — every system influences every other. High aversion suppresses exploration; strong attachment enables it</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> Strict phylogenetic hierarchy: ventral inhibits sympathetic; when ventral fails, sympathetic dominates; when overwhelmed, dorsal takes over</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> Self-reinforcing loop: dominant story &rarr; identity &rarr; behavior &rarr; confirmation of story. Alternative stories suppressed</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> Tight feedback pair: anxiety about other &rarr; unworthiness &rarr; protest behavior &rarr; other withdraws &rarr; confirms both models</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> Parallel non-communicating circuits — emotional truth and rational knowledge exist in separate memory systems. The gap is the pathology</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Classification tree: symptoms &rarr; disorder &rarr; treatment protocol. Top-down, not relational — components don't "talk to each other," they get sorted</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="E">
+        <div class="tuple-header">
+          <span class="tuple-sym">E</span>
+          <span class="tuple-question">Environment — what each lens leaves out</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> External events, relationships, triggering situations, the therapeutic relationship, cultural/family systems</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> The relational field, bodily states, social context, objects of curiosity — 7 systems means 7 channels of environmental input</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> Safety and danger cues: facial expressions, vocal prosody, proximity, environmental sounds — processed <em>before</em> cognition</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> Social audience, cultural discourses, family myths, diagnostic labels, other people's stories — who witnesses and validates</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> Attachment figures: primary caregivers, romantic partners, close friends, therapist. Specifically <em>relational</em>, not situational</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> Life situations that activate the emotional truth; the therapeutic context that enables juxtaposition</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Largely absent — environment treated as "stressor" or "trigger," not constituent. Social determinants acknowledged but not modeled</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="G">
+        <div class="tuple-header">
+          <span class="tuple-sym">G</span>
+          <span class="tuple-question">Gateway — how information gets in and out (the intake channel)</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> <em>Out:</em> Parts express as behavior (perfectionism, bingeing). <em>In:</em> Events cross as triggers; therapist presence crosses as co-regulatory signal</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> <em>Out:</em> Needs express as relational bids. <em>In:</em> Attunement or frustration of each system. Widest interface — 7 channels</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> <em>Out:</em> Facial muscles, voice, heart rate variability. <em>In:</em> Neuroceptive cues shift autonomic state directly, below awareness</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> <em>Out:</em> Stories performed to others. <em>In:</em> Audience response thickens or loosens the narrative. Fundamentally social and linguistic</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> <em>Out:</em> Proximity-seeking, protest, deactivation. <em>In:</em> Caregiver responsiveness accumulates into earned security</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> <em>Out:</em> Symptom manifests as avoidance, reactivity. <em>In:</em> Disconfirming experiences bounce off implicit memory — unless delivered during reconsolidation</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> <em>In:</em> Clinical interview + standardized assessment instruments (PHQ-9, GAD-7). <em>Out:</em> Diagnosis code, treatment plan, insurance justification</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="B">
+        <div class="tuple-header">
+          <span class="tuple-sym">B</span>
+          <span class="tuple-question">Boundary — where each lens draws the line (what counts as "in")</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> The psyche — the totality of the internal system. Explicitly intrapsychic; the boundary is the skin between "my parts" and "the world"</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> Total motivational architecture — all 7 systems as a whole. <em>Widest boundary.</em> Claims to encompass all motivated behavior</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> The autonomic nervous system — vagal pathways and target organs. <em>Narrow and physiologically precise</em></div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> Narrative identity — the semiotic construction of self. Not the body, not the psyche, but the <em>story</em></div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> The attachment system — the internal working model. Narrower than LLF, broader than Coherence</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> One specific emotional truth generating one specific symptom. <em>Narrowest boundary</em> — it zooms in on a single schema-symptom pair</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Individual brain/behavior — the <em>tightest boundary of all seven lenses</em>. No relational field, no meaning, no developmental function. Just the person's symptoms</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="T">
+        <div class="tuple-header">
+          <span class="tuple-sym">T</span>
+          <span class="tuple-question">Time — how far back and how fast each lens looks</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> Dual: developmental time (when parts formed, typically childhood) + therapeutic time (unburdening pace — sessions to months)</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> Developmental (compensatory patterns from childhood) + moment-to-moment (which systems are foregrounded right now shifts continuously)</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> Milliseconds (neuroception) &rarr; minutes (state shifts) &rarr; years (chronic autonomic patterning). <em>Fastest time scales of any framework</em></div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> Biographical time — the story spans past, present, and projected future as a unified arc. Always about sequence, causation, trajectory</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> First years critical (sensitive periods) + lifespan relational updating. Strange Situation captures minutes; patterns span decades</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> Two precise moments: the formative event (when the belief was learned) + the reconsolidation window (~5 hours after retrieval, when memory is labile)</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Cross-sectional snapshot + minimum duration criteria (e.g., "2 weeks" for depression, "6 months" for GAD). Time measured in checkbox thresholds, not developmental arcs</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="H">
+        <div class="tuple-header">
+          <span class="tuple-sym">H</span>
+          <span class="tuple-question">History — what the system remembers (and what it forgets)</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> Distributed: each part carries frozen burdens — memories, beliefs, somatic sensations from formative experiences. History IS the pathology</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> Compensatory patterns: which systems were met, which starved. History shows as the <em>shape</em> of the motivational landscape</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> Autonomic patterns: chronic state biases — habitual dorsal shutdown or sympathetic hypervigilance. History lives in the body, not narrative</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> The narrative itself IS history — one version has crowded out others. Not objective but constructed, and reconstructable</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> Implicit relational blueprints: accumulated caregiver responsiveness patterns, encoded below awareness. You don't "know" your style — you enact it</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> One singular formative learning event that set the schema. The symptom <em>is</em> the history, still running</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Family history of mental illness (genetic risk), not developmental meaning-making. History is a checklist of diagnoses in relatives, not a story</div>
+        </div>
+      </div>
+
+      <div class="tuple-row" data-tuple="delta">
+        <div class="tuple-header">
+          <span class="tuple-sym">&Delta;</span>
+          <span class="tuple-question">Transformation — the bet each lens makes on what actually heals</span>
+          <span class="tuple-chevron">+</span>
+        </div>
+        <div class="tuple-body">
+          <div class="tuple-entry" style="border-left-color:var(--c-ifs)"><strong>IFS</strong> Unburdening: Self witnesses Exile's pain &rarr; Exile releases frozen belief &rarr; Protectors relax. A structural network change, not just flow adjustment</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-llf)"><strong>Lichtenberg</strong> Corrective relational experience: provide what was developmentally missed. Not insight — actual new experiences that rewire felt sense</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-poly)"><strong>Polyvagal</strong> Ventral vagal activation through co-regulation, breathwork, safe engagement. Claims primacy: <em>regulate first, then everything else becomes possible</em></div>
+          <div class="tuple-entry" style="border-left-color:var(--c-narr)"><strong>Narrative</strong> Externalize the problem, map its influence, find unique outcomes, build a preferred story, perform it to a witnessing audience</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-attach)"><strong>Attachment</strong> Earned security: consistent responsiveness + mentalization + coherent autobiographical narrative. Slow, relational, accumulated</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-coher)"><strong>Coherence</strong> Juxtaposition: retrieve the emotional truth, introduce vivid felt contradiction while it's active, hold both &rarr; synaptic-level memory reconsolidation</div>
+          <div class="tuple-entry" style="border-left-color:var(--c-dsm)"><strong>DSM</strong> Symptom reduction/remission via medication; "disorder management" not growth. Success = fewer symptoms on a scale, not deeper understanding or relational change</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Stage 5: Insight ── -->
+    <div class="insight-section">
+      <p class="insight-text">Systems science isn't another framework competing for attention. It's the formal language that shows you <em>why</em> each lens works — what boundary it draws, what network it posits, what transformation it bets on.</p>
+      <p class="insight-text">Notice how DSM draws the tightest boundary of all — just the individual's symptoms, severed from environment, meaning, and relationship. The other six frameworks all include something DSM excludes. Systems science shows you <em>what</em> each excludes and <em>why</em> that matters.</p>
+      <p class="insight-text muted">The same eight questions work for every lens. The accordion above shows exactly how. Change the boundary, change what you see.</p>
+      <p class="insight-text muted" style="font-size:0.85rem; margin-top:12px; padding:14px 16px; background:var(--surface); border-radius:var(--r); border-left:3px solid var(--c-dsm)">DSM isn't wrong — it's necessary for extreme cases where the psyche is so fragmented that frameworks assuming a coherent Self can't reach. But it was never designed to be the only lens.</p>
+
+      <div class="section-label" style="margin-top:36px">At a glance</div>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Framework</th>
+            <th>Focuses on</th>
+            <th>Works through</th>
+            <th>Best when…</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--c-ifs)">IFS</td>
+            <td>Internal parts & protectors</td>
+            <td>Intrapsychic witnessing</td>
+            <td>Internal conflict, self-criticism, contradictory impulses</td>
+          </tr>
+          <tr>
+            <td style="color:var(--c-llf)">Lichtenberg</td>
+            <td>Motivational needs</td>
+            <td>Corrective relational experience</td>
+            <td>Longing, relational hunger, no single trigger</td>
+          </tr>
+          <tr>
+            <td style="color:var(--c-poly)">Polyvagal</td>
+            <td>Autonomic nervous system</td>
+            <td>Co-regulation & somatic safety</td>
+            <td>Shutdown, overwhelm, panic, dissociation</td>
+          </tr>
+          <tr>
+            <td style="color:var(--c-narr)">Narrative</td>
+            <td>Dominant story & identity</td>
+            <td>Linguistic re-authoring</td>
+            <td>"Always," "never," "that's just who I am"</td>
+          </tr>
+          <tr>
+            <td style="color:var(--c-attach)">Attachment</td>
+            <td>Internal working model</td>
+            <td>Consistent safe relating</td>
+            <td>Repeating relational patterns</td>
+          </tr>
+          <tr>
+            <td style="color:var(--c-coher)">Coherence</td>
+            <td>Symptom-generating belief</td>
+            <td>Memory reconsolidation</td>
+            <td>"I know X but can't stop doing Y"</td>
+          </tr>
+          <tr>
+            <td style="color:var(--c-dsm)">DSM</td>
+            <td>Symptom classification</td>
+            <td>Pharmacological correction</td>
+            <td>Extreme disintegration, triage, shared clinical language</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /overlay-section -->
+
+</div><!-- /page -->
+
+<script>
+(function() {
+  const fwBar = document.getElementById('fwBar');
+  const pills = fwBar.querySelectorAll('.fw-pill');
+  const cards = document.querySelectorAll('#interpCards .interp-card');
+  const passage = document.getElementById('passage');
+  const spans = passage.querySelectorAll('.hl');
+  const overlaySection = document.getElementById('overlaySection');
+
+  let activeFw = null;
+  let overlayMode = true;
+
+  // Framework highlight colors (CSS var refs for single-fw mode)
+  const fwColors = {
+    ifs:    'var(--c-ifs-bg)',
+    llf:    'var(--c-llf-bg)',
+    poly:   'var(--c-poly-bg)',
+    narr:   'var(--c-narr-bg)',
+    attach: 'var(--c-attach-bg)',
+    coher:  'var(--c-coher-bg)',
+    dsm:    'var(--c-dsm-bg)'
+  };
+
+  // Raw RGBA for overlay gradients
+  const fwRGBA = {
+    ifs:    'rgba(123,94,167,0.18)',
+    llf:    'rgba(74,103,65,0.18)',
+    poly:   'rgba(181,128,30,0.18)',
+    narr:   'rgba(46,125,123,0.18)',
+    attach: 'rgba(181,74,111,0.18)',
+    coher:  'rgba(90,111,167,0.18)',
+    dsm:    'rgba(107,114,128,0.18)'
+  };
+
+  function setFramework(fw) {
+    overlayMode = false;
+    activeFw = fw;
+
+    // Update pills
+    pills.forEach(p => {
+      p.classList.toggle('active', p.dataset.fw === fw);
+    });
+
+    // Highlight spans
+    spans.forEach(s => {
+      const fws = s.dataset.fw.split(' ');
+      s.style.background = '';
+      s.classList.remove('dimmed');
+      if (fws.includes(fw)) {
+        s.style.background = fwColors[fw];
+        s.classList.add('active');
+        s.classList.remove('dimmed');
+      } else {
+        s.classList.remove('active');
+        s.classList.add('dimmed');
+      }
+    });
+
+    // Show matching card
+    cards.forEach(c => {
+      if (c.dataset.fw === fw) {
+        c.style.display = 'block';
+        void c.offsetWidth;
+        c.classList.add('visible');
+      } else {
+        c.classList.remove('visible');
+        c.style.display = 'none';
+      }
+    });
+  }
+
+  function enterOverlay() {
+    overlayMode = true;
+    activeFw = null;
+
+    // Deactivate pills
+    pills.forEach(p => p.classList.remove('active'));
+
+    // Layer all highlights — use gradient for multi-tagged spans
+    spans.forEach(s => {
+      const fws = s.dataset.fw.split(' ');
+      s.classList.remove('dimmed', 'active');
+      if (fws.length === 1) {
+        s.style.background = fwRGBA[fws[0]] || '';
+      } else {
+        // Build striped gradient for overlapping frameworks
+        const stops = [];
+        const pct = 100 / fws.length;
+        fws.forEach((f, i) => {
+          stops.push(fwRGBA[f] + ' ' + (i * pct) + '%');
+          stops.push(fwRGBA[f] + ' ' + ((i + 1) * pct) + '%');
+        });
+        s.style.background = 'linear-gradient(135deg, ' + stops.join(', ') + ')';
+      }
+    });
+
+    // Hide individual cards
+    cards.forEach(c => { c.classList.remove('visible'); c.style.display = 'none'; });
+  }
+
+  // Pill click handlers — toggle between single lens and overlay
+  pills.forEach(p => {
+    p.addEventListener('click', () => {
+      if (p.dataset.fw === activeFw) {
+        // Clicking active pill returns to overlay
+        enterOverlay();
+      } else {
+        setFramework(p.dataset.fw);
+      }
+    });
+  });
+
+  // 8-tuple accordion
+  document.querySelectorAll('.tuple-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const row = header.parentElement;
+      const wasOpen = row.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.tuple-row.open').forEach(r => r.classList.remove('open'));
+      // Toggle clicked
+      if (!wasOpen) row.classList.add('open');
+    });
+  });
+
+  // ── Diagram interactivity ──
+  // Map color-key items and SVG labels to framework keys
+  const fwKeys = ['ifs', 'llf', 'poly', 'narr', 'attach', 'coher', 'dsm'];
+  const colorKeyItems = document.querySelectorAll('#colorKey .color-key-item');
+  const diagram = document.getElementById('boundaryDiagram');
+  let activeDiagramFw = null;
+
+  function highlightDiagram(fw) {
+    if (activeDiagramFw === fw) {
+      // Toggle off — reset all
+      activeDiagramFw = null;
+      resetDiagram();
+      return;
+    }
+    activeDiagramFw = fw;
+
+    // Highlight the selected ellipse, dim others
+    fwKeys.forEach(k => {
+      const el = document.getElementById('el-' + k);
+      if (!el) return;
+      if (k === fw) {
+        el.classList.add('highlighted');
+        el.classList.remove('dimmed');
+      } else {
+        el.classList.remove('highlighted');
+        el.classList.add('dimmed');
+      }
+    });
+
+    // Highlight matching labels/annotations, dim others
+    diagram.querySelectorAll('.fw-label, .fw-annotation').forEach(node => {
+      const nodeFw = node.dataset ? node.dataset.fw : null;
+      if (nodeFw === fw) {
+        node.classList.remove('dimmed');
+      } else if (nodeFw) {
+        node.classList.add('dimmed');
+      } else {
+        // Annotations without data-fw — dim if they don't belong to active fw
+        // Check parent proximity by color
+        const fill = node.getAttribute('fill') || node.getAttribute('stroke') || '';
+        const matchesColor = fill.includes('--c-' + fw);
+        if (!matchesColor) node.classList.add('dimmed');
+        else node.classList.remove('dimmed');
+      }
+    });
+
+    // Update color key active state
+    colorKeyItems.forEach((item, i) => {
+      item.classList.toggle('active', fwKeys[i] === fw);
+    });
+  }
+
+  function resetDiagram() {
+    fwKeys.forEach(k => {
+      const el = document.getElementById('el-' + k);
+      if (el) { el.classList.remove('highlighted', 'dimmed'); }
+    });
+    diagram.querySelectorAll('.fw-label, .fw-annotation').forEach(node => {
+      node.classList.remove('dimmed');
+    });
+    colorKeyItems.forEach(item => item.classList.remove('active'));
+  }
+
+  // Color key clicks
+  colorKeyItems.forEach((item, i) => {
+    item.addEventListener('click', () => highlightDiagram(fwKeys[i]));
+  });
+
+  // SVG label clicks (text elements with data-fw)
+  diagram.querySelectorAll('text.fw-label[data-fw]').forEach(label => {
+    label.style.cursor = 'pointer';
+    label.addEventListener('click', () => highlightDiagram(label.dataset.fw));
+  });
+
+  // Start in overlay mode — show all highlights on load
+  enterOverlay();
+
+})();
+</script>
+
+</body>
+</html>
