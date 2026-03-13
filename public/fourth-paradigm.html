@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systems Models: The Fourth Paradigm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #1c1a16;
+    --ink-dim: #4a4640;
+    --ink-faint: #9a9489;
+    --ground: #f7f4ef;
+    --ground-raised: #f0ece4;
+    --ground-border: #ddd8cf;
+    --accent: #8a6a3a;
+    --accent-dim: #b8966a;
+    --flow: #3a6e62;
+    --flow-bright: #2d5a50;
+    --serif: 'EB Garamond', Georgia, serif;
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 40% at 50% 60%, rgba(138,106,58,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 30%, rgba(58,110,98,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Boundary circle — subtle systems diagram echo */
+  .hero-circle {
+    position: absolute;
+    width: min(600px, 90vw);
+    height: min(600px, 90vw);
+    border-radius: 50%;
+    border: 1px solid rgba(138,106,58,0.08);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-circle::before {
+    content: '';
+    position: absolute;
+    inset: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(138,106,58,0.06);
+  }
+  .hero-circle::after {
+    content: '';
+    position: absolute;
+    inset: -60px;
+    border-radius: 50%;
+    border: 1px solid rgba(138,106,58,0.04);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 780px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-statement {
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+
+  .hero-statement em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-attribution {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.6s;
+    cursor: pointer;
+  }
+
+  .hero-scroll span {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--ink-faint), transparent);
+    animation: scrollPulse 2s ease-in-out infinite 2s;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 6rem 0 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ground-border);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  p {
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  em { font-style: italic; }
+
+  strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  cite {
+    font-style: italic;
+    color: var(--ink-dim);
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 2px solid var(--accent-dim);
+    padding: 1.5rem 0 1.5rem 2rem;
+    margin: 3rem 0;
+    font-family: var(--display);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* ── PARADIGM CARDS ── */
+  .paradigm-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    margin: 2.5rem 0;
+    border: 1px solid var(--ground-border);
+    background: var(--ground-border);
+  }
+
+  .paradigm-card {
+    background: var(--ground-raised);
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .paradigm-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+    line-height: 1.6;
+  }
+
+  .paradigm-body {
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+
+  .paradigm-body strong {
+    display: block;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ── THE GAP ── */
+  .gap-statement {
+    text-align: center;
+    padding: 3rem 1rem;
+    margin: 2.5rem 0;
+    position: relative;
+  }
+  .gap-statement::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--ground-border);
+    border-radius: 2px;
+  }
+
+  .gap-question {
+    font-family: var(--display);
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.4;
+    margin-bottom: 0;
+  }
+
+  /* ── REQUIRES LIST ── */
+  .requires-list {
+    list-style: none;
+    margin: 1.5rem 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .requires-list li {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    font-size: 0.95rem;
+  }
+  .requires-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--flow-bright);
+    text-transform: uppercase;
+    padding-top: 0.1rem;
+  }
+  .requires-def {
+    color: var(--ink-dim);
+  }
+
+  /* ── INTELLECTUAL STACK ── */
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  .stack-table th {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--ground-border);
+    font-weight: 400;
+  }
+
+  .stack-table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid var(--ground-border);
+    vertical-align: top;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  .stack-table tr:last-child td { border-bottom: none; }
+
+  .stack-table td:first-child {
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .stack-table td:nth-child(2) {
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  .stack-table tr:hover td {
+    background: rgba(138,106,58,0.04);
+  }
+
+  /* ── AUDIENCE TOGGLE ── */
+  .audience-section {
+    margin: 2.5rem 0;
+  }
+
+  .audience-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0;
+    border: 1px solid var(--ground-border);
+    border-bottom: none;
+  }
+
+  .audience-tab {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    border-right: 1px solid var(--ground-border);
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .audience-tab:last-child { border-right: none; }
+  .audience-tab:hover { color: var(--ink-dim); background: rgba(138,106,58,0.05); }
+  .audience-tab.active {
+    color: var(--accent);
+    background: rgba(138,106,58,0.07);
+  }
+
+  .audience-panel {
+    display: none;
+    padding: 2rem;
+    border: 1px solid var(--ground-border);
+    background: var(--ground-raised);
+  }
+  .audience-panel.active { display: block; }
+
+  .audience-panel p {
+    font-family: var(--display);
+    font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── AUTHORSHIP NOTE ── */
+  .authorship {
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--ground-border);
+  }
+
+  .authorship-header {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .authorship p {
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--ground-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer a {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer a:hover { color: var(--accent); }
+
+  .footer-date {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    color: var(--ink-faint);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ground-border);
+  }
+  .divider-mark {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+  }
+
+  /* ── MONO INLINE ── */
+  code {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    color: var(--flow-bright);
+    background: rgba(58,110,98,0.1);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .paradigm-card { grid-template-columns: 1fr; gap: 0.5rem; }
+    .requires-list li { grid-template-columns: 80px 1fr; }
+    .audience-tab { font-size: 0.52rem; padding: 0.65rem 0.5rem; }
+    .stack-table td:nth-child(2) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-circle"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Halcyonic Systems · March 2026</p>
+    <h1 class="hero-statement">
+      Every AI paradigm learns structure from data.<br>
+      Systems models assert structure from theory.<br>
+      <em>And Simon knew the difference before Dartmouth.</em>
+    </h1>
+    <p class="hero-attribution">Systems Models: The Fourth Paradigm</p>
+  </div>
+  <div class="hero-scroll" onclick="document.querySelector('.content').scrollIntoView({behavior:'smooth'})">
+    <span>Read</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- Section 1 -->
+  <section class="section" id="s1">
+    <div class="section-number">§ 01 · The Thread That Got Dropped</div>
+    <h2>The Thread That Got Dropped</h2>
+
+    <p>In 1956, a group of researchers convened at Dartmouth College and named their field "artificial intelligence." The name stuck. But two of the most consequential people in that room — Herbert Simon and Allen Newell — were never entirely comfortable with it. They preferred a different phrase: <em>information processing systems</em>. Simon would later say, without apology, that what they were doing before Dartmouth they had simply called operations research.</p>
+
+    <p>The distinction wasn't modesty. It was precision.</p>
+
+    <p>An information processing system takes inputs, transforms them according to rules, and produces outputs. That is a clean, formal, measurable description of what computers actually do. "Artificial intelligence" smuggles in something else — a suggestion of mind, of understanding, of something more than transformation. Simon and Newell resisted the smuggling. In <cite>The Sciences of the Artificial</cite> (1969), Simon drew the line explicitly: designed systems require a different science than natural systems. Natural science describes what <em>is</em>. The science of the artificial studies what <em>could be</em> — systems specified to meet goals, authored to behave in particular ways.</p>
+
+    <div class="pull-quote">The "AI" branding won rhetorically. The categorical distinction Simon was preserving got lost.</div>
+
+    <p>Fifty years passed.</p>
+  </section>
+
+  <div class="divider section" id="d1"><div class="divider-mark"></div></div>
+
+  <!-- Section 2 -->
+  <section class="section" id="s2">
+    <div class="section-number">§ 02 · What the Field Built</div>
+    <h2>What the Field Built</h2>
+
+    <p>The last decade has produced three dominant paradigms, each more capable than anything Simon's generation could have imagined.</p>
+
+    <div class="paradigm-grid">
+      <div class="paradigm-card">
+        <div class="paradigm-label">Vision<br>Models</div>
+        <div class="paradigm-body">
+          <strong>Learn structure from pixels</strong>
+          The face unlock on your phone. The radiology AI flagging tumors. The system that reads your license plate at the parking garage. From LeCun's early convolutional networks to Meta's I-JEPA, the progression is a story of increasingly sophisticated pattern extraction from images — learned representations of what visual scenes contain.
+        </div>
+      </div>
+      <div class="paradigm-card">
+        <div class="paradigm-label">Language<br>Models</div>
+        <div class="paradigm-body">
+          <strong>Learn structure from tokens</strong>
+          The assistant drafting your emails. The tool summarizing contracts. The system you're reading this alongside. The transformer architecture (Vaswani et al., 2017) unleashed a lineage — GPT, Claude, Gemini — that compresses the statistical structure of human language into parameters. At sufficient scale, this turns out to be extraordinarily useful.
+        </div>
+      </div>
+      <div class="paradigm-card">
+        <div class="paradigm-label">World<br>Models</div>
+        <div class="paradigm-body">
+          <strong>Learn structure from state transitions</strong>
+          The robotics systems learning to navigate physical space. The autonomous vehicles building internal maps of traffic dynamics. The game-playing agents that mastered Go and StarCraft by simulating forward from current state. LeCun's 2022 paper articulates the broader ambition: machines that build internal models of how the world evolves, enabling planning and prediction beyond reactive pattern matching.
+        </div>
+      </div>
+    </div>
+
+    <p>Three paradigms. Each more sophisticated than the last. Each sharing a single epistemic posture: structure is <em>extracted from data</em>. The architecture changes. The epistemology doesn't.</p>
+  </section>
+
+  <div class="divider section" id="d2"><div class="divider-mark"></div></div>
+
+  <!-- Section 3 -->
+  <section class="section" id="s3">
+    <div class="section-number">§ 03 · The First Crack</div>
+    <h2>The First Crack</h2>
+
+    <p>Judea Pearl saw the limitation clearly in <cite>Causality</cite> (2000). His ladder of causation has three rungs: association, intervention, counterfactual. Statistical models — no matter how large, no matter how well-trained — are permanently on the first rung. They can tell you what correlates with what. They cannot tell you what would happen if you intervened. They cannot reason about causes.</p>
+
+    <p>Causal models require <em>asserting</em> mechanism, not inferring it. You have to say: this variable causes that one, through this pathway. No training run produces that claim. It has to be authored.</p>
+
+    <p>Pearl's insight is the first crack in the paradigm. It points toward a different kind of knowledge — structural, mechanistic, explicit — that cannot be learned from data regardless of how much data you have.</p>
+  </section>
+
+  <div class="divider section" id="d3"><div class="divider-mark"></div></div>
+
+  <!-- Section 4 -->
+  <section class="section" id="s4">
+    <div class="section-number">§ 04 · The Gap</div>
+    <h2>The Gap</h2>
+
+    <p>Here is the question none of the three paradigms ask. Not vision models. Not language models. Not world models. Not even Pearl's causal models, fully:</p>
+
+    <div class="gap-statement">
+      <p class="gap-question">What kind of system is this,<br>and why does it behave the way it does?</p>
+    </div>
+
+    <p>This is not a prediction question. It is not a pattern recognition question. It is an ontological and mechanistic question. Answering it requires:</p>
+
+    <ul class="requires-list">
+      <li>
+        <span class="requires-label">Composition</span>
+        <span class="requires-def">What entities constitute the system</span>
+      </li>
+      <li>
+        <span class="requires-label">Environment</span>
+        <span class="requires-def">What the system is embedded within and coupled to</span>
+      </li>
+      <li>
+        <span class="requires-label">Structure</span>
+        <span class="requires-def">The relations among components</span>
+      </li>
+      <li>
+        <span class="requires-label">Mechanism</span>
+        <span class="requires-def">The processes that generate emergent behavior</span>
+      </li>
+    </ul>
+
+    <p>This is Bunge's CESM ontology. This is Mobus's systems science formalism. An LLM knows what has been <em>said</em> about Bitcoin. A systems model specifies what Bitcoin <em>is</em> — its boundary, its subsystems, the flows of energy and information between them, the feedback mechanisms that generate decentralization as an emergent property.</p>
+
+    <p>These are different kinds of knowledge. One is compressed from observation. The other is formally authored from theory. This is what no training run produces.</p>
+  </section>
+
+  <div class="divider section" id="d4"><div class="divider-mark"></div></div>
+
+  <!-- Section 5 -->
+  <section class="section" id="s5">
+    <div class="section-number">§ 05 · The Resolution</div>
+    <h2>The Resolution — BERT</h2>
+
+    <p><strong>BERT — the Bounded Entity Reasoning Toolkit</strong> — is the authoring environment for that fourth question.</p>
+
+    <p>It implements a typed System Language grounded in Mobus's 8-tuple formalism: every system has components, an internal network, an environment, external flows, a boundary, a transformation function, a history, and a characteristic timescale. These are not metadata fields. They are ontological commitments.</p>
+
+    <p>BERT models are machine-readable — an OWL/RDF ontology with 40 implemented concepts, a JSON schema, a simulation bridge to Mesa and Bevy. They are not diagrams. They are formal specifications that drive simulation.</p>
+
+    <p>These assertions are not informal. BERT's grammar constraints are machine-verified in <code>Lean 4</code>, with a bridge theorem that formally characterizes what is preserved and what is lost when a Mobus model projects down to Bunge's CES ontology. Six categories of information have no Bunge counterpart — milieu, flow capacity, boundary properties, transformation functions, history, and timescale. SL models contain strictly more information than Bunge-style descriptions. The theorem proves it.</p>
+
+    <div class="pull-quote">The System Language Specification v0.1, completed March 2026, covers 40 of approximately 101 Mobus concepts — the structural and compositional foundation. The dynamics layer — feedback loops, homeostasis, emergence, attractors — is the frontier of v2 and beyond. This is v0.1 of a paradigm, not its completion.</div>
+  </section>
+
+  <div class="divider section" id="d5"><div class="divider-mark"></div></div>
+
+  <!-- Section 6 -->
+  <section class="section" id="s6">
+    <div class="section-number">§ 06 · Why Now</div>
+    <h2>Why Now</h2>
+
+    <p>The world in March 2026 is drowning in complexity it cannot describe. Climate systems, financial contagion, AI governance, cryptoeconomic infrastructure, geopolitical realignment — every consequential problem of this moment is a systems problem. The dominant tools for reasoning about them are either too reductive, too informal, or too opaque. None of them can answer Simon's question.</p>
+
+    <p>The AI moment makes this more urgent, not less. As AI agents begin operating inside economic and governance systems at scale — and they are — the need to formally specify those systems becomes critical. You cannot govern what you cannot describe. You cannot simulate what you have not formally modeled.</p>
+
+    <p>The current AI paradigm is extraordinarily good at compressing what has already happened. It is structurally incapable of formally specifying what should be built. That gap — between pattern recognition and system design — is precisely where formal systems models live.</p>
+
+    <div class="pull-quote">Simon and Newell named this territory in 1972. The field walked away from it. The tools to return to it now exist. This is the work we were supposed to be doing.</div>
+  </section>
+
+  <div class="divider section" id="d6"><div class="divider-mark"></div></div>
+
+  <!-- Intellectual Stack -->
+  <section class="section" id="s7">
+    <div class="section-number">§ 07 · The Intellectual Stack</div>
+    <h2>The Intellectual Stack</h2>
+
+    <table class="stack-table">
+      <thead>
+        <tr>
+          <th>Figure</th>
+          <th>Work</th>
+          <th>Contribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Simon &amp; Newell</td>
+          <td>Human Problem Solving (1972)</td>
+          <td>IPS — what AI actually is, formally</td>
+        </tr>
+        <tr>
+          <td>Simon</td>
+          <td>The Sciences of the Artificial (1969)</td>
+          <td>Designed systems require a different science</td>
+        </tr>
+        <tr>
+          <td>Pearl</td>
+          <td>Causality (2000)</td>
+          <td>Statistical models cannot reach mechanism</td>
+        </tr>
+        <tr>
+          <td>LeCun</td>
+          <td>A Path Towards Autonomous Machine Intelligence (2022)</td>
+          <td>Even world models are learned, not asserted</td>
+        </tr>
+        <tr>
+          <td>Mobus</td>
+          <td>Systems Science (2022)</td>
+          <td>Formal ontology for what systems models assert</td>
+        </tr>
+        <tr>
+          <td>Bunge</td>
+          <td>CESM ontology</td>
+          <td>Composition, Environment, Structure, Mechanism</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider section" id="d7"><div class="divider-mark"></div></div>
+
+  <!-- Audience Toggle -->
+  <section class="section" id="s8">
+    <div class="section-number">§ 08 · The Argument, for Different Rooms</div>
+    <h2>The Argument, for Different Rooms</h2>
+
+    <p>The same argument lands differently depending on where you start. Choose your audience:</p>
+
+    <div class="audience-section">
+      <div class="audience-tabs">
+        <button class="audience-tab active" onclick="switchAudience('ai')">AI Researchers</button>
+        <button class="audience-tab" onclick="switchAudience('systems')">Systems Scientists</button>
+        <button class="audience-tab" onclick="switchAudience('general')">Complex Problems</button>
+      </div>
+      <div class="audience-panel active" id="panel-ai">
+        <p>Vision models, language models, world models — all learn structure from data. Systems models assert structure from theory. BERT is the authoring environment for that fourth paradigm.</p>
+      </div>
+      <div class="audience-panel" id="panel-systems">
+        <p>Simon called it information processing — transformation functions all the way down. Systems models describe the systems those functions run inside. BERT is the authoring environment for that distinction.</p>
+      </div>
+      <div class="audience-panel" id="panel-general">
+        <p>Every AI model learns patterns from data. A systems model formally describes what a system <em>is</em> — its parts, its boundaries, what flows through it, and why it behaves the way it does. That's not a learning problem. It's an authoring problem.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Authorship -->
+  <section class="authorship section" id="s9">
+    <div class="authorship-header">A Note on Authorship</div>
+    <p>This document was written jointly by Shingai Thornton and Claude (Anthropic). The intellectual content — the theoretical lineage, the framing, the design decisions in the System Language Specification — is Shingai's. Claude served as interlocutor, accelerant, and co-author of prose.</p>
+    <p style="margin-top: 1rem;">This arrangement is itself an instance of the argument. The work of formally specifying complex systems cannot be delegated to a language model. It requires human judgment, domain expertise, and theoretical grounding that no training run produces. What AI accelerates is the synthesis — the movement from accumulated understanding to coherent artifact.</p>
+    <p style="margin-top: 1rem;">The humans remain in the loop. That is not a constraint on the work. It is the point of it.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer section" id="footer">
+    <div class="footer-links">
+      <a href="https://github.com/halcyonic-systems/bert" target="_blank">BERT on GitHub</a>
+      <a href="https://halcyonic.systems" target="_blank">Halcyonic Systems</a>
+      <a href="https://bert.systems" target="_blank">bert.systems</a>
+    </div>
+    <div class="footer-date">March 2026</div>
+  </footer>
+
+</main>
+
+<script>
+  // Scroll-triggered reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.section').forEach(el => observer.observe(el));
+
+  // Audience toggle
+  function switchAudience(id) {
+    document.querySelectorAll('.audience-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.audience-panel').forEach(p => p.classList.remove('active'));
+    
+    event.target.classList.add('active');
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+</script>
+</body>
+</html>
