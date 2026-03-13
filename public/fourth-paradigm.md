@@ -23,6 +23,10 @@ Simon's science of the artificial was organized around a single question: not *h
 
 Simon and Newell also gave AI its foundational claim: the Physical Symbol System Hypothesis — that intelligence *is* physical symbol manipulation. The field took that claim and built increasingly powerful symbol-manipulating machines. But Simon's science of the artificial required physical symbols for a different purpose — not to exhibit intelligence, but to formally specify designed systems. That second use of symbols is the one that got dropped.
 
+Simon framed every artificial system as an interface between an inner environment and an outer one — the internal composition and processes on one side, the external world the system is embedded in on the other. That framing, articulated in 1969, is almost verbatim what BERT's boundary concept formalizes: inner environment as subsystems and internal network, outer environment as sources, sinks, and milieu, and the boundary itself — with its interfaces, porosity, and perceptive fuzziness — as Simon's interface in formal computational clothing. Mobus formalized the concept in 2022. BERT implements it in code. That is a 57-year arc from insight to computational artifact.
+
+This convergence is not accidental. Simon won the Nobel Prize in Economics (1978) for bounded rationality and the Turing Award (1975) with Newell for the PSSH. He is simultaneously the intellectual father of behavioral economics, cognitive science, artificial intelligence, and design theory. The work described here sits at the intersection of all four — which is what systems science *is*.
+
 The "AI" branding won rhetorically. The categorical distinction Simon was preserving got lost.
 
 Fifty years passed.
@@ -84,6 +88,8 @@ BERT's primitives — Subsystem, Source, Sink, Interface, Flow — are physical 
 BERT models are machine-readable — an OWL/RDF ontology with 40 implemented concepts, a JSON schema, and a simulation bridge to Mesa currently 60% complete — the BERT JSON parser and archetype-to-behavior mappings are built; the final wiring of BERT subsystems to Mesa agent step logic is in progress. They are not diagrams. They are formal specifications that drive simulation.
 
 These assertions are not informal. BERT's grammar constraints are machine-verified in Lean 4, with a bridge theorem that formally characterizes what is preserved and what is lost when a Mobus model projects down to Bunge's CES ontology. Six categories of information have no Bunge counterpart — milieu, flow capacity, boundary properties, transformation functions, history, and timescale. SL models contain strictly more information than Bunge-style descriptions. The theorem proves it.
+
+The AgentModel's Reactive/Anticipatory/Intentional hierarchy is Simon's bounded rationality made formal — agents modeled not as perfect optimizers but as systems with cognitive limits, whose interactions generate the emergent behavior that formal specification exists to capture.
 
 The System Language Specification v0.1, completed in March 2026, covers 40 of approximately 101 concepts in Mobus's full ontology — the structural and compositional foundation. The dynamics layer, the feedback loops, homeostasis, emergence, attractors — that is the frontier of v2 and beyond. This is v0.1 of a paradigm, not its completion.
 
