@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const collection = [
+  { id: 1, name: 'Halcyonic #1', archetype: 'Void Monk' },
+  { id: 2, name: 'Halcyonic #2', archetype: 'Signal Keeper' },
+  { id: 3, name: 'Halcyonic #3', archetype: 'Boundary Walker' },
+  { id: 4, name: 'Halcyonic #4', archetype: 'Flow Weaver' },
+  { id: 5, name: 'Halcyonic #5', archetype: 'Pattern Seer' },
+  { id: 6, name: 'Halcyonic #6', archetype: 'Deep Listener' },
+];
+---
+
+<BaseLayout title="Collection" description="The Halcyonic token collection on Base">
+  <section class="mx-auto max-w-4xl px-6 py-16">
+
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Collection</h1>
+    <p class="mt-4 text-lg text-gray-600">
+      30 unique tokens on Base. Each represents an archetype in the practice of seeing clearly.
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-3 text-sm">
+      <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-700 border border-teal-200">30 Total</span>
+      <span class="px-3 py-1 rounded-full bg-ocean-50 text-ocean-700 border border-ocean-200">Base Network</span>
+      <span class="px-3 py-1 rounded-full bg-warm-50 text-warm-700 border border-warm-200">ERC-721</span>
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3">
+      {collection.map((item) => (
+        <div class="group card-lift rounded-xl bg-white border border-ocean-100 hover:border-ocean-300 shadow-sm hover:shadow-md transition-all overflow-hidden">
+          <div class="aspect-square bg-gradient-to-br from-ocean-100 to-teal-100 flex items-center justify-center">
+            <!-- Replace with: <img src={`/images/${item.id}.png`} alt={item.name} class="w-full h-full object-cover" /> -->
+            <span class="text-4xl text-ocean-300 select-none">◇</span>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-sm text-gray-900 group-hover:text-ocean-600 transition-colors">{item.name}</h3>
+            <p class="mt-1 text-xs text-gray-500">{item.archetype}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-12 text-center text-sm text-gray-400">
+      <a href="/community" class="link-hover text-gray-500 hover:text-ocean-600 transition-colors">
+        &larr; Back to community
+      </a>
+    </p>
+
+  </section>
+</BaseLayout>

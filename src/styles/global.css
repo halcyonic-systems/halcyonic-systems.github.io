@@ -33,46 +33,16 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Animated gradient background */
-@property --gradient-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 body {
   @apply text-gray-900 antialiased;
   min-height: 100vh;
-  background: linear-gradient(
-    var(--gradient-angle),
-    #e0f2fe 0%,
-    #f0f9ff 25%,
-    #ccfbf1 50%,
-    #f0fdfa 75%,
-    #e0f2fe 100%
-  );
-  background-size: 400% 400%;
-  animation: gradient-shift 20s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  background: #f7f5f0;
 }
 
 /* Dark mode */
 .dark body {
   @apply text-gray-100;
-  background: linear-gradient(
-    var(--gradient-angle),
-    #0c4a6e 0%,
-    #082f49 25%,
-    #134e4a 50%,
-    #0f172a 75%,
-    #0c4a6e 100%
-  );
-  background-size: 400% 400%;
-  animation: gradient-shift 20s ease infinite;
+  background: #141520;
 }
 
 /* Link underline animation */
@@ -110,16 +80,16 @@ h1, h2, h3 {
 }
 
 /* Dark mode overrides */
-.dark .bg-white\/70 {
-  background-color: rgba(15, 23, 42, 0.7);
+.dark .bg-white {
+  background-color: #1e1e2e;
 }
 
-.dark .bg-white\/60 {
-  background-color: rgba(15, 23, 42, 0.6);
+.dark .bg-\[#f7f5f0\] {
+  background-color: #141520;
 }
 
-.dark .bg-white\/40 {
-  background-color: rgba(15, 23, 42, 0.4);
+.dark .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .text-gray-900 {
