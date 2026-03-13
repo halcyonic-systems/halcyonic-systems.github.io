@@ -21,6 +21,8 @@ An information processing system takes inputs, transforms them according to rule
 
 Simon's science of the artificial was organized around a single question: not *how are things?* — that is natural science's domain — but *how ought things to be designed in order to function and attain goals?* It is the designer's question. It requires specifying what a system is, how it is bounded, what it must do. No amount of observation produces that specification. It has to be authored.
 
+Simon and Newell also gave AI its foundational claim: the Physical Symbol System Hypothesis — that intelligence *is* physical symbol manipulation. The field took that claim and built increasingly powerful symbol-manipulating machines. But Simon's science of the artificial required physical symbols for a different purpose — not to exhibit intelligence, but to formally specify designed systems. That second use of symbols is the one that got dropped.
+
 The "AI" branding won rhetorically. The categorical distinction Simon was preserving got lost.
 
 Fifty years passed.
@@ -77,6 +79,8 @@ BERT — the Bounded Entity Reasoning Toolkit — is the authoring environment f
 
 It implements a typed System Language grounded in Mobus's 8-tuple formalism: every system has components, an internal network, an environment, external flows, a boundary, a transformation function, a history, and a characteristic timescale. These are not metadata fields. They are the ontological commitments of a formal model.
 
+BERT's primitives — Subsystem, Source, Sink, Interface, Flow — are physical symbols in exactly Simon and Newell's sense: discrete tokens that designate real-world entities, participate in formal operations, and can be created, composed, and destroyed. But they are deployed not for intelligent action, as the Physical Symbol System Hypothesis intended, but for ontological specification. The System Language is a physical symbol system whose purpose is to formally assert what kind of system exists — not to exhibit intelligence about it.
+
 BERT models are machine-readable — an OWL/RDF ontology with 40 implemented concepts, a JSON schema, and a simulation bridge to Mesa currently 60% complete — the BERT JSON parser and archetype-to-behavior mappings are built; the final wiring of BERT subsystems to Mesa agent step logic is in progress. They are not diagrams. They are formal specifications that drive simulation.
 
 These assertions are not informal. BERT's grammar constraints are machine-verified in Lean 4, with a bridge theorem that formally characterizes what is preserved and what is lost when a Mobus model projects down to Bunge's CES ontology. Six categories of information have no Bunge counterpart — milieu, flow capacity, boundary properties, transformation functions, history, and timescale. SL models contain strictly more information than Bunge-style descriptions. The theorem proves it.
@@ -103,7 +107,7 @@ This is the work we were supposed to be doing.
 
 | Figure | Work | Contribution |
 |--------|------|-------------|
-| Simon & Newell | *Human Problem Solving* (1972) | IPS — what AI actually is, formally |
+| Simon & Newell | *Human Problem Solving* (1972) | PSSH — intelligence is symbol manipulation; but symbols also specify |
 | Simon | *The Sciences of the Artificial* (1969) | Designed systems require a different science |
 | Pearl | *Causality* (2000) | Statistical models cannot reach mechanism |
 | LeCun | *A Path Towards Autonomous Machine Intelligence* (2022) | Even world models are learned, not asserted |
