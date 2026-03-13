@@ -572,6 +572,59 @@
     border-left-width: 2px;
   }
 
+  /* ── REFERENCES ── */
+  .references {
+    padding-top: 4rem;
+  }
+
+  .ref-group-heading {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--ground-border);
+  }
+  .ref-group-heading:first-of-type {
+    margin-top: 1.5rem;
+  }
+
+  .ref-entry {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--ground-border);
+    transition: border-left-color 0.2s;
+  }
+  .ref-entry:target {
+    border-left-color: var(--accent);
+    border-left-width: 2px;
+  }
+
+  .ref-citation {
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 0.35rem;
+  }
+  .ref-citation a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ground-border);
+    transition: border-bottom-color 0.2s;
+  }
+  .ref-citation a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  .ref-note {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 1200px) {
     .toc { display: none; }
@@ -597,6 +650,7 @@
   <a class="toc-item" href="#s6">06 · Why Now</a>
   <a class="toc-item" href="#s7">07 · The Stack</a>
   <a class="toc-item" href="#s8">08 · The Argument</a>
+  <a class="toc-item" href="#s10">10 · References</a>
   <a class="toc-item" href="#s9">09 · Authorship</a>
 </nav>
 
@@ -859,6 +913,103 @@
     <p>This document was written jointly by Shingai Thornton and Claude (Anthropic). The intellectual content — the theoretical lineage, the framing, the design decisions in the System Language Specification — is Shingai's. Claude served as interlocutor, accelerant, and co-author of prose.</p>
     <p style="margin-top: 1rem;">This arrangement is itself an instance of the argument. The work of formally specifying complex systems cannot be delegated to a language model. It requires human judgment, domain expertise, and theoretical grounding that no training run produces. What AI accelerates is the synthesis — the movement from accumulated understanding to coherent artifact.</p>
     <p style="margin-top: 1rem;">The humans remain in the loop. That is not a constraint on the work. It is the point of it.</p>
+  </section>
+
+  <!-- References -->
+  <section class="references section" id="s10">
+    <div class="section-number">§ 10 · References</div>
+    <h2>References</h2>
+
+    <div class="ref-group-heading">Foundational Works</div>
+
+    <div class="ref-entry" id="ref-simon-1969">
+      <div class="ref-citation"><strong>Simon, H.A.</strong> (1969). <cite>The Sciences of the Artificial</cite>. MIT Press.</div>
+      <div class="ref-note">The origin of the design question. Defines artificial systems as interfaces between inner and outer environments, introduces the science of the artificial as distinct from natural science, and frames the designer's question: how ought things to be in order to attain goals and to function?</div>
+    </div>
+
+    <div class="ref-entry" id="ref-simon-newell-1972">
+      <div class="ref-citation"><strong>Simon, H.A., &amp; Newell, A.</strong> (1972). <cite>Human Problem Solving</cite>. Prentice-Hall.</div>
+      <div class="ref-note">Establishes the information processing systems framework — the authors' preferred alternative to "artificial intelligence." Grounds cognition in formal symbol manipulation and bounded rationality.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-newell-simon-1976">
+      <div class="ref-citation"><strong>Newell, A., &amp; Simon, H.A.</strong> (1976). Computer science as empirical inquiry: Symbols and search. <cite>Communications of the ACM, 19</cite>(3), 113–126.</div>
+      <div class="ref-note">The Turing Award lecture. States the Physical Symbol System Hypothesis: a physical symbol system has the necessary and sufficient means for general intelligent action.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-simon-1955">
+      <div class="ref-citation"><strong>Simon, H.A.</strong> (1955). A behavioral model of rational choice. <cite>Quarterly Journal of Economics, 69</cite>(1), 99–118.</div>
+      <div class="ref-note">Introduces bounded rationality — agents make decisions within cognitive limits, not as perfect optimizers. The theoretical foundation for agent-based modeling and BERT's Reactive/Anticipatory/Intentional AgentModel hierarchy.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-pearl-2000">
+      <div class="ref-citation"><strong>Pearl, J.</strong> (2000). <cite>Causality: Models, Reasoning, and Inference</cite>. Cambridge University Press.</div>
+      <div class="ref-note">The ladder of causation: association, intervention, counterfactual. Demonstrates that statistical models are permanently on the first rung — mechanism must be asserted, not inferred.</div>
+    </div>
+
+    <div class="ref-group-heading">Systems Science Foundations</div>
+
+    <div class="ref-entry" id="ref-bunge-1979">
+      <div class="ref-citation"><strong>Bunge, M.</strong> (1979). <cite>Treatise on Basic Philosophy, Vol. 4: Ontology II — A World of Systems</cite>. D. Reidel.</div>
+      <div class="ref-note">Source of the CESM ontology: Composition, Environment, Structure, Mechanism. The philosophical grounding for what systems models formally assert.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-mobus-kalton-2015">
+      <div class="ref-citation"><strong>Mobus, G.E., &amp; Kalton, M.C.</strong> (2015). <cite>Principles of Systems Science</cite>. Springer.</div>
+      <div class="ref-note">Comprehensive systems science framework. Foundation for BERT's ontological elements, hierarchy, and flow taxonomy.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-mobus-2022">
+      <div class="ref-citation"><strong>Mobus, G.E.</strong> (2022). <cite>Systems Science: Theory, Analysis, Modeling, and Design</cite>. Springer.</div>
+      <div class="ref-note">Direct theoretical grounding for BERT. Source of the 8-tuple formalism S = ⟨C, N, E, G, B, T, H, Δt⟩, Deep Systems Analysis methodology, and the complexity classification framework.</div>
+    </div>
+
+    <div class="ref-group-heading">AI Paradigm Sources</div>
+
+    <div class="ref-entry" id="ref-lecun-2022">
+      <div class="ref-citation"><strong>LeCun, Y.</strong> (2022). A path towards autonomous machine intelligence (Version 0.9.2). <cite>OpenReview</cite>. <a href="https://openreview.net/forum?id=BZ5a1r-kVsf" target="_blank">openreview.net</a></div>
+      <div class="ref-note">Articulates world models as a paradigm — machines that build internal representations of how the world evolves. The most credible internal critique of the statistical learning paradigm.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-vaswani-2017">
+      <div class="ref-citation"><strong>Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł., &amp; Polosukhin, I.</strong> (2017). Attention is all you need. <cite>Advances in Neural Information Processing Systems, 30</cite>.</div>
+      <div class="ref-note">The transformer architecture. Origin of the language model lineage — GPT, Claude, Gemini and everything that followed.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-lecun-bengio-hinton-2015">
+      <div class="ref-citation"><strong>LeCun, Y., Bengio, Y., &amp; Hinton, G.</strong> (2015). Deep learning. <cite>Nature, 521</cite>, 436–444.</div>
+      <div class="ref-note">The vision model lineage. Establishes deep learning as the paradigm for pattern extraction from perceptual data.</div>
+    </div>
+
+    <div class="ref-group-heading">BERT and This Work</div>
+
+    <div class="ref-entry" id="ref-thornton-2025">
+      <div class="ref-citation"><strong>Thornton, S.</strong> (2025). A Deep Systems Analysis of Bitcoin. Working Paper, Binghamton University.</div>
+      <div class="ref-note">Application of Deep Systems Analysis to Bitcoin as a complex adaptive system. The reference model for the BERT System Language Specification.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-sl-spec-2026">
+      <div class="ref-citation"><strong>Halcyonic Systems.</strong> (2026). <cite>BERT System Language Specification v0.1</cite>. <a href="https://github.com/halcyonic-systems/bert" target="_blank">github.com/halcyonic-systems/bert</a></div>
+      <div class="ref-note">The formal specification of the System Language implemented in BERT. Covers 40 Mobus concepts with Lean 4-verified grammar constraints and a bridge theorem characterizing information loss in projection to Bunge's CES ontology.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-bert-2023">
+      <div class="ref-citation"><strong>Halcyonic Systems.</strong> (2023–2026). <cite>BERT: Bounded Entity Reasoning Toolkit</cite> (v0.3.0). <a href="https://github.com/halcyonic-systems/bert" target="_blank">github.com/halcyonic-systems/bert</a></div>
+      <div class="ref-note">The open-source desktop application implementing the System Language. Built in Rust/Tauri/Bevy.</div>
+    </div>
+
+    <div class="ref-group-heading">Related Work</div>
+
+    <div class="ref-entry" id="ref-voshmgir-zargham-2020">
+      <div class="ref-citation"><strong>Voshmgir, S., &amp; Zargham, M.</strong> (2020). Foundations of cryptoeconomic systems. <cite>Vienna University of Economics and Business Research Institute for Cryptoeconomics Working Paper</cite>.</div>
+      <div class="ref-note">Establishes cryptoeconomic systems as complex socioeconomic networks requiring interdisciplinary analysis — the applied domain where BERT's systems models have immediate research value.</div>
+    </div>
+
+    <div class="ref-entry" id="ref-mesa-2026">
+      <div class="ref-citation"><strong>Mesa Development Team.</strong> (2026). <cite>Mesa 3.5.0: Agent-based modeling in Python</cite>. <a href="https://github.com/projectmesa/mesa/releases/tag/v3.5.0" target="_blank">github.com/projectmesa/mesa</a></div>
+      <div class="ref-note">Released March 13, 2026 — the same day the System Language Specification was completed. Provides event scheduling, DataFrame-to-agent instantiation, and scenario management that directly enables the BERT-to-simulation bridge.</div>
+    </div>
+
   </section>
 
   <!-- Footer -->

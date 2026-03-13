@@ -145,6 +145,82 @@ The humans remain in the loop. That is not a constraint on the work. It is the p
 
 ---
 
-*BERT is open source: [github.com/halcyonic-systems/bert](https://github.com/halcyonic-systems/bert)*  
-*Halcyonic Systems: [halcyonic.systems](https://halcyonic.systems)*  
+---
+
+## References
+
+### Foundational Works
+
+**Simon, H.A.** (1969). *The Sciences of the Artificial*. MIT Press.
+The origin of the design question. Defines artificial systems as interfaces between inner and outer environments, introduces the science of the artificial as distinct from natural science, and frames the designer's question: *how ought things to be in order to attain goals and to function?*
+
+**Simon, H.A., & Newell, A.** (1972). *Human Problem Solving*. Prentice-Hall.
+Establishes the information processing systems framework — the authors' preferred alternative to "artificial intelligence." Grounds cognition in formal symbol manipulation and bounded rationality.
+
+**Newell, A., & Simon, H.A.** (1976). Computer science as empirical inquiry: Symbols and search. *Communications of the ACM, 19*(3), 113–126.
+The Turing Award lecture. States the Physical Symbol System Hypothesis: a physical symbol system has the necessary and sufficient means for general intelligent action.
+
+**Simon, H.A.** (1955). A behavioral model of rational choice. *Quarterly Journal of Economics, 69*(1), 99–118.
+Introduces bounded rationality — agents make decisions within cognitive limits, not as perfect optimizers. The theoretical foundation for agent-based modeling and BERT's Reactive/Anticipatory/Intentional AgentModel hierarchy.
+
+**Pearl, J.** (2000). *Causality: Models, Reasoning, and Inference*. Cambridge University Press.
+The ladder of causation: association, intervention, counterfactual. Demonstrates that statistical models are permanently on the first rung — mechanism must be asserted, not inferred.
+
+---
+
+### Systems Science Foundations
+
+**Bunge, M.** (1979). *Treatise on Basic Philosophy, Vol. 4: Ontology II — A World of Systems*. D. Reidel.
+Source of the CESM ontology: Composition, Environment, Structure, Mechanism. The philosophical grounding for what systems models formally assert.
+
+**Mobus, G.E., & Kalton, M.C.** (2015). *Principles of Systems Science*. Springer.
+Comprehensive systems science framework. Foundation for BERT's ontological elements, hierarchy, and flow taxonomy.
+
+**Mobus, G.E.** (2022). *Systems Science: Theory, Analysis, Modeling, and Design*. Springer.
+Direct theoretical grounding for BERT. Source of the 8-tuple formalism S = ⟨C, N, E, G, B, T, H, Δt⟩, Deep Systems Analysis methodology, and the complexity classification framework.
+
+---
+
+### AI Paradigm Sources
+
+**LeCun, Y.** (2022). A path towards autonomous machine intelligence (Version 0.9.2). *OpenReview*.
+[https://openreview.net/forum?id=BZ5a1r-kVsf](https://openreview.net/forum?id=BZ5a1r-kVsf)
+Articulates world models as a paradigm — machines that build internal representations of how the world evolves. The most credible internal critique of the statistical learning paradigm.
+
+**Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł., & Polosukhin, I.** (2017). Attention is all you need. *Advances in Neural Information Processing Systems, 30*.
+The transformer architecture. Origin of the language model lineage — GPT, Claude, Gemini and everything that followed.
+
+**LeCun, Y., Bengio, Y., & Hinton, G.** (2015). Deep learning. *Nature, 521*, 436–444.
+The vision model lineage. Establishes deep learning as the paradigm for pattern extraction from perceptual data.
+
+---
+
+### BERT and This Work
+
+**Thornton, S.** (2025). A Deep Systems Analysis of Bitcoin. Working Paper, Binghamton University.
+Application of Deep Systems Analysis to Bitcoin as a complex adaptive system. The reference model for the BERT System Language Specification.
+
+**Halcyonic Systems.** (2026). *BERT System Language Specification v0.1*.
+[https://github.com/halcyonic-systems/bert](https://github.com/halcyonic-systems/bert)
+The formal specification of the System Language implemented in BERT. Covers 40 Mobus concepts with Lean 4-verified grammar constraints and a bridge theorem characterizing information loss in projection to Bunge's CES ontology.
+
+**Halcyonic Systems.** (2023–2026). *BERT: Bounded Entity Reasoning Toolkit* (v0.3.0).
+[https://github.com/halcyonic-systems/bert](https://github.com/halcyonic-systems/bert)
+The open-source desktop application implementing the System Language. Built in Rust/Tauri/Bevy.
+
+---
+
+### Related Work
+
+**Voshmgir, S., & Zargham, M.** (2020). Foundations of cryptoeconomic systems. *Vienna University of Economics and Business Research Institute for Cryptoeconomics Working Paper*.
+Establishes cryptoeconomic systems as complex socioeconomic networks requiring interdisciplinary analysis — the applied domain where BERT's systems models have immediate research value.
+
+**Mesa Development Team.** (2026). *Mesa 3.5.0: Agent-based modeling in Python*.
+[https://github.com/projectmesa/mesa/releases/tag/v3.5.0](https://github.com/projectmesa/mesa/releases/tag/v3.5.0)
+Released March 13, 2026 — the same day the System Language Specification was completed. Provides event scheduling, DataFrame-to-agent instantiation, and scenario management that directly enables the BERT-to-simulation bridge.
+
+---
+
+*BERT is open source: [github.com/halcyonic-systems/bert](https://github.com/halcyonic-systems/bert)*
+*Halcyonic Systems: [halcyonic.systems](https://halcyonic.systems)*
 *System Language Specification v0.1 — March 2026*
