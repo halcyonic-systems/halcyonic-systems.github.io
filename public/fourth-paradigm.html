@@ -530,7 +530,52 @@
     50% { opacity: 1; }
   }
 
+  /* ── TABLE OF CONTENTS ── */
+  .toc {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .toc.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .toc-item {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-left: 1px solid var(--ground-border);
+    transition: all 0.2s ease;
+    line-height: 1.4;
+  }
+  .toc-item:hover {
+    color: var(--accent);
+    border-left-color: var(--accent-dim);
+  }
+  .toc-item.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    border-left-width: 2px;
+  }
+
   /* ── RESPONSIVE ── */
+  @media (max-width: 1200px) {
+    .toc { display: none; }
+  }
   @media (max-width: 600px) {
     body { font-size: 16px; }
     .paradigm-card { grid-template-columns: 1fr; gap: 0.5rem; }
@@ -541,6 +586,19 @@
 </style>
 </head>
 <body>
+
+<!-- TABLE OF CONTENTS -->
+<nav class="toc" id="toc">
+  <a class="toc-item" href="#s1">01 · The Thread</a>
+  <a class="toc-item" href="#s2">02 · What Was Built</a>
+  <a class="toc-item" href="#s3">03 · The First Crack</a>
+  <a class="toc-item" href="#s4">04 · The Gap</a>
+  <a class="toc-item" href="#s5">05 · The Resolution</a>
+  <a class="toc-item" href="#s6">06 · Why Now</a>
+  <a class="toc-item" href="#s7">07 · The Stack</a>
+  <a class="toc-item" href="#s8">08 · The Argument</a>
+  <a class="toc-item" href="#s9">09 · Authorship</a>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -573,6 +631,8 @@
     <p>The distinction wasn't modesty. It was precision.</p>
 
     <p>An information processing system takes inputs, transforms them according to rules, and produces outputs. That is a clean, formal, measurable description of what computers actually do. "Artificial intelligence" smuggles in something else — a suggestion of mind, of understanding, of something more than transformation. Simon and Newell resisted the smuggling. In <cite>The Sciences of the Artificial</cite> (1969), Simon drew the line explicitly: designed systems require a different science than natural systems. Natural science describes what <em>is</em>. The science of the artificial studies what <em>could be</em> — systems specified to meet goals, authored to behave in particular ways.</p>
+
+    <p>Simon's science of the artificial was organized around a single question: not <em>how are things?</em> — that is natural science's domain — but <em>how ought things to be designed in order to function and attain goals?</em> It is the designer's question. It requires specifying what a system is, how it is bounded, what it must do. No amount of observation produces that specification. It has to be authored.</p>
 
     <div class="pull-quote">The "AI" branding won rhetorically. The categorical distinction Simon was preserving got lost.</div>
 
@@ -815,11 +875,40 @@
 
   document.querySelectorAll('.section').forEach(el => observer.observe(el));
 
+  // TOC visibility — show after scrolling past hero
+  const toc = document.getElementById('toc');
+  const hero = document.querySelector('.hero');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      toc.classList.toggle('visible', !entry.isIntersecting);
+    });
+  }, { threshold: 0.05 });
+  tocObserver.observe(hero);
+
+  // TOC active section tracking
+  const tocLinks = document.querySelectorAll('.toc-item');
+  const sections = Array.from(tocLinks).map(link => {
+    const id = link.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector('.toc-item[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(section => sectionObserver.observe(section));
+
   // Audience toggle
   function switchAudience(id) {
     document.querySelectorAll('.audience-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.audience-panel').forEach(p => p.classList.remove('active'));
-    
+
     event.target.classList.add('active');
     document.getElementById('panel-' + id).classList.add('active');
   }

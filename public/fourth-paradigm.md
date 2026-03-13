@@ -19,6 +19,8 @@ The distinction wasn't modesty. It was precision.
 
 An information processing system takes inputs, transforms them according to rules, and produces outputs. That is a clean, formal, measurable description of what computers actually do. "Artificial intelligence" smuggles in something else — a suggestion of mind, of understanding, of something more than transformation. Simon and Newell resisted the smuggling. In *The Sciences of the Artificial* (1969), Simon drew the line explicitly: designed systems require a different science than natural systems. Natural science describes what *is*. The science of the artificial studies what *could be* — systems specified to meet goals, authored to behave in particular ways.
 
+Simon's science of the artificial was organized around a single question: not *how are things?* — that is natural science's domain — but *how ought things to be designed in order to function and attain goals?* It is the designer's question. It requires specifying what a system is, how it is bounded, what it must do. No amount of observation produces that specification. It has to be authored.
+
 The "AI" branding won rhetorically. The categorical distinction Simon was preserving got lost.
 
 Fifty years passed.
