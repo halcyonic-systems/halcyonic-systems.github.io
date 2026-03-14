@@ -20,42 +20,60 @@ const steps = [
 ];
 ---
 
-<BaseLayout title="Community" description="A research working group applying formal systems science across domains">
+<BaseLayout title="Community" description="Forums, working groups, and research collaboration">
   <section class="mx-auto max-w-4xl px-6 py-16">
 
-    <!-- Identity -->
-    <p class="text-sm font-medium uppercase tracking-widest text-ocean-600">Research Community</p>
-    <h1 class="mt-3 text-3xl font-bold tracking-tight text-gray-900">
-      We build tools and produce research. Then we work with the people who use them.
-    </h1>
-    <div class="mt-6 max-w-2xl space-y-4 text-lg text-gray-600">
-      <p>
-        Halcyonic is a working group applying formal systems science to domains that
-        need it — blockchain economics, governance, network analysis, consciousness research.
-        We build computational tools, publish papers, and formalize the shared language
-        that makes transdisciplinary work possible.
-      </p>
-      <p>
-        This is not a community for spectators. Members propose projects, get funded through
-        <a href="https://www.researchhub.com" target="_blank" rel="noopener noreferrer" class="link-hover text-ocean-600">ResearchHub</a>,
-        and deliver reproducible research. Reputation is earned through completed work.
-      </p>
-    </div>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Community</h1>
+    <p class="mt-4 text-lg text-gray-600 max-w-2xl">
+      Two ways in. The forums are open to everyone. The Discord is for active contributors and collaborators.
+    </p>
 
-    <!-- Featured Art -->
-    <div class="mt-16 overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
-      <div class="aspect-[21/9] bg-gray-100 flex items-center justify-center">
-        <!-- Replace with: <img src="/images/featured.png" alt="Halcyonic" class="w-full h-full object-cover" /> -->
-        <div class="text-center">
-          <span class="text-6xl select-none opacity-30">◇</span>
-          <p class="mt-2 text-sm text-gray-400">Featured artwork</p>
+    <!-- Two paths -->
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+
+      <!-- Forums -->
+      <a
+        href="https://halcyonic.discourse.group"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group card-lift p-6 rounded-xl bg-white border border-gray-200 hover:border-ocean-300 shadow-sm hover:shadow-md transition-all"
+      >
+        <div class="w-12 h-12 rounded-lg bg-ocean-700 flex items-center justify-center mb-4">
+          <span class="text-white text-xl">💬</span>
         </div>
+        <h2 class="text-lg font-semibold text-gray-900 group-hover:text-ocean-600 transition-colors">Forums</h2>
+        <p class="mt-2 text-gray-600 text-sm">
+          Open discussion on systems science foundations, formalization, field reports, and ongoing projects. No account required to browse.
+        </p>
+        <span class="mt-4 inline-block text-sm font-medium text-ocean-600">
+          Browse the forums <span aria-hidden="true">&rarr;</span>
+        </span>
+      </a>
+
+      <!-- Discord -->
+      <div class="p-6 rounded-xl bg-white border border-gray-200 shadow-sm">
+        <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center mb-4">
+          <span class="text-white text-xl">⬡</span>
+        </div>
+        <h2 class="text-lg font-semibold text-gray-900">Discord</h2>
+        <p class="mt-2 text-gray-600 text-sm">
+          Private working groups for active contributors. Token-gated access — hold a Halcyonic NFT to join.
+        </p>
+        <span class="mt-4 inline-block text-sm font-medium text-gray-400">
+          Invitation only — see below
+        </span>
       </div>
+
     </div>
 
-    <!-- How It Works -->
+    <!-- Membership flow -->
     <div class="mt-16">
-      <h2 class="text-lg font-semibold text-ocean-700">How membership works</h2>
+      <h2 class="text-lg font-semibold text-gray-900">How Discord access works</h2>
+      <p class="mt-2 text-gray-600">
+        We're building a working group, not a community for spectators. Members propose projects,
+        collaborate on research, and deliver reproducible work.
+      </p>
+
       <div class="mt-8 grid gap-8 sm:grid-cols-3">
         {steps.map((step) => (
           <div class="relative pl-4 border-l-2 border-ocean-200">
@@ -67,29 +85,28 @@ const steps = [
       </div>
     </div>
 
-    <!-- Invitation CTA -->
-    <div class="mt-16 rounded-xl bg-white border border-gray-200 p-8 text-center">
+    <!-- CTA -->
+    <div class="mt-12 rounded-xl bg-white border border-gray-200 p-8 text-center">
       <h2 class="text-xl font-bold text-gray-900">If the work resonates</h2>
       <p class="mt-3 max-w-lg mx-auto text-gray-600">
         We're looking for people who apply rigorous methods to hard problems —
         and want collaborators who do the same.
       </p>
-      <a
-        href="#"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-ocean-600 to-teal-600 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-ocean-200 hover:shadow-md hover:shadow-ocean-300 transition-all"
-      >
-        Request an invitation <span aria-hidden="true">&rarr;</span>
-      </a>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="#"
+          class="inline-flex items-center gap-2 rounded-lg bg-ocean-700 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-ocean-600 transition-all"
+        >
+          Request an invitation <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a
+          href="/collection"
+          class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 hover:border-ocean-300 hover:text-ocean-700 transition-all"
+        >
+          View the collection <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
     </div>
-
-    <!-- Subtle collection link -->
-    <p class="mt-12 text-center text-sm text-gray-400">
-      <a href="/collection" class="link-hover text-gray-500 hover:text-ocean-600 transition-colors">
-        View the collection <span aria-hidden="true">&rarr;</span>
-      </a>
-    </p>
 
   </section>
 </BaseLayout>

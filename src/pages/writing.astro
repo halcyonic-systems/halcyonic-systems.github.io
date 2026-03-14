@@ -1,24 +1,159 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const featured = [
+  {
+    title: 'Systems Models: The Fourth Paradigm',
+    description: 'On the kind of knowledge AI cannot learn. Vision models, language models, world models — all learn structure from data. Systems models assert structure from theory.',
+    href: '/fourth-paradigm.html',
+    date: 'March 2026',
+    tag: 'Essay',
+    tagColor: 'bg-ocean-50 text-ocean-700 border-ocean-200',
+    internal: true,
+  },
+];
+
+const archive = [
+  {
+    title: 'What is Systems Science?',
+    description: 'Overview of systems science as a meta-discipline examining patterns across systems of all types.',
+    href: 'https://ideas.halcyonic.systems/p/what-is-systems-science',
+    date: '2023',
+  },
+  {
+    title: 'Formalizing System Ontologies',
+    description: 'Introducing a prototype formal ontology of systems — the intellectual precursor to BERT.',
+    href: 'https://ideas.halcyonic.systems/p/formalizing-system-ontologies',
+    date: '2024',
+  },
+  {
+    title: "Bitcoin's Emergent Properties",
+    description: 'Framing Bitcoin as a complex adaptive system with emergent properties.',
+    href: 'https://ideas.halcyonic.systems/p/bitcoins-emergent-properties',
+    date: '2024',
+  },
+  {
+    title: 'On Hayek and Bertalanffy',
+    description: 'The intellectual connection between Friedrich Hayek and systems theorist Ludwig von Bertalanffy.',
+    href: 'https://ideas.halcyonic.systems/p/on-hayek-and-bertalanffy',
+    date: '2024',
+  },
+  {
+    title: 'The Value of Cryptoeconomic Systems',
+    description: 'Why cryptoeconomic systems are uniquely valuable for systems science — permissionless, transparent, open-source, and programmable.',
+    href: 'https://ideas.halcyonic.systems/p/the-value-of-cryptoeconomic-systems',
+    date: '2024',
+  },
+  {
+    title: 'Systemism as Ideology',
+    description: 'Introducing "systemism" as a meaningful intellectual movement and ideological framework.',
+    href: 'https://ideas.halcyonic.systems/p/systemism-as-ideology',
+    date: '2024',
+  },
+  {
+    title: 'Spreading Systemism with an Idea Machine',
+    description: 'Strategies for promoting systemism more widely in society.',
+    href: 'https://ideas.halcyonic.systems/p/spreading-systemism-with-an-idea',
+    date: '2024',
+  },
+  {
+    title: 'Humanistic Systems Research',
+    description: "Bertalanffy's vision of systems research that centers human individuals rather than technological efficiency.",
+    href: 'https://ideas.halcyonic.systems/p/humanistic-systems-research',
+    date: '2024',
+  },
+  {
+    title: 'Comparing Methods in Systems Research',
+    description: 'Comparing the empirical and deductive approaches to theoretical systems science.',
+    href: 'https://ideas.halcyonic.systems/p/comparing-methods-in-systems-research',
+    date: '2024',
+  },
+  {
+    title: 'Looking Backwards to Revitalize Systems Science',
+    description: 'Understanding the history of systems research to meaningfully influence its present and future.',
+    href: 'https://ideas.halcyonic.systems/p/looking-backwards-to-revitalize-systems',
+    date: '2024',
+  },
+  {
+    title: 'Why "Complexity" Science is Poorly Named',
+    description: "Evaluating a Santa Fe Institute co-founder's critiques of Complexity Science.",
+    href: 'https://ideas.halcyonic.systems/p/why-complexity-science-is-poorly',
+    date: '2024',
+  },
+];
 ---
 
-<BaseLayout title="Writing" description="Essays on systems thinking and research updates">
+<BaseLayout title="Writing" description="Essays on systems science, cryptoeconomics, and transdisciplinary research">
   <section class="mx-auto max-w-4xl px-6 py-16">
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">Writing</h1>
-
-    <p class="mt-4 text-lg text-gray-600">
-      A window into how I think about systems science, and three domains that desperately need rigorous systems foundations: cryptoeconomics, political economy, and neuromorphics.
+    <p class="mt-4 text-lg text-gray-600 max-w-2xl">
+      Systems science applied to the domains that need it most — and the occasional essay on what rigorous thinking actually looks like.
     </p>
 
-    <div class="mt-8">
+    <!-- Featured -->
+    <div class="mt-10 grid gap-6">
+      {featured.map((piece) => (
+        <a
+          href={piece.href}
+          target={piece.internal ? undefined : "_blank"}
+          rel={piece.internal ? undefined : "noopener noreferrer"}
+          class="group card-lift p-6 rounded-xl bg-white border border-gray-200 hover:border-ocean-300 shadow-sm hover:shadow-md transition-all"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class={`text-xs px-2 py-0.5 rounded-full border ${piece.tagColor}`}>{piece.tag}</span>
+                <span class="text-xs text-gray-400">{piece.date}</span>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 group-hover:text-ocean-600 transition-colors">{piece.title}</h2>
+              <p class="mt-2 text-gray-600">{piece.description}</p>
+              <span class="mt-3 inline-block text-sm font-medium text-ocean-600">
+                Read <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Archive -->
+    {archive.length > 0 && (
+      <div class="mt-16">
+        <h2 class="text-sm font-medium uppercase tracking-widest text-gray-400 mb-6">From the archive</h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {archive.map((piece) => (
+            <a
+              href={piece.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group p-4 rounded-lg border border-gray-100 hover:border-ocean-200 hover:bg-white transition-all"
+            >
+              <div class="flex items-baseline justify-between gap-2 mb-1">
+                <h3 class="font-medium text-sm text-gray-900 group-hover:text-ocean-600 transition-colors">{piece.title}</h3>
+                <span class="text-xs text-gray-400 shrink-0">{piece.date}</span>
+              </div>
+              <p class="text-xs text-gray-500 line-clamp-2">{piece.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Subscribe -->
+    <div class="mt-16 rounded-xl bg-white border border-gray-200 p-8 text-center">
+      <h2 class="text-lg font-semibold text-gray-900">Get new essays by email</h2>
+      <p class="mt-2 text-gray-600 text-sm max-w-md mx-auto">
+        Infrequent, substantive, no spam. New pieces land when they're ready.
+      </p>
       <a
         href="https://ideas.halcyonic.systems"
         target="_blank"
         rel="noopener noreferrer"
-        class="link-hover text-lg font-medium text-ocean-600 hover:text-ocean-500 transition-colors"
+        class="mt-5 inline-flex items-center gap-2 rounded-lg bg-ocean-700 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-ocean-600 transition-all"
       >
-        ideas.halcyonic.systems <span aria-hidden="true">&rarr;</span>
+        Subscribe on Substack <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
+
   </section>
 </BaseLayout>
