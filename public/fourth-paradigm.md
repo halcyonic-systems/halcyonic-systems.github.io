@@ -217,7 +217,7 @@ Establishes cryptoeconomic systems as complex socioeconomic networks requiring i
 
 **Mesa Development Team.** (2026). *Mesa 3.5.0: Agent-based modeling in Python*.
 [https://github.com/projectmesa/mesa/releases/tag/v3.5.0](https://github.com/projectmesa/mesa/releases/tag/v3.5.0)
-Released March 13, 2026 — the same day the System Language Specification was completed. Provides event scheduling, DataFrame-to-agent instantiation, and scenario management that directly enables the BERT-to-simulation bridge.
+Released February 15, 2026. Provides event scheduling, DataFrame-to-agent instantiation, and scenario management that directly enables the BERT-to-simulation bridge.
 
 ---
 
