@@ -1,38 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Basic Research — ocean blue
-const basicResearch = [
+// Systems Technologies — warm gold
+const systemsTech = [
   {
-    title: 'Formal Systems Ontologies',
-    description: "What if we had a shared language for describing any system? I'm developing formal ontologies grounded in systems science to make rigorous transdisciplinary research possible.",
-    link: 'https://bert.gitbook.io/bert-documentation/for-researchers/system-ontology',
-    linkText: 'See the foundations',
-    icon: '∅',
-    gradient: 'from-ocean-500 to-ocean-600',
-    border: 'border-ocean-100 hover:border-ocean-300',
-    hover: 'group-hover:text-ocean-600',
+    title: 'BERT',
+    description: 'An open-source framework for rigorous systems modeling across any domain. Bounded Entity Reasoning Toolkit.',
+    link: 'https://bert.systems',
+    linkText: 'Explore the toolkit',
   },
   {
-    title: 'The System Language Palette',
-    description: "An evolving visual vocabulary for systems science. Click any icon to explore its theoretical foundations in Mobus.",
-    link: '/icons',
-    linkText: 'Browse the palette',
-    icon: '◉',
-    gradient: 'from-ocean-500 to-ocean-600',
-    border: 'border-ocean-100 hover:border-ocean-300',
-    hover: 'group-hover:text-ocean-600',
-    internal: true,
-  },
-  {
-    title: 'Halcyonic Garden',
-    description: "135+ interconnected notes on systems thinking, complexity, and the patterns that connect — a digital garden of ideas from Bateson, Bunge, and beyond.",
-    link: 'https://garden.halcyonic.systems',
-    linkText: 'Explore the garden',
-    icon: '🌿',
-    gradient: 'from-ocean-500 to-ocean-600',
-    border: 'border-ocean-100 hover:border-ocean-300',
-    hover: 'group-hover:text-ocean-600',
+    title: 'Facets',
+    description: "Ask a question, see which facets of systems science it touches. 8-tuple dimensional classification grounded in Mobus's formal ontology.",
+    link: 'https://facets.halcyonic.systems',
+    linkText: 'Try the live demo',
   },
 ];
 
@@ -40,133 +21,222 @@ const basicResearch = [
 const appliedScience = [
   {
     title: 'A Deep Systems Analysis of Bitcoin',
-    description: 'Explore Bitcoin through the lens of systems science. I break down Bitcoin as a complex adaptive system—its boundaries, flows, feedback loops, and emergent behaviors.',
+    description: 'Bitcoin as a complex adaptive system — boundaries, flows, feedback loops, and emergent behaviors.',
     link: 'https://www.researchhub.com/paper/9310259/a-deep-systems-analysis-of-bitcoin',
     linkText: 'Read the paper',
-    icon: '₿',
-    gradient: 'from-teal-500 to-teal-600',
-    border: 'border-teal-100 hover:border-teal-300',
-    hover: 'group-hover:text-teal-600',
   },
   {
     title: 'Hayekian Anticipatory Systems Explorer',
-    description: "An interactive visualization of Butos & McQuade's functional closure loop — Hayek's market theory formalized through anticipatory systems science. Seven domains from abstract to free banking.",
+    description: "Interactive visualization of functional closure — Hayek's market theory formalized through anticipatory systems science.",
     link: 'https://halcyonic.systems/hayekian-systems/',
     linkText: 'Launch the explorer',
-    icon: 'H',
-    gradient: 'from-teal-500 to-teal-600',
-    border: 'border-teal-100 hover:border-teal-300',
-    hover: 'group-hover:text-teal-600',
   },
   {
     title: 'Georgist Network Economy ABM',
-    description: 'An agent-based model exploring land value taxation and network effects in political economy. Built in Mesa, deployed on Railway, with 450-simulation parameter sweeps.',
+    description: 'Agent-based model of land value taxation and network effects. Mesa, Railway, 450-simulation parameter sweeps.',
     link: 'https://github.com/halcyonic-systems/georgist-network-economy',
     linkText: 'View on GitHub',
-    icon: '⚖',
-    gradient: 'from-teal-500 to-teal-600',
-    border: 'border-teal-100 hover:border-teal-300',
-    hover: 'group-hover:text-teal-600',
   },
   {
     title: 'Seven Windows, One Person',
-    description: "Six therapeutic frameworks and one diagnostic lens examine the same person speaking. What does each one hear? An interactive systems science exploration.",
+    description: 'Six therapeutic frameworks examine the same person speaking. What does each one hear?',
     link: '/experiments/seven-windows/',
     linkText: 'Enter the experience',
-    icon: '◎',
-    gradient: 'from-teal-500 to-teal-600',
-    border: 'border-teal-100 hover:border-teal-300',
-    hover: 'group-hover:text-teal-600',
     internal: true,
   },
 ];
 
-// Systems Technologies — warm gold
-const systemsTech = [
+// Basic Research — ocean
+const basicResearch = [
   {
-    title: 'BERT',
-    description: 'Curious what rigorous systems modeling looks like in practice? BERT (Bounded Entity Reasoning Toolkit) is an open-source framework I built for analyzing complex systems across any domain.',
-    link: 'https://bert.systems',
-    linkText: 'Explore the toolkit',
-    icon: 'B',
-    gradient: 'from-warm-400 to-warm-500',
-    border: 'border-warm-100 hover:border-warm-300',
-    hover: 'group-hover:text-warm-600',
+    title: 'Formal Systems Ontologies',
+    description: "A shared language for describing any system. Formal ontologies grounded in systems science for rigorous transdisciplinary research.",
+    link: 'https://bert.gitbook.io/bert-documentation/for-researchers/system-ontology',
+    linkText: 'See the foundations',
   },
   {
-    title: 'Facets',
-    description: "Ask a question, see which facets of systems science it touches. Facets decomposes queries through Mobus's 8-tuple ontology, classifies them across 8 structural dimensions, and synthesizes answers grounded in formal systems theory.",
-    link: 'https://facets.halcyonic.systems',
-    linkText: 'Try the live demo',
-    icon: '◇',
-    gradient: 'from-warm-400 to-warm-500',
-    border: 'border-warm-100 hover:border-warm-300',
-    hover: 'group-hover:text-warm-600',
+    title: 'The System Language Palette',
+    description: 'An evolving visual vocabulary for systems science. Each icon grounded in Mobus.',
+    link: '/icons',
+    linkText: 'Browse the palette',
+    internal: true,
+  },
+  {
+    title: 'Halcyonic Garden',
+    description: '135+ interconnected notes on systems thinking, complexity, and the patterns that connect.',
+    link: 'https://garden.halcyonic.systems',
+    linkText: 'Explore the garden',
   },
 ];
 
-// Hidden until more outputs to show - uncomment when ready
-// const areas = [
-//   {
-//     title: 'Cryptoeconomics',
-//     description: 'Analyzing blockchain systems as complex adaptive networks. Mechanism design, network effects, and emergent behaviors in decentralized systems.',
-//   },
-//   {
-//     title: 'Political Economy',
-//     description: 'Systems approaches to governance and economic coordination. Institutional analysis through a systems lens.',
-//   },
-//   {
-//     title: 'Neuromorphics',
-//     description: 'Brain-inspired computing architectures. Exploring bio-inspired approaches to computation and information processing.',
-//   },
-// ];
+const sections = [
+  { label: 'Systems Technologies', items: systemsTech, color: '#8a6a3a', tint: 'r-section-warm' },
+  { label: 'Applied Science', items: appliedScience, color: '#3a6e62', tint: 'r-section-teal' },
+  { label: 'Basic Research', items: basicResearch, color: '#4a7fba', tint: 'r-section-ocean' },
+];
 ---
 
 <BaseLayout title="Research" description="Systems science research projects and areas of focus">
-  <section class="mx-auto max-w-4xl px-6 py-16">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Research</h1>
-    <p class="mt-4 text-lg text-gray-600">
-      We study the fundamental nature of systems and build technologies for applied transdisciplinary science.
-    </p>
+  <style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=EB+Garamond:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+      .r-page { --accent: #8a6a3a; --flow: #3a6e62; --ocean: #4a7fba; --ink: #1c1a16; --ink-dim: #4a4640; --ink-faint: #9a9489; --ground-border: #ddd8cf; }
+      .r-title { font-family: 'Cormorant Garamond', Georgia, serif; }
+      .r-body { font-family: 'EB Garamond', Georgia, serif; }
+      .r-mono { font-family: 'JetBrains Mono', monospace; }
 
-    <div class="mt-8 flex flex-wrap gap-3 text-sm">
-      <span class="px-3 py-1 rounded-full bg-warm-50 text-warm-700 border border-warm-200">Systems Technologies</span>
-      <span class="text-gray-400">→</span>
-      <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-700 border border-teal-200">Applied Science</span>
-      <span class="text-gray-400">→</span>
-      <span class="px-3 py-1 rounded-full bg-ocean-50 text-ocean-700 border border-ocean-200">Basic Research</span>
-    </div>
-    <p class="mt-3 text-sm text-gray-500">
+      .r-section-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      /* ── Card grid: featured first item + smaller rest ── */
+      .r-card-grid {
+        display: grid;
+        gap: 0.6rem;
+      }
+      .r-card-grid.has-feature {
+        grid-template-columns: 1fr 1fr;
+      }
+      .r-card-grid.has-feature .r-card:first-child {
+        grid-column: 1 / -1;
+      }
+      @media (max-width: 640px) {
+        .r-card-grid.has-feature { grid-template-columns: 1fr; }
+      }
+
+      .r-card {
+        display: block;
+        padding: 1.25rem 1.5rem;
+        background: var(--card-bg);
+        border-left: 2px solid var(--hover-color);
+        border-radius: 0 6px 6px 0;
+        text-decoration: none;
+        transition: background 0.2s ease;
+      }
+      .r-card:hover { background: var(--card-bg-hover); }
+      .r-card:hover .r-card-title { color: var(--hover-color); }
+
+      /* Section-specific card tints */
+      .r-section-warm { --card-bg: rgba(138, 106, 58, 0.06); --card-bg-hover: rgba(138, 106, 58, 0.12); }
+      .r-section-teal { --card-bg: rgba(58, 110, 98, 0.06); --card-bg-hover: rgba(58, 110, 98, 0.12); }
+      .r-section-ocean { --card-bg: rgba(74, 127, 186, 0.06); --card-bg-hover: rgba(74, 127, 186, 0.12); }
+
+      /* Featured card (first in each section) */
+      .r-card-grid.has-feature .r-card:first-child {
+        padding: 1.75rem 2rem;
+        border-left-width: 3px;
+      }
+      .r-card-grid.has-feature .r-card:first-child .r-card-title {
+        font-size: 1.7rem;
+        font-weight: 400;
+      }
+      .r-card-grid.has-feature .r-card:first-child .r-card-desc {
+        font-size: 1.05rem;
+        max-width: 700px;
+      }
+
+      .r-card-title {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.3;
+        margin-bottom: 0.3rem;
+        transition: color 0.2s ease;
+      }
+
+      .r-card-desc {
+        font-family: 'EB Garamond', Georgia, serif;
+        font-size: 0.95rem;
+        color: var(--ink-dim);
+        line-height: 1.6;
+        max-width: 500px;
+      }
+
+      .r-card-link {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-top: 0.5rem;
+        display: inline-block;
+      }
+
+      .r-category-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.25rem;
+      }
+      .r-category-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .r-intro {
+        font-family: 'EB Garamond', Georgia, serif;
+        font-size: 1.1rem;
+        color: var(--ink-dim);
+        line-height: 1.7;
+        max-width: 580px;
+      }
+
+      .r-flow-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .r-flow-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .r-flow-sep {
+        color: var(--ink-faint);
+        font-size: 0.7rem;
+      }
+    </style>
+
+  <section class="r-page mx-auto max-w-3xl px-6 py-16">
+    <h1 class="r-title text-3xl font-light tracking-tight" style="color: var(--ink);">Research</h1>
+    <p class="r-intro mt-4">
       We build tools grounded in formal systems science. Each technology is backed by applied research and theoretical foundations.
     </p>
 
-    {[
-      { label: 'Systems Technologies', items: systemsTech, color: 'text-warm-500' },
-      { label: 'Applied Science', items: appliedScience, color: 'text-teal-600' },
-      { label: 'Basic Research', items: basicResearch, color: 'text-ocean-600' },
-    ].map((group) => (
-      <div class="mt-10">
-        <h2 class={`text-sm font-medium uppercase tracking-widest ${group.color} mb-4`}>{group.label}</h2>
-        <div class="grid gap-4">
+    <div class="mt-6 r-flow-row">
+      <span class="r-flow-label" style="color: var(--accent);">Systems Technologies</span>
+      <span class="r-flow-sep">→</span>
+      <span class="r-flow-label" style="color: var(--flow);">Applied Science</span>
+      <span class="r-flow-sep">→</span>
+      <span class="r-flow-label" style="color: var(--ocean);">Basic Research</span>
+    </div>
+
+    {sections.map((group) => (
+      <div class="mt-12">
+        <div class="r-category-row">
+          <span class="r-category-dot" style={`background: ${group.color};`}></span>
+          <span class="r-section-label" style={`color: ${group.color};`}>{group.label}</span>
+        </div>
+        <div class={`r-card-grid ${group.tint} ${group.items.length >= 3 ? 'has-feature' : ''}`}>
           {group.items.map((project) => (
             <a
               href={project.link}
               target={project.internal ? undefined : "_blank"}
               rel={project.internal ? undefined : "noopener noreferrer"}
-              class={`group card-lift p-6 rounded-xl bg-white border ${project.border} shadow-sm hover:shadow-md transition-all`}
+              class="r-card"
+              style={`--hover-color: ${group.color};`}
             >
-              <div class="flex gap-5">
-                <div class={`w-12 h-12 shrink-0 rounded-lg bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
-                  <span class="text-white text-xl font-bold">{project.icon}</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class={`font-semibold text-gray-900 ${project.hover} transition-colors`}>{project.title}</h3>
-                  <p class="mt-2 text-gray-600">{project.description}</p>
-                  <span class="mt-3 inline-block text-sm font-medium text-ocean-600">
-                    {project.linkText} <span aria-hidden="true">&rarr;</span>
-                  </span>
-                </div>
-              </div>
+              <div class="r-card-title">{project.title}</div>
+              <div class="r-card-desc">{project.description}</div>
+              <span class="r-card-link">{project.linkText}</span>
             </a>
           ))}
         </div>
