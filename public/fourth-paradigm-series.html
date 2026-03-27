@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fourth Paradigm — On the kind of knowledge computation cannot produce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1a16;
+    --ink-dim: #4a4640;
+    --ink-faint: #9a9489;
+    --ground: #f7f4ef;
+    --ground-raised: #f0ece4;
+    --ground-border: #ddd8cf;
+    --accent: #8a6a3a;
+    --accent-dim: #b8966a;
+    --flow: #3a6e62;
+    --flow-bright: #2d5a50;
+    --serif: 'EB Garamond', Georgia, serif;
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 60%, rgba(58,110,98,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 30%, rgba(138,106,58,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-circle {
+    position: absolute;
+    width: min(500px, 85vw);
+    height: min(500px, 85vw);
+    border-radius: 50%;
+    border: 1px solid rgba(58,110,98,0.07);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-circle::before {
+    content: '';
+    position: absolute;
+    inset: 35px;
+    border-radius: 50%;
+    border: 1px solid rgba(58,110,98,0.05);
+  }
+  .hero-circle::after {
+    content: '';
+    position: absolute;
+    inset: -50px;
+    border-radius: 50%;
+    border: 1px solid rgba(58,110,98,0.03);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 720px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink-dim);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  /* ── SERIES ENTRIES ── */
+  .series {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+
+  .series-entry {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--ground-border);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .series-entry.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .series-entry:last-of-type {
+    border-bottom: none;
+  }
+
+  .entry-number {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .entry-title {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+
+  .entry-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .entry-title a:hover {
+    color: var(--flow-bright);
+  }
+
+  .entry-role {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--flow-bright);
+    margin-bottom: 1.25rem;
+  }
+
+  .entry-summary {
+    font-size: 1.05rem;
+    color: var(--ink-dim);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  .entry-link {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+  .entry-link:hover {
+    color: var(--flow-bright);
+    border-bottom-color: var(--flow-bright);
+  }
+
+  /* ── CODA ── */
+  .coda {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .coda-text {
+    border-left: 2px solid var(--accent-dim);
+    padding: 1.5rem 0 1.5rem 2rem;
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    max-width: 600px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    border-top: 1px solid var(--ground-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer a {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--accent); }
+
+  .footer-date {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { padding: 4rem 1.5rem 3rem; min-height: 50vh; }
+    .series { padding: 1rem 1.5rem 4rem; }
+    .series-entry { padding: 2.5rem 0; }
+    .coda { padding: 0 1.5rem 3rem; }
+    footer { padding: 1.5rem 1.5rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-circle"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Halcyonic Systems · Research Series</p>
+    <h1 class="hero-title">The Fourth Paradigm</h1>
+    <p class="hero-subtitle">On the kind of knowledge computation cannot produce. A three-part investigation into what today's most powerful tools actually compute, where they stop, and what fills the gap.</p>
+  </div>
+</section>
+
+<div class="series">
+
+  <div class="series-entry" id="e1">
+    <div class="entry-number">01</div>
+    <h2 class="entry-title"><a href="fourth-paradigm.html">Systems Models: The Fourth Paradigm</a></h2>
+    <div class="entry-role">The Argument</div>
+    <p class="entry-summary">Every major AI paradigm learns structure from data. Systems models assert structure from theory. Herbert Simon knew the difference before the field had a name. This essay traces a 57-year arc from Simon's <em>Sciences of the Artificial</em> to a working systems specification language, and argues that authored ontological commitment is a fundamentally different kind of knowledge than statistical learning.</p>
+    <a href="fourth-paradigm.html" class="entry-link">Read the essay</a>
+  </div>
+
+  <div class="series-entry" id="e2">
+    <div class="entry-number">02</div>
+    <h2 class="entry-title"><a href="instruments.html">The Instruments</a></h2>
+    <div class="entry-role">The Evidence</div>
+    <p class="entry-summary">Recognition, prediction, generation, reasoning, decision, discovery. Six capabilities, cataloged honestly: what each class of computational tool actually computes, the hard ceiling defined by its mathematical operation, and the question none of them ask. The gap is not more power. It is an authored commitment — a human who says <em>this is what I believe this system is</em> and accepts the consequences of being wrong.</p>
+    <a href="instruments.html" class="entry-link">Read the catalog</a>
+  </div>
+
+  <div class="series-entry" id="e3">
+    <div class="entry-number">03</div>
+    <h2 class="entry-title"><a href="neuromorphic-substrates.html">Neuromorphic Substrates</a></h2>
+    <div class="entry-role">The Frontier</div>
+    <p class="entry-summary">Neuromorphic hardware computes using physics that already remembers, already decays, already adapts. From Intel's silicon to honey-and-carbon-nanotube memristors. Six functions compared across three substrate classes, with maturity assessments and honest limits. The pattern: the substrate changes what's efficient, not what's knowable. The ceiling is epistemic, not computational.</p>
+    <a href="neuromorphic-substrates.html" class="entry-link">Read the comparison</a>
+  </div>
+
+</div>
+
+<div class="coda">
+  <div class="coda-text">These essays are not about what computers can't do. They are about what they can't <em>know</em> — and what that means for anyone building systems that matter.</div>
+</div>
+
+<footer>
+  <div style="display:flex;gap:2rem;">
+    <a href="https://halcyonic.systems" target="_blank">Halcyonic Systems</a>
+    <a href="https://github.com/halcyonic-systems/bert" target="_blank">BERT on GitHub</a>
+  </div>
+  <span class="footer-date">March 2026</span>
+</footer>
+
+<script>
+  // Intersection observer for scroll-triggered entry animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.series-entry').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

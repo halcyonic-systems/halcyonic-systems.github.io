@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Instruments — What computational models actually do, where they stop, and what fills the gap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #1c1a16;
+    --ink-dim: #4a4640;
+    --ink-faint: #9a9489;
+    --ground: #f7f4ef;
+    --ground-raised: #f0ece4;
+    --ground-border: #ddd8cf;
+    --accent: #8a6a3a;
+    --accent-dim: #b8966a;
+    --flow: #3a6e62;
+    --flow-bright: #2d5a50;
+    --serif: 'EB Garamond', Georgia, serif;
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 60%, rgba(58,110,98,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 30%, rgba(138,106,58,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-circle {
+    position: absolute;
+    width: min(600px, 90vw);
+    height: min(600px, 90vw);
+    border-radius: 50%;
+    border: 1px solid rgba(58,110,98,0.08);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-circle::before {
+    content: '';
+    position: absolute;
+    inset: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(58,110,98,0.06);
+  }
+  .hero-circle::after {
+    content: '';
+    position: absolute;
+    inset: -60px;
+    border-radius: 50%;
+    border: 1px solid rgba(58,110,98,0.04);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 780px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-statement {
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+
+  .hero-statement em {
+    font-style: italic;
+    color: var(--flow-bright);
+  }
+
+  .hero-attribution {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .hero-attribution a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ground-border);
+    transition: all 0.2s;
+  }
+  .hero-attribution a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.6s;
+    cursor: pointer;
+  }
+
+  .hero-scroll span {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--ink-faint), transparent);
+    animation: scrollPulse 2s ease-in-out infinite 2s;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 6rem 0 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ground-border);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  p {
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+  p:last-child { margin-bottom: 0; }
+
+  em { font-style: italic; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 2px solid var(--accent-dim);
+    padding: 1.5rem 0 1.5rem 2rem;
+    margin: 3rem 0;
+    font-family: var(--display);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* ── INSTRUMENT CARDS ── */
+  .instrument-group {
+    margin: 2.5rem 0 3.5rem;
+  }
+
+  .instrument-card {
+    border: 1px solid var(--ground-border);
+    background: var(--ground-raised);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+  .instrument-card:first-child {
+    border-radius: 2px 2px 0 0;
+  }
+  .instrument-card:last-child {
+    border-radius: 0 0 2px 2px;
+  }
+  .instrument-card:hover {
+    border-color: var(--accent-dim);
+    z-index: 1;
+    position: relative;
+  }
+
+  .instrument-name {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.1rem;
+  }
+
+  .instrument-aka {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+
+  .instrument-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    margin-bottom: 0.65rem;
+  }
+  .instrument-row:last-child { margin-bottom: 0; }
+
+  .instrument-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+  }
+
+  .label-computes { color: var(--flow-bright); }
+  .label-ceiling { color: var(--accent); }
+  .label-gap { color: var(--ink-faint); }
+
+  .instrument-value {
+    font-size: 0.92rem;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+
+  /* ── SUMMARY CARD ── */
+  .summary-card {
+    border: 1px solid var(--ground-border);
+    background: var(--ground-raised);
+    padding: 2rem 2rem;
+    margin: 2.5rem 0;
+    border-radius: 2px;
+  }
+
+  .summary-card p {
+    font-family: var(--display);
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    color: var(--ink-faint);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ground-border);
+  }
+  .divider-mark {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+  }
+
+  /* ── MONO INLINE ── */
+  code {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    color: var(--flow-bright);
+    background: rgba(58,110,98,0.1);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .toc.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .toc-item {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-left: 1px solid var(--ground-border);
+    transition: all 0.2s ease;
+    line-height: 1.4;
+  }
+  .toc-item:hover {
+    color: var(--accent);
+    border-left-color: var(--accent-dim);
+  }
+  .toc-item.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    border-left-width: 2px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--ground-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer a {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer a:hover { color: var(--accent); }
+
+  .footer-date {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1200px) {
+    .toc { display: none; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .instrument-row { grid-template-columns: 70px 1fr; }
+    .instrument-card { padding: 1.25rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TABLE OF CONTENTS -->
+<nav class="toc" id="toc">
+  <a class="toc-item" href="#s0">00 · The Frame</a>
+  <a class="toc-item" href="#s1">01 · Recognition</a>
+  <a class="toc-item" href="#s2">02 · Prediction</a>
+  <a class="toc-item" href="#s3">03 · Generation</a>
+  <a class="toc-item" href="#s4">04 · Reasoning</a>
+  <a class="toc-item" href="#s5">05 · Decision</a>
+  <a class="toc-item" href="#s6">06 · Discovery</a>
+  <a class="toc-item" href="#s7">07 · The Question</a>
+  <a class="toc-item" href="#s8">08 · Engineering</a>
+  <a class="toc-item" href="#s9">09 · Science</a>
+  <a class="toc-item" href="#s10">10 · Governance</a>
+  <a class="toc-item" href="#s11">11 · The Cost</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-circle"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Halcyonic Systems · Companion Document</p>
+    <h1 class="hero-statement">
+      These tools can recognize, predict, generate,<br>
+      reason, decide, and discover.<br>
+      <em>None of them can say what kind of system they're looking at.</em>
+    </h1>
+    <p class="hero-attribution">The Instruments<br>Companion to <a href="fourth-paradigm.html">Systems Models: The Fourth Paradigm</a></p>
+  </div>
+  <div class="hero-scroll" onclick="document.querySelector('.content').scrollIntoView({behavior:'smooth'})">
+    <span>Read</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- Section 0: The Frame -->
+  <section class="section" id="s0">
+    <div class="section-number">§ 00 · The Frame</div>
+    <h2>What These Tools Actually Do</h2>
+
+    <p>The computational tools built over the last decade are extraordinarily capable. They recognize patterns humans miss. They predict outcomes across domains. They generate text, images, and code that pass for human work. Some of them can plan, search, and optimize.</p>
+
+    <p>Each of these capabilities is real. None of them is magic. Each one computes a specific mathematical operation on data — and each one has a hard ceiling defined by what that operation can and cannot reach.</p>
+
+    <p>That ceiling matters. Not as an academic observation, but because these tools are now operating <em>inside</em> the systems that sustain civilization — financial infrastructure, energy grids, governance mechanisms, public health systems, ecological networks. They are optimizing within those systems. They are predicting on behalf of those systems. They are making decisions that reshape those systems in real time. And in every case, the same question goes unasked: <em>what kind of system is this?</em></p>
+
+    <p>An engineer who deploys a load-bearing structure without specifying its failure modes is negligent. A scientist who publishes a forecast without specifying the mechanism behind it is extrapolating, not explaining. A governing body that regulates a system it has not formally described is performing theater. In each case, what is missing is not more computational power. What is missing is an authored commitment — a human who says <em>this is what I believe this system is</em> and accepts the consequences of being wrong.</p>
+
+    <p>This document catalogs computational capabilities honestly: what each class of tool computes, where it stops, and what kind of knowledge fills the gap. The catalog is organized not by technical architecture but by <em>what people think these tools do</em> — recognition, prediction, generation, reasoning, decision, discovery — because that's where the conversation usually starts. But the destination is the question none of them ask, and the cost of leaving it unanswered.</p>
+
+    <div class="pull-quote">The question isn't whether these instruments are powerful. They are. The question is whether power without specification is safe — in engineering, in science, in governance, in any domain where consequences are real.</div>
+  </section>
+
+  <div class="divider"><div class="divider-mark"></div></div>
+
+  <!-- Section 1: Recognition -->
+  <section class="section" id="s1">
+    <div class="section-number">§ 01 · Recognition</div>
+    <h2>"It Can See"</h2>
+
+    <p>The first capability people encounter is pattern recognition — the ability to look at an image, a sound, a dataset, and identify what's there. This is real and useful. But "seeing" is a metaphor. What these tools compute is feature extraction: the conversion of raw data into numerical representations that cluster similar things together.</p>
+
+    <div class="instrument-group">
+      <div class="instrument-card">
+        <div class="instrument-name">Convolutional Network</div>
+        <div class="instrument-aka">CNN · ResNet · EfficientNet · YOLO</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Hierarchical spatial features from grid data. Slides small filters across an image, building up from edges → textures → parts → objects. The output is a numerical signature of what's in the image.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Identifies <em>what</em> is present. Cannot say <em>why</em> it's there, what it's <em>for</em>, or how it relates to things outside the frame. Classifies a photograph of a factory — cannot tell you what the factory produces, who it serves, or why it was built there.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Vision Transformer</div>
+        <div class="instrument-aka">ViT · DINOv2 · I-JEPA</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Relational structure between image patches via attention. Unlike convolutions, these learn which parts of an image are relevant to which other parts, regardless of distance.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Learns <em>correlations</em> between visual elements. Cannot distinguish correlation from mechanism. Sees that smokestacks co-occur with rail lines — cannot assert that one serves the other.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Clustering Algorithm</div>
+        <div class="instrument-aka">k-means · DBSCAN · HDBSCAN</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Natural groupings in data based on similarity — which things belong together, without being told categories in advance.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Finds groups. Cannot name them, explain them, or say whether the groupings reflect anything real about the system's structure. The analyst decides what the clusters <em>mean</em>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>The gap: recognition tells you what patterns exist in the data. It cannot tell you what kind of system produced those patterns, or what the patterns mean for the system's behavior.</p>
+    </div>
+  </section>
+
+  <!-- Section 2: Prediction -->
+  <section class="section" id="s2">
+    <div class="section-number">§ 02 · Prediction</div>
+    <h2>"It Can Predict"</h2>
+
+    <p>Prediction is the capability that feels most like understanding. If a tool can tell you what will happen next, it must "know" something. But prediction is extrapolation from pattern, not comprehension of mechanism. A barometer predicts rain without understanding atmospheric physics.</p>
+
+    <div class="instrument-group">
+      <div class="instrument-card">
+        <div class="instrument-name">Time-Series Forecaster</div>
+        <div class="instrument-aka">Prophet · N-BEATS · TimesFM · Chronos</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Extrapolation of temporal patterns — trend, seasonality, regime change — from historical data. Answers: given the past, what is the most likely future?</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Predicts <em>if nothing changes</em>. Cannot tell you what would happen if you intervened. Cannot tell you which part of the system to change. Cannot distinguish a stable trend from one approaching a tipping point.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">State Space Model</div>
+        <div class="instrument-aka">Mamba · S4 · S5</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Long-range dependencies via structured state evolution. Tracks how the hidden state of a sequence develops over very long horizons, with linear-time efficiency.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Captures temporal dependencies without limit on range. Still learns <em>correlation over time</em>, not <em>causation over time</em>. Can track a slow regime shift. Cannot say what caused it.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Regression Estimator</div>
+        <div class="instrument-aka">OLS · Ridge · LASSO · GLM</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">The best-fit relationship between input variables and a continuous output. Mature, interpretable, transparent — the workhorse of quantitative science.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Estimates relationships that <em>exist in the data</em>. Cannot distinguish a causal relationship from a confounded one. The modeler must decide which variables to include and why.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>The gap: prediction tells you what is likely to happen next. It cannot tell you what would happen if you changed the system, because it doesn't know what the system <em>is</em>.</p>
+    </div>
+  </section>
+
+  <!-- Section 3: Generation -->
+  <section class="section" id="s3">
+    <div class="section-number">§ 03 · Generation</div>
+    <h2>"It Can Create"</h2>
+
+    <p>Generation is the capability that most captures public imagination. Tools that write, draw, compose, and code. The outputs can be indistinguishable from human work. But generation is sampling from a learned distribution — producing new instances that are statistically consistent with the training data. That is not the same as designing something for a purpose.</p>
+
+    <div class="instrument-group">
+      <div class="instrument-card">
+        <div class="instrument-name">Transformer (Language)</div>
+        <div class="instrument-aka">GPT · Claude · Gemini · Granite · LLaMA</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Next-token probability, conditioned on all previous tokens. Compresses the statistical structure of human language into billions of parameters. At sufficient scale, this produces remarkably fluent, contextually appropriate text.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Knows what has been <em>said</em> about a system. Does not know what a system <em>is</em>. Can synthesize, summarize, and draft with extraordinary speed. Cannot make the ontological commitments that a formal specification requires — it doesn't know which claims to stake its credibility on.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Diffusion Model</div>
+        <div class="instrument-aka">DDPM · Stable Diffusion · Flow Matching</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Reversal of a noise process — starting from random noise, iteratively refining toward a coherent output that is statistically consistent with the training distribution.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Generates plausible instances. Cannot generate <em>specified</em> instances — artifacts designed to satisfy explicit functional constraints. The difference between "a plausible bridge" and "a bridge that carries this load across this span."</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Variational Autoencoder</div>
+        <div class="instrument-aka">VAE · β-VAE</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">A compressed latent space — learns the minimal dimensions that characterize a distribution, then samples from that space to generate new instances.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Discovers what the dimensions <em>are</em>. Cannot say what they <em>mean</em>. Finds that a dataset has three latent axes. The human must determine that they correspond to, say, energy flow, material cycling, and information processing.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>The gap: generation produces new instances that are consistent with observed data. It cannot produce designs that satisfy <em>authored requirements</em> — because requirements are commitments, not patterns.</p>
+    </div>
+  </section>
+
+  <!-- Section 4: Reasoning -->
+  <section class="section" id="s4">
+    <div class="section-number">§ 04 · Reasoning</div>
+    <h2>"It Can Reason"</h2>
+
+    <p>This is where the conversation usually gets interesting — and where the language gets most misleading. "Reasoning" in the computational sense means decomposing a problem into steps and chaining operations toward a conclusion. That is genuinely useful. It is not the same as understanding <em>why</em> the steps work or <em>whether</em> the conclusion is true of the real system.</p>
+
+    <div class="instrument-group">
+      <div class="instrument-card">
+        <div class="instrument-name">Structural Causal Model</div>
+        <div class="instrument-aka">Pearl's DAG · do-calculus · SCM</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">The consequences of intervention, given an asserted causal graph. Pearl's framework lets you answer: if I change <em>this</em>, what happens to <em>that</em>? But only after you've committed to a causal structure.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">The closest any data-side instrument gets to authorship — because the causal graph must be <em>hypothesized</em>, not learned. The tool computes consequences. The human asserts structure. Pearl himself calls this the fundamental distinction.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Graph Neural Network</div>
+        <div class="instrument-aka">GCN · GAT · GraphSAGE</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Learned representations over nodes and edges via message passing. Propagates information through a network to learn what each node's neighborhood implies about it.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Learns <em>what the network looks like</em>. Cannot say <em>what the network is for</em>. Detects that two clusters of nodes are densely connected. Cannot assert that they form distinct subsystems serving different functions.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Bayesian Network</div>
+        <div class="instrument-aka">BN · Probabilistic Graphical Model</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Conditional probability propagation through a directed graph. Given evidence at some nodes, updates beliefs across the entire network. Rigorous, principled, transparent.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Quantifies uncertainty <em>within</em> a structure. The structure itself must be provided. The network topology is an assertion, not a computation.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Neuro-Symbolic System</div>
+        <div class="instrument-aka">NeSy · LNN · DeepProbLog</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">A hybrid: pattern recognition plus logical constraint enforcement. Learns from data while respecting formally specified rules — the most ambitious bridge between learning and specification.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Only as good as the rules it's given. The symbolic side requires the same authored commitments as any formal model. The neural side fills in where data is available. The human decides where the boundary between learning and assertion falls.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>The gap: reasoning tools chain operations and propagate implications. They operate <em>within</em> a structure. They cannot author the structure itself — that requires an ontological commitment no computation produces.</p>
+    </div>
+  </section>
+
+  <!-- Section 5: Decision -->
+  <section class="section" id="s5">
+    <div class="section-number">§ 05 · Decision</div>
+    <h2>"It Can Decide"</h2>
+
+    <p>Decision-making tools optimize — they search for the action, policy, or configuration that maximizes some objective. This is genuine and powerful. But the objective itself must be specified. And the space within which the tool searches must be defined. Optimization without specification is a powerful engine with no destination.</p>
+
+    <div class="instrument-group">
+      <div class="instrument-card">
+        <div class="instrument-name">Reinforcement Learner</div>
+        <div class="instrument-aka">PPO · SAC · DQN · RLHF</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">A policy — a mapping from states to actions — that maximizes cumulative reward over time. Learns by trial and error within an environment.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Optimizes <em>within</em> a defined environment toward a <em>given</em> reward. Cannot question the environment's boundaries. Cannot question the reward function. Both are authored.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Multi-Agent Reinforcement Learning</div>
+        <div class="instrument-aka">MAPPO · QMIX · Independent Learners</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Concurrent policies for multiple interacting agents. Emergent behavior arises from the interaction of individually rational (or boundedly rational) agents.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Produces emergent dynamics. Cannot <em>explain</em> them. Generates a fascinating pattern — the human must determine whether that pattern reflects reality and what it means for the system.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Evolutionary Optimizer</div>
+        <div class="instrument-aka">Genetic Algorithm · CMA-ES · MAP-Elites</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">A population-based search over a design space — breeds, mutates, and selects candidate solutions across multiple objectives simultaneously.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Searches a space. Cannot define the space. The representation of candidate solutions, the fitness function, and the constraints are all authored. The optimizer explores; the designer specifies what's worth exploring.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>The gap: decision tools optimize within authored constraints toward authored objectives. They are engines. The system model is the map and the destination.</p>
+    </div>
+  </section>
+
+  <!-- Section 6: Discovery -->
+  <section class="section" id="s6">
+    <div class="section-number">§ 06 · Discovery</div>
+    <h2>"It Can Discover"</h2>
+
+    <p>The most recent and most ambitious claim — that these tools can discover new knowledge. Causal discovery algorithms propose candidate mechanisms. Physics-informed networks learn dynamics that respect conservation laws. World models build internal representations of how environments evolve. These are genuine advances. But each one still operates within a frame that someone had to define.</p>
+
+    <div class="instrument-group">
+      <div class="instrument-card">
+        <div class="instrument-name">Causal Discovery Algorithm</div>
+        <div class="instrument-aka">PC · FCI · NOTEARS · GES</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Candidate causal graphs from observational data using conditional independence tests. Proposes: these variables might cause those variables, through these pathways.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Proposes <em>candidates</em>. Cannot commit to them. The output is a set of hypotheses, not a specification. The modeler accepts, rejects, or modifies based on domain knowledge the algorithm doesn't have.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">Physics-Informed Network</div>
+        <div class="instrument-aka">PINN · Neural ODE · Hamiltonian NN</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">Learned dynamics constrained by known physical laws. Embeds conservation laws, symmetries, and differential equations directly into the learning process — the most principled fusion of formal knowledge and data.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Only as good as the physics you give it. The conservation laws, the boundary conditions, the governing equations — all authored. The network fills in where the formal model is incomplete. It does not write the formal model.</div>
+        </div>
+      </div>
+
+      <div class="instrument-card">
+        <div class="instrument-name">World Model</div>
+        <div class="instrument-aka">Dreamer · IRIS · Genie · Cosmos</div>
+        <div class="instrument-row">
+          <div class="instrument-label label-computes">Computes</div>
+          <div class="instrument-value">A learned internal representation of environment dynamics. Enables planning by imagining future states — the tool most explicitly aimed at "understanding" how things work.</div>
+        </div>
+        <div class="instrument-row">
+          <div class="instrument-label label-ceiling">Ceiling</div>
+          <div class="instrument-value">Learns a compressed approximation of dynamics. The representation is opaque — you cannot inspect it and say "the system has these components connected by these flows." It is a black box that predicts well. It is not a specification.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>The gap: discovery tools propose hypotheses and learn approximate dynamics. They do not commit to what a system is. Commitment is what specification means.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-mark"></div></div>
+
+  <!-- Section 7: The Question None of Them Ask -->
+  <section class="section" id="s7">
+    <div class="section-number">§ 07 · The Question None of Them Ask</div>
+    <h2>The Question None of Them Ask</h2>
+
+    <p>Every instrument in this catalog is powerful. Every one performs a specific, well-defined, mathematically rigorous operation. Together, they constitute the most sophisticated toolkit for pattern extraction, prediction, generation, and optimization ever built.</p>
+
+    <p>None of them asks:</p>
+
+    <div class="pull-quote">What kind of system is this — what are its parts, its boundaries, its flows, its mechanisms — and why does it behave the way it does?</div>
+
+    <p>That question is not a pattern recognition question. It is not a prediction question. It is not a generation, reasoning, or optimization question. It is an <em>ontological</em> question — a question about what exists and how it is organized. Answering it requires:</p>
+
+    <p><strong>Composition</strong> — specifying what entities constitute the system. <strong>Environment</strong> — specifying what the system is embedded within. <strong>Structure</strong> — specifying the relations among components. <strong>Mechanism</strong> — specifying the processes that generate behavior.</p>
+
+    <p>These specifications are not inferred from data. They are authored by a human who accepts the consequences of being wrong. That is what makes them specifications and not predictions.</p>
+
+    <p>This distinction might sound philosophical. It is not. It is the distinction that separates every discipline that builds things from every discipline that merely describes them. And it is precisely the distinction that is missing from the most consequential systems of our time.</p>
+  </section>
+
+  <!-- Section 8: Engineering -->
+  <section class="section" id="s8">
+    <div class="section-number">§ 08 · Engineering</div>
+    <h2>Specification Is What Makes Engineering Engineering</h2>
+
+    <p>An engineer does not predict that a bridge will hold. An engineer <em>specifies</em> a bridge — its materials, its load paths, its tolerances, its failure modes — and signs their name. The specification is a commitment: I assert that this structure, built this way, will carry this load. When the bridge fails, it is the specification that gets interrogated. There is a document. There is a person. There is accountability.</p>
+
+    <p>This is not incidental to engineering. It <em>is</em> engineering. The computational instruments in this catalog — finite element analysis, structural optimization, fatigue prediction — are powerful tools that serve the specification. They do not replace it. No amount of simulation excuses the engineer from saying: <em>this is what I believe the system is, and I am responsible for that claim</em>.</p>
+
+    <p>The Boeing 737 MAX is the canonical illustration. MCAS — the Maneuvering Characteristics Augmentation System — was an optimization layer added to compensate for an aerodynamic shift introduced by larger engines. The airframe's aerodynamic envelope had changed. The specification of how the aircraft's control system interacted with that new envelope was inadequate. Sensors fed data to an algorithm. The algorithm acted on a model of the aircraft. The model was wrong. 346 people died.</p>
+
+    <p>The instruments worked. The sensors read correctly. The algorithm executed as coded. The optimization ran. What failed was the specification — the authored claim about what the system was and how it behaved. That gap was not computational. It was ontological. Someone needed to formally specify the full system — airframe, engines, control surfaces, sensor architecture, software logic, pilot interface — as an integrated whole, and commit to that description. The tools cannot do that. A human must.</p>
+
+    <div class="summary-card">
+      <p>Prediction without specification is forecasting. Engineering without specification is negligence. The difference is a human who signs the drawing.</p>
+    </div>
+  </section>
+
+  <!-- Section 9: Science -->
+  <section class="section" id="s9">
+    <div class="section-number">§ 09 · Science</div>
+    <h2>Specification Is What Makes Science Science</h2>
+
+    <p>Science uses prediction, but prediction is not the product. The product is the <em>model</em> — a mechanistic claim about how a system works. The prediction is the <em>test</em>. When the prediction fails, you don't adjust the curve. You revise the mechanism.</p>
+
+    <p>This is the deepest difference between science and extrapolation, and it is routinely obscured. A curve fit through historical data can predict accurately for years. It is not science. It contains no claim about <em>why</em> the pattern holds, and therefore no guidance about when it will stop holding. Science requires someone to say: <em>I assert that this mechanism produces this behavior</em>. The assertion is falsifiable. The curve is merely extendable.</p>
+
+    <p>Climate science works precisely this way. General circulation models are not curve fits through temperature records. They are authored specifications of atmospheric mechanism — radiation physics, ocean circulation, carbon cycling, ice-albedo feedback — assembled into a formal model and then tested against observation. When the model diverges from data, the divergence tells you something about the mechanism. It tells you <em>where your understanding is wrong</em>. A curve fit that diverges tells you nothing except that the future is not like the past.</p>
+
+    <p>The early COVID-19 modeling landscape demonstrated the cost of the alternative. Competing models with different structural assumptions produced wildly divergent forecasts. Some modeled airborne transmission, some didn't. Some included behavioral feedback loops, some didn't. Some specified hospital capacity constraints, some assumed infinite capacity. The forecasts disagreed — but there was no transparent way to adjudicate <em>between the specifications themselves</em>, because most of the specifications were informal, implicit, or buried in code. The public saw disagreeing numbers. What they needed to see was disagreeing <em>mechanisms</em> — formally stated, openly comparable, and subject to structured critique. That is what formal system specification provides.</p>
+
+    <div class="summary-card">
+      <p>Extrapolation without mechanism is curve fitting. Science without mechanism is — as Darwin put it — stamp collecting. The mechanism is a commitment. The prediction is the test of that commitment.</p>
+    </div>
+  </section>
+
+  <!-- Section 10: Governance -->
+  <section class="section" id="s10">
+    <div class="section-number">§ 10 · Governance</div>
+    <h2>Specification Is What Makes Governance Possible</h2>
+
+    <p>Governance specifies what the system <em>is</em> — where authority lives, what flows are permitted, who is accountable when something goes wrong. Optimization finds the best move within a system. These are not the same activity. And when the second proceeds without the first, the result is automated power with no return address.</p>
+
+    <p>This is not hypothetical. It is the operational reality of March 2026.</p>
+
+    <p>The EU AI Act requires organizations deploying high-risk systems to define system boundaries, specify accountability chains, classify risks, and document the mechanisms by which the system affects people. Every compliance team working on implementation is discovering the same problem: they are trying to govern systems that no one has formally described. The regulation demands specification. The tools available produce prediction. The gap between these two is not a policy challenge. It is a structural impossibility — you cannot govern what you cannot describe.</p>
+
+    <p>The US executive orders on AI safety face the same structural problem. They mandate risk assessment, bias auditing, and transparency reporting for systems deployed across federal agencies. Each mandate implicitly assumes that someone, somewhere, has formally specified what the system is — its components, its data flows, its decision boundaries, its failure modes. In practice, that specification rarely exists. What exists is a trained model, a deployment pipeline, and a performance dashboard. The model predicts. The dashboard monitors. No one has committed to a structural claim about what the system is and how it works. When it fails — and complex systems always eventually do — there is no specification to interrogate. There is only output that stopped being useful, and no human who can explain <em>why</em>.</p>
+
+    <p>Cryptoeconomic systems illustrate the same gap from the design side. A staking mechanism, a governance token, a DeFi protocol — each is a complex adaptive system with interacting agents, feedback loops, and emergent dynamics. Optimization tools can find the parameter settings that maximize a given metric. But the question that precedes optimization is: <em>what is this system?</em> What are its subsystems? What flows between them? Where are the boundaries? What mechanisms generate the behaviors we observe? Without that specification, optimization is hill-climbing in the dark. You may reach a peak. You cannot know what landscape you are on.</p>
+
+    <div class="summary-card">
+      <p>You cannot steer what you have not specified. You cannot hold anyone accountable for a specification no one made. Governance without specification is theater.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-mark"></div></div>
+
+  <!-- Section 11: The Cost -->
+  <section class="section" id="s11">
+    <div class="section-number">§ 11 · The Cost of the Missing Question</div>
+    <h2>The Cost of the Missing Question</h2>
+
+    <p>In every domain — engineering, science, governance — the same structure holds. The specification creates the possibility of accountability. The engineer's drawing. The scientist's mechanism. The governor's charter. Each is an authored commitment: <em>this is what I believe the system is, and I accept what follows from being wrong</em>.</p>
+
+    <p>Without that commitment, there is no artifact to interrogate when things go wrong. There is only output.</p>
+
+    <p>The instruments in §01 through §06 of this catalog are powerful precisely <em>because</em> they operate on an authored structure. The forecaster tests the engineer's design. The simulation tests the scientist's mechanism. The optimizer searches the governor's policy space. Without the structure, the instruments spin. They produce numbers, images, forecasts, and recommendations that refer to nothing — that are accountable to no specification and falsifiable by no observation.</p>
+
+    <p>The scarce resource in March 2026 is not computation. We have more computational power than any generation in history. The scarce resource is <em>commitment</em> — the willingness to formally say <em>this is what I believe this system is</em> and to accept the consequences of that claim. That willingness is what separates engineering from prediction. It is what separates science from extrapolation. And it is what separates governance from optimization.</p>
+
+    <div class="pull-quote">Every consequential system in the world — climate, financial, computational, biological, political — is currently being optimized by tools that cannot describe what they are optimizing. That is the cost of the missing question.</div>
+
+    <p>This is not an observation that only one community is making. Across multiple domains — independently, and without coordinating — sophisticated practitioners have converged on the same discovery: that authored specification is the load-bearing element in their work, and that no amount of computation replaces it.</p>
+
+    <p>In cryptoeconomic systems design, Michael Zargham and BlockScience built cadCAD — a computer-aided design framework grounded in control systems engineering — because they found that you cannot validate a protocol design without first formally specifying its state variables, update mechanisms, and feedback loops. In safety-critical systems engineering, Nancy Leveson at MIT developed STAMP — a systems-theoretic accident model — because she found that catastrophic failures occur not from component breakdowns but from inadequate <em>system-level</em> specification of control structures and safety constraints. In applied mathematics, John Baez and collaborators built AlgebraicJulia — a compositional modeling framework using category theory — because they found that scientific models become opaque and brittle when they are monolithic, and that composability requires formally specifying how subsystem models interface.</p>
+
+    <p>Each of these communities is right. Each has independently discovered that the critical gap is not computational but specificationary. And yet none of them has a framework that explains why all three of them are right <em>for the same reason</em>.</p>
+
+    <p>There is a further subtlety that all three examples obscure. Zargham simulates. Leveson models control loops. Baez composes dynamical systems. In each case, the specification earns its keep by enabling some downstream computation — a simulation, an analysis, a composition. This makes it easy to conclude that the specification's value is instrumental: it matters because it lets you run the next step.</p>
+
+    <p>But consider the domains where simulation is impractical or inconclusive — political economy, institutional design, geopolitical systems, ecological governance. You cannot fabricate a counterfactual nation-state. The feedback loop between policy intervention and observable outcome is long, noisy, and confounded. The actors inside the system change their behavior in response to being modeled. In these domains, simulation may be optional. The specification is not.</p>
+
+    <p>The specification still forces the modeler to commit: <em>these</em> are the subsystems, <em>these</em> are the flows, <em>here</em> is where the boundary falls, <em>this</em> is the mechanism I believe generates the behavior we observe. Those commitments discipline thinking. They make disagreements structural rather than rhetorical — two people arguing about a formal specification are arguing about which components exist and how they interact, not about whose narrative is more persuasive. They create a shared artifact that can be critiqued, revised, and falsified even when no simulation is ever run.</p>
+
+    <p>This means specification is not downstream of simulation. It is upstream of <em>everything</em> — including the decision about whether to simulate at all. Simulation is one possible use of a formal model. Clarity, communication, accountability, and structured disagreement are others. In the domains where the stakes are highest and the systems are least amenable to controlled experiment — which is to say, in the domains that matter most — those other uses are primary.</p>
+
+    <p>The reason is this: every one of them presupposes an answer to a prior question that none of their frameworks formally asks. Before you can specify state update maps, you need to know what the system's components <em>are</em>. Before you can specify control structures, you need to know what the system is <em>embedded in</em> and where authority flows. Before you can compose subsystem models, you need to know what the structural relations <em>between</em> subsystems are. The prior question — in every case — is ontological:</p>
+
+    <p><strong>Composition</strong> — what entities constitute the system. <strong>Environment</strong> — what the system is embedded within. <strong>Structure</strong> — the relations among components. <strong>Mechanism</strong> — the processes that generate behavior.</p>
+
+    <p>That is Bunge's CESM ontology, formalized by Mobus into a rigorous systems science framework. It is the question that precedes Zargham's state variables, Leveson's control hierarchies, and Baez's compositional interfaces. It is the ground floor — and the fact that multiple independent communities have converged on the need for it, without having it, is itself the strongest evidence that the account is overdue.</p>
+
+    <p>The instruments are indispensable. They are also subordinate. They serve the specification. They do not replace it. They cannot replace it. That is not a limitation of current technology to be overcome by the next training run. It is a <em>categorical</em> distinction between learning structure from data and asserting structure from theory — a distinction Herbert Simon identified in 1969 and the field has spent fifty years forgetting.</p>
+
+    <p>The formal system model — authored, committed, falsifiable — occupies a different epistemic dimension from everything in this catalog. Not better. Not competing. <em>Orthogonal</em>. It answers the question none of these tools can ask. And in a world where the tools grow more powerful by the month, the question grows more urgent at exactly the same rate.</p>
+
+    <p>That is the work described in <a href="fourth-paradigm.html" style="color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: border-bottom-color 0.2s;">The Fourth Paradigm</a>.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer section" id="footer">
+    <div class="footer-links">
+      <a href="fourth-paradigm-series.html">The Series</a>
+      <a href="fourth-paradigm.html">The Fourth Paradigm</a>
+      <a href="neuromorphic-substrates.html">Neuromorphic Substrates</a>
+      <a href="https://halcyonic.systems" target="_blank">Halcyonic Systems</a>
+    </div>
+    <div class="footer-date">March 2026</div>
+  </footer>
+
+</main>
+
+<script>
+  // Scroll-triggered reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.section').forEach(el => observer.observe(el));
+
+  // TOC visibility
+  const toc = document.getElementById('toc');
+  const hero = document.querySelector('.hero');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      toc.classList.toggle('visible', !entry.isIntersecting);
+    });
+  }, { threshold: 0.05 });
+  tocObserver.observe(hero);
+
+  // TOC active tracking
+  const tocLinks = document.querySelectorAll('.toc-item');
+  const sections = Array.from(tocLinks).map(link => {
+    const id = link.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector('.toc-item[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(section => sectionObserver.observe(section));
+</script>
+
+</body>
+</html>
