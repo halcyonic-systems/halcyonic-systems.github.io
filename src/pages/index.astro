@@ -7,6 +7,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
   <section slot="hero" class="hero-zone">
     <div class="hero-content">
       <WalkingArrow />
+      <p class="hero-hint">click nodes to explore &middot; hover branches for detail</p>
 
       <div class="hero-text">
         <h1 class="hero-wordmark">
@@ -28,8 +29,6 @@ import WalkingArrow from '../components/WalkingArrow.astro';
           Read the Writing <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
-
-      <p class="hero-hint">click nodes to explore &middot; hover branches for detail</p>
     </div>
   </section>
 
@@ -43,11 +42,10 @@ import WalkingArrow from '../components/WalkingArrow.astro';
 
 <style>
   .hero-zone {
-    min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3rem 2rem 2.5rem;
+    padding: 2.5rem 2rem 2rem;
     position: relative;
   }
 
@@ -57,7 +55,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.75rem;
     width: 100%;
   }
 
@@ -74,7 +72,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     color: var(--color-night-parchment);
     margin-bottom: 0.5rem;
     opacity: 0;
-    animation: fade-up 0.8s ease 2.8s forwards;
+    animation: fade-up 0.6s ease 1.5s forwards;
   }
 
   .h-accent {
@@ -86,11 +84,11 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 1.15rem;
-    color: var(--color-night-blue-dim);
+    color: rgba(226, 232, 240, 0.5);
     letter-spacing: 0.05em;
     margin-bottom: 0.5rem;
     opacity: 0;
-    animation: fade-up 0.8s ease 3.1s forwards;
+    animation: fade-up 0.6s ease 1.7s forwards;
   }
 
   .hero-equation {
@@ -99,15 +97,15 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     color: var(--color-night-gold-dim);
     letter-spacing: 0.08em;
     opacity: 0;
-    animation: fade-up 0.8s ease 3.4s forwards;
+    animation: fade-up 0.6s ease 1.9s forwards;
   }
 
   .hero-ctas {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     opacity: 0;
-    animation: fade-up 0.8s ease 3.7s forwards;
+    animation: fade-up 0.6s ease 2.1s forwards;
   }
 
   .cta-primary {
@@ -143,13 +141,13 @@ import WalkingArrow from '../components/WalkingArrow.astro';
   }
 
   .hero-hint {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(99, 102, 241, 0.3);
-    margin-top: 1rem;
+    color: rgba(226, 232, 240, 0.3);
+    margin-top: -0.25rem;
     opacity: 0;
-    animation: fade-up 0.5s ease 4s forwards;
+    animation: fade-up 0.5s ease 2.3s forwards;
   }
 
   @keyframes fade-up {
@@ -168,8 +166,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
 
   @media (max-width: 640px) {
     .hero-zone {
-      min-height: 70vh;
-      padding: 3rem 1rem 2rem;
+      padding: 2rem 1rem 1.5rem;
     }
 
     .hero-wordmark {

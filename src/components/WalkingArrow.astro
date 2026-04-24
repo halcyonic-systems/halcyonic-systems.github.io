@@ -2,7 +2,7 @@
 ---
 
 <div class="walking-arrow">
-  <svg class="arrow-svg" viewBox="0 0 700 500">
+  <svg class="arrow-svg" viewBox="0 150 700 200">
     <defs>
       <radialGradient id="node-glow-blue" cx="50%" cy="50%" r="50%">
         <stop offset="0%" stop-color="var(--color-night-blue)" stop-opacity="0.3"/>
@@ -137,7 +137,7 @@
   .shaft {
     stroke-dasharray: 280;
     stroke-dashoffset: 280;
-    animation: draw-arrow 2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+    animation: draw-arrow 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
   }
 
   @keyframes draw-arrow {
@@ -146,12 +146,12 @@
 
   .arrowhead {
     opacity: 0;
-    animation: fade-in 0.4s ease 2.2s forwards;
+    animation: fade-in 0.4s ease 1.5s forwards;
   }
 
   .f-label {
     opacity: 0;
-    animation: fade-in 0.6s ease 2.5s forwards;
+    animation: fade-in 0.5s ease 1.3s forwards;
   }
 
   @keyframes fade-in {
