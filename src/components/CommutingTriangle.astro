@@ -1,0 +1,358 @@
+---
+---
+
+<div class="ct-wrapper">
+  <div class="ct-triangle" id="triangleArea">
+    <svg class="ct-svg" viewBox="40 40 520 440">
+      <defs>
+        <marker id="arr-teal" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#14b8a6" stroke-width="1.5"/>
+        </marker>
+        <marker id="arr-indigo" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#6366f1" stroke-width="1.5"/>
+        </marker>
+        <marker id="arr-slate" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="rgba(30,41,59,0.5)" stroke-width="1.5"/>
+        </marker>
+      </defs>
+
+      <!-- Edge glows -->
+      <line class="ct-edge-glow" id="ct-glow-left" x1="300" y1="95" x2="120" y2="405"
+            stroke="rgba(99,102,241,0.08)" stroke-width="8" stroke-linecap="round"/>
+      <line class="ct-edge-glow" id="ct-glow-right" x1="300" y1="95" x2="480" y2="405"
+            stroke="rgba(13,148,136,0.06)" stroke-width="8" stroke-linecap="round"/>
+      <line class="ct-edge-glow" id="ct-glow-bottom" x1="120" y1="405" x2="480" y2="405"
+            stroke="rgba(30,41,59,0.04)" stroke-width="8" stroke-linecap="round"/>
+
+      <!-- Edges -->
+      <line class="ct-edge" id="ct-edge-left" x1="290" y1="110" x2="132" y2="392"
+            stroke="#6366f1" stroke-width="1.5" marker-end="url(#arr-indigo)"/>
+      <line class="ct-edge" id="ct-edge-right" x1="310" y1="110" x2="468" y2="392"
+            stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+      <line class="ct-edge" id="ct-edge-bottom" x1="140" y1="410" x2="460" y2="410"
+            stroke="rgba(30,41,59,0.5)" stroke-width="1.5" marker-end="url(#arr-slate)"/>
+
+      <!-- Edge labels -->
+      <text class="ct-edge-label" x="185" y="240" transform="rotate(-59, 185, 240)"
+            font-family="Cormorant Garamond" font-style="italic" font-size="14"
+            fill="rgba(99,102,241,0.5)">research</text>
+      <text class="ct-edge-label" x="420" y="240" transform="rotate(59, 420, 240)"
+            font-family="Cormorant Garamond" font-style="italic" font-size="14"
+            fill="rgba(13,148,136,0.5)">apply</text>
+      <text class="ct-edge-label" x="300" y="440" text-anchor="middle"
+            font-family="Cormorant Garamond" font-style="italic" font-size="14"
+            fill="rgba(30,41,59,0.4)">operationalize</text>
+
+      <!-- Commutation symbol -->
+      <text class="ct-commutes-label" x="300" y="320" text-anchor="middle"
+            font-family="Cormorant Garamond" font-size="28" fill="rgba(13,148,136,0.3)"
+            id="commuteSymbol">&#x21BB;</text>
+      <text class="ct-inner-text" x="300" y="295" text-anchor="middle"
+            font-family="Cormorant Garamond" font-style="italic" font-size="12"
+            fill="rgba(99,102,241,0.35)">the diagram commutes</text>
+
+      <!-- Vertex: Labs (top) -->
+      <g class="ct-vertex" id="ct-v-labs">
+        <circle class="ct-vertex-ring" cx="300" cy="85" r="18" fill="none"
+                stroke="#6366f1" stroke-width="1" stroke-opacity="0.4"/>
+        <circle class="ct-vertex-core" cx="300" cy="85" r="7" fill="#6366f1" opacity="0.8"/>
+        <text class="ct-vertex-label" x="300" y="55" text-anchor="middle"
+              font-family="Inter" font-size="11" letter-spacing="0.15em"
+              fill="rgba(99,102,241,0.8)">LABS</text>
+        <text class="ct-vertex-label" x="300" y="68" text-anchor="middle"
+              font-family="Cormorant Garamond" font-style="italic" font-size="11"
+              fill="rgba(99,102,241,0.5)">epistemic core</text>
+      </g>
+
+      <!-- Vertex: Ventures (right) -->
+      <g class="ct-vertex" id="ct-v-ventures">
+        <circle class="ct-vertex-ring" cx="490" cy="410" r="18" fill="none"
+                stroke="#14b8a6" stroke-width="1" stroke-opacity="0.4"/>
+        <circle class="ct-vertex-core" cx="490" cy="410" r="7" fill="#14b8a6" opacity="0.8"/>
+        <text class="ct-vertex-label" x="530" y="405" text-anchor="start"
+              font-family="Inter" font-size="11" letter-spacing="0.15em"
+              fill="rgba(13,148,136,0.8)">VENTURES</text>
+        <text class="ct-vertex-label" x="530" y="420" text-anchor="start"
+              font-family="Cormorant Garamond" font-style="italic" font-size="11"
+              fill="rgba(13,148,136,0.5)">application layer</text>
+      </g>
+
+      <!-- Vertex: Systems (left) -->
+      <g class="ct-vertex" id="ct-v-systems">
+        <circle class="ct-vertex-ring" cx="110" cy="410" r="18" fill="none"
+                stroke="rgba(30,41,59,0.5)" stroke-width="1" stroke-opacity="0.4"/>
+        <circle class="ct-vertex-core" cx="110" cy="410" r="7" fill="#1e293b" opacity="0.6"/>
+        <text class="ct-vertex-label" x="70" y="405" text-anchor="end"
+              font-family="Inter" font-size="11" letter-spacing="0.15em"
+              fill="rgba(30,41,59,0.7)">SYSTEMS</text>
+        <text class="ct-vertex-label" x="70" y="420" text-anchor="end"
+              font-family="Cormorant Garamond" font-style="italic" font-size="11"
+              fill="rgba(30,41,59,0.45)">institutional container</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="ct-layers">
+    <button class="ct-layer-card" data-vertex="ct-v-labs">
+      <span class="ct-layer-name" style="color: rgba(99,102,241,0.8);">Labs</span>
+      <span class="ct-layer-desc">formal ontology, simulation, BERT</span>
+    </button>
+    <button class="ct-layer-card" data-vertex="ct-v-systems">
+      <span class="ct-layer-name" style="color: rgba(30,41,59,0.7);">Systems</span>
+      <span class="ct-layer-desc">IP, attribution, identity</span>
+    </button>
+    <button class="ct-layer-card" data-vertex="ct-v-ventures">
+      <span class="ct-layer-name" style="color: rgba(13,148,136,0.8);">Ventures</span>
+      <span class="ct-layer-desc">gov-graphs, protocol science, consulting</span>
+    </button>
+  </div>
+
+  <p class="ct-commute-statement" id="commuteStatement">
+    The path from insight to impact commutes:<br/>
+    research &rarr; apply = research &rarr; operationalize &rarr; apply
+  </p>
+</div>
+
+<style>
+  .ct-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .ct-triangle {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .ct-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Edge draw animation */
+  .ct-edge, .ct-edge-glow {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .ct-edge.drawn, .ct-edge-glow.drawn {
+    stroke-dashoffset: 0;
+  }
+
+  /* Vertices */
+  .ct-vertex {
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .ct-vertex:hover .ct-vertex-ring {
+    r: 22;
+    stroke-opacity: 0.8;
+  }
+
+  .ct-vertex:hover .ct-vertex-core {
+    r: 10;
+  }
+
+  .ct-vertex-label {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .ct-vertex.active .ct-vertex-label {
+    opacity: 1;
+  }
+
+  .ct-vertex.active .ct-vertex-ring {
+    stroke-opacity: 0.8;
+  }
+
+  /* Edge labels */
+  .ct-edge-label {
+    opacity: 0;
+    transition: opacity 0.5s ease 0.3s;
+    pointer-events: none;
+  }
+
+  .edges-labeled .ct-edge-label {
+    opacity: 1;
+  }
+
+  /* Commutation reveals */
+  .ct-commutes-label {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .commutes-visible .ct-commutes-label {
+    opacity: 1;
+  }
+
+  .ct-inner-text {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .inner-visible .ct-inner-text {
+    opacity: 1;
+  }
+
+  /* Layer cards */
+  .ct-layers {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ct-layer-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-frost-border);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-family: inherit;
+  }
+
+  .ct-layer-card:hover {
+    background: rgba(13, 148, 136, 0.04);
+  }
+
+  .ct-layer-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ct-layer-desc {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--color-frost-slate-dim);
+  }
+
+  /* Commutation statement */
+  .ct-commute-statement {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--color-frost-teal-dim);
+    text-align: center;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .ct-commute-statement.visible {
+    opacity: 1;
+    max-height: 4rem;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .ct-edge, .ct-edge-glow {
+      stroke-dashoffset: 0 !important;
+      transition: none !important;
+    }
+
+    .ct-vertex-label, .ct-edge-label,
+    .ct-commutes-label, .ct-inner-text {
+      transition-duration: 0.01s !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ct-triangle {
+      max-width: 320px;
+    }
+
+    .ct-layers {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<script>
+  const edges = ['ct-edge-left', 'ct-edge-right', 'ct-edge-bottom'];
+  const glows = ['ct-glow-left', 'ct-glow-right', 'ct-glow-bottom'];
+  const vertices = ['ct-v-labs', 'ct-v-ventures', 'ct-v-systems'];
+  const area = document.getElementById('triangleArea');
+  const commuteStatement = document.getElementById('commuteStatement');
+
+  function drawEdges() {
+    edges.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id)?.classList.add('drawn');
+        document.getElementById(glows[i])?.classList.add('drawn');
+      }, i * 600);
+    });
+
+    setTimeout(() => {
+      area?.classList.add('edges-labeled');
+    }, 2200);
+
+    setTimeout(() => {
+      area?.classList.add('commutes-visible');
+    }, 2800);
+  }
+
+  let activeVertices = new Set();
+
+  vertices.forEach(id => {
+    const el = document.getElementById(id);
+    el?.addEventListener('click', () => {
+      el.classList.toggle('active');
+      if (el.classList.contains('active')) {
+        activeVertices.add(id);
+      } else {
+        activeVertices.delete(id);
+      }
+
+      if (activeVertices.size === 3) {
+        area?.classList.add('inner-visible');
+        commuteStatement?.classList.add('visible');
+      } else {
+        area?.classList.remove('inner-visible');
+        commuteStatement?.classList.remove('visible');
+      }
+    });
+  });
+
+  document.querySelectorAll('.ct-layer-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const vid = card.dataset.vertex;
+      document.getElementById(vid)?.click();
+    });
+  });
+
+  // Use IntersectionObserver to trigger draw when visible
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setTimeout(drawEdges, 300);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 }
+  );
+
+  if (area) observer.observe(area);
+</script>

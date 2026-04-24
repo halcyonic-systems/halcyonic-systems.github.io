@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CommutingTriangle from '../components/CommutingTriangle.astro';
 ---
 
 <BaseLayout title="About" description="About Shingai Thornton and Halcyonic Systems">
@@ -39,6 +40,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         seven independent traditions of system definition, one shared categorical structure.
         The work draws on general systems theory, formal ontology, and category theory.
       </p>
+    </div>
+
+    <div class="ab-architecture">
+      <h2 class="ab-section-header">Architecture</h2>
+      <CommutingTriangle />
     </div>
 
     <div class="ab-connect">
@@ -120,7 +126,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: 0.75rem;
   }
 
-  .ab-lineage {
+  .ab-lineage, .ab-architecture {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--color-frost-border);
