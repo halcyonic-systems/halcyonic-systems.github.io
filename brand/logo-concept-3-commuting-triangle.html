@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halcyonic — Concept 3: Commuting Triangle</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #060a14;
+    color: #e0d8cc;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .gradient-orb {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb-1 {
+    top: 20%;
+    left: 30%;
+    background: rgba(26, 36, 64, 0.5);
+  }
+
+  .orb-2 {
+    bottom: 20%;
+    right: 30%;
+    background: rgba(186, 163, 112, 0.08);
+  }
+
+  .triangle-area {
+    position: relative;
+    z-index: 1;
+    width: 600px;
+    height: 520px;
+    margin-bottom: 2rem;
+  }
+
+  svg.tri-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .edge {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .edge.drawn {
+    stroke-dashoffset: 0;
+  }
+
+  .edge-glow {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .edge-glow.drawn {
+    stroke-dashoffset: 0;
+  }
+
+  .vertex {
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .vertex:hover .vertex-ring {
+    r: 22;
+    stroke-opacity: 0.8;
+  }
+
+  .vertex:hover .vertex-core {
+    r: 10;
+  }
+
+  .vertex-label {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .vertex.active .vertex-label {
+    opacity: 1;
+  }
+
+  .vertex.active .vertex-ring {
+    stroke-opacity: 0.8;
+  }
+
+  .edge-label {
+    opacity: 0;
+    transition: opacity 0.5s ease 0.3s;
+    pointer-events: none;
+  }
+
+  .edges-labeled .edge-label {
+    opacity: 1;
+  }
+
+  .commutes-label {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .commutes-visible .commutes-label {
+    opacity: 1;
+  }
+
+  .flow-particle {
+    opacity: 0;
+  }
+
+  .flow-particle.active {
+    opacity: 1;
+  }
+
+  .inner-text {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .inner-visible .inner-text {
+    opacity: 1;
+  }
+
+  .wordmark {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 2.4rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e0d8cc;
+    z-index: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: appear 0.8s ease 1.8s forwards;
+  }
+
+  @keyframes appear {
+    to { opacity: 1; }
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(139, 164, 199, 0.6);
+    letter-spacing: 0.05em;
+    z-index: 1;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: appear 0.8s ease 2.1s forwards;
+  }
+
+  .layers-info {
+    display: flex;
+    gap: 3rem;
+    z-index: 1;
+    opacity: 0;
+    animation: appear 0.8s ease 2.4s forwards;
+  }
+
+  .layer-card {
+    text-align: center;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+
+  .layer-card:hover {
+    background: rgba(139, 164, 199, 0.05);
+  }
+
+  .layer-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.6;
+  }
+
+  .layer-card .name {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(186, 163, 112, 0.7);
+    margin-bottom: 0.25rem;
+  }
+
+  .layer-card .desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(139, 164, 199, 0.5);
+  }
+
+  .commute-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: rgba(186, 163, 112, 0.5);
+    margin-top: 2.5rem;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .commute-statement.visible {
+    opacity: 1;
+  }
+
+  .instruction {
+    position: fixed;
+    bottom: 2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(139, 164, 199, 0.3);
+    z-index: 1;
+    opacity: 0;
+    animation: appear 0.5s ease 3s forwards;
+  }
+</style>
+</head>
+<body>
+
+<div class="gradient-orb orb-1"></div>
+<div class="gradient-orb orb-2"></div>
+
+<div class="hero">
+  <div class="triangle-area" id="triangleArea">
+    <svg class="tri-svg" viewBox="0 0 600 520">
+      <defs>
+        <linearGradient id="edge-top" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8ba4c7"/>
+          <stop offset="100%" stop-color="#baa370"/>
+        </linearGradient>
+        <linearGradient id="edge-right" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#baa370"/>
+          <stop offset="100%" stop-color="#e0d8cc" stop-opacity="0.7"/>
+        </linearGradient>
+        <linearGradient id="edge-bottom" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8ba4c7"/>
+          <stop offset="100%" stop-color="#e0d8cc" stop-opacity="0.7"/>
+        </linearGradient>
+        <marker id="arr-gold" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#baa370" stroke-width="1.5"/>
+        </marker>
+        <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#8ba4c7" stroke-width="1.5"/>
+        </marker>
+        <marker id="arr-light" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="rgba(224,216,204,0.7)" stroke-width="1.5"/>
+        </marker>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Edge glows (behind) -->
+      <line class="edge-glow" id="glow-left" x1="300" y1="95" x2="120" y2="405"
+            stroke="rgba(139,164,199,0.1)" stroke-width="8" stroke-linecap="round"/>
+      <line class="edge-glow" id="glow-right" x1="300" y1="95" x2="480" y2="405"
+            stroke="rgba(186,163,112,0.08)" stroke-width="8" stroke-linecap="round"/>
+      <line class="edge-glow" id="glow-bottom" x1="120" y1="405" x2="480" y2="405"
+            stroke="rgba(224,216,204,0.05)" stroke-width="8" stroke-linecap="round"/>
+
+      <!-- Edges (arrows) -->
+      <line class="edge" id="edge-left" x1="290" y1="110" x2="132" y2="392"
+            stroke="#8ba4c7" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+      <line class="edge" id="edge-right" x1="310" y1="110" x2="468" y2="392"
+            stroke="#baa370" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+      <line class="edge" id="edge-bottom" x1="140" y1="410" x2="460" y2="410"
+            stroke="rgba(224,216,204,0.7)" stroke-width="1.5" marker-end="url(#arr-light)"/>
+
+      <!-- Edge labels -->
+      <text class="edge-label" x="185" y="240" transform="rotate(-59, 185, 240)"
+            font-family="Cormorant Garamond" font-style="italic" font-size="14"
+            fill="rgba(139,164,199,0.6)">research</text>
+      <text class="edge-label" x="420" y="240" transform="rotate(59, 420, 240)"
+            font-family="Cormorant Garamond" font-style="italic" font-size="14"
+            fill="rgba(186,163,112,0.6)">apply</text>
+      <text class="edge-label" x="300" y="440" text-anchor="middle"
+            font-family="Cormorant Garamond" font-style="italic" font-size="14"
+            fill="rgba(224,216,204,0.5)">operationalize</text>
+
+      <!-- Commutes symbol (center) -->
+      <text class="commutes-label" x="300" y="320" text-anchor="middle"
+            font-family="Cormorant Garamond" font-size="28" fill="rgba(186,163,112,0.35)"
+            id="commuteSymbol">&#x21BB;</text>
+      <text class="inner-text" x="300" y="295" text-anchor="middle"
+            font-family="Cormorant Garamond" font-style="italic" font-size="12"
+            fill="rgba(139,164,199,0.4)">the diagram commutes</text>
+
+      <!-- Vertex: Labs (top) -->
+      <g class="vertex" id="v-labs" data-idx="0">
+        <circle class="vertex-ring" cx="300" cy="85" r="18" fill="none"
+                stroke="#8ba4c7" stroke-width="1" stroke-opacity="0.4"/>
+        <circle class="vertex-core" cx="300" cy="85" r="7" fill="#8ba4c7" opacity="0.8"/>
+        <text class="vertex-label" x="300" y="55" text-anchor="middle"
+              font-family="Inter" font-size="11" letter-spacing="0.15em"
+              fill="rgba(139,164,199,0.8)">LABS</text>
+        <text class="vertex-label" x="300" y="68" text-anchor="middle"
+              font-family="Cormorant Garamond" font-style="italic" font-size="11"
+              fill="rgba(139,164,199,0.5)">epistemic core</text>
+      </g>
+
+      <!-- Vertex: Ventures (right) -->
+      <g class="vertex" id="v-ventures" data-idx="1">
+        <circle class="vertex-ring" cx="490" cy="410" r="18" fill="none"
+                stroke="#baa370" stroke-width="1" stroke-opacity="0.4"/>
+        <circle class="vertex-core" cx="490" cy="410" r="7" fill="#baa370" opacity="0.8"/>
+        <text class="vertex-label" x="540" y="405" text-anchor="start"
+              font-family="Inter" font-size="11" letter-spacing="0.15em"
+              fill="rgba(186,163,112,0.8)">VENTURES</text>
+        <text class="vertex-label" x="540" y="420" text-anchor="start"
+              font-family="Cormorant Garamond" font-style="italic" font-size="11"
+              fill="rgba(186,163,112,0.5)">application layer</text>
+      </g>
+
+      <!-- Vertex: Systems (left) -->
+      <g class="vertex" id="v-systems" data-idx="2">
+        <circle class="vertex-ring" cx="110" cy="410" r="18" fill="none"
+                stroke="rgba(224,216,204,0.7)" stroke-width="1" stroke-opacity="0.4"/>
+        <circle class="vertex-core" cx="110" cy="410" r="7" fill="#e0d8cc" opacity="0.7"/>
+        <text class="vertex-label" x="60" y="405" text-anchor="end"
+              font-family="Inter" font-size="11" letter-spacing="0.15em"
+              fill="rgba(224,216,204,0.7)">SYSTEMS</text>
+        <text class="vertex-label" x="60" y="420" text-anchor="end"
+              font-family="Cormorant Garamond" font-style="italic" font-size="11"
+              fill="rgba(224,216,204,0.45)">institutional container</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="wordmark">HALCYONIC</div>
+  <div class="subtitle">Labs generate knowledge. Ventures apply it. Systems hold the whole.</div>
+
+  <div class="layers-info">
+    <div class="layer-card" data-vertex="v-labs">
+      <div class="name">Labs</div>
+      <div class="desc">formal ontology, simulation, BERT</div>
+    </div>
+    <div class="layer-card" data-vertex="v-systems">
+      <div class="name">Systems</div>
+      <div class="desc">IP, attribution, identity</div>
+    </div>
+    <div class="layer-card" data-vertex="v-ventures">
+      <div name="name" class="name">Ventures</div>
+      <div class="desc">gov-graphs, protocol science, consulting</div>
+    </div>
+  </div>
+
+  <div class="commute-statement" id="commuteStatement">
+    The path from insight to impact commutes:<br/>
+    research &rarr; apply = research &rarr; operationalize &rarr; apply
+  </div>
+</div>
+
+<div class="instruction">click vertices to explore &middot; watch the triangle draw itself</div>
+
+<script>
+  const edges = ['edge-left', 'edge-right', 'edge-bottom'];
+  const glows = ['glow-left', 'glow-right', 'glow-bottom'];
+  const vertices = ['v-labs', 'v-ventures', 'v-systems'];
+  const area = document.getElementById('triangleArea');
+  const commuteSymbol = document.getElementById('commuteSymbol');
+  const commuteStatement = document.getElementById('commuteStatement');
+
+  function drawEdges() {
+    edges.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id).classList.add('drawn');
+        document.getElementById(glows[i]).classList.add('drawn');
+      }, i * 600);
+    });
+
+    setTimeout(() => {
+      area.classList.add('edges-labeled');
+    }, 2200);
+
+    setTimeout(() => {
+      area.classList.add('commutes-visible');
+    }, 2800);
+  }
+
+  let activeVertices = new Set();
+
+  vertices.forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('click', () => {
+      el.classList.toggle('active');
+      if (el.classList.contains('active')) {
+        activeVertices.add(id);
+      } else {
+        activeVertices.delete(id);
+      }
+
+      if (activeVertices.size === 3) {
+        area.classList.add('inner-visible');
+        commuteStatement.classList.add('visible');
+      } else {
+        area.classList.remove('inner-visible');
+        commuteStatement.classList.remove('visible');
+      }
+    });
+  });
+
+  document.querySelectorAll('.layer-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const vid = card.dataset.vertex;
+      const el = document.getElementById(vid);
+      el.click();
+    });
+  });
+
+  setTimeout(drawEdges, 500);
+</script>
+<script src="scheme-bridge.js"></script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halcyonic — Concept 2: Walking Arrow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #060a14;
+    color: #e0d8cc;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .arrow-canvas {
+    position: relative;
+    width: 700px;
+    height: 500px;
+    margin-bottom: 2rem;
+  }
+
+  svg.main-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .node-domain, .node-codomain {
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .node-domain:hover circle, .node-codomain:hover circle {
+    r: 14;
+  }
+
+  .shaft {
+    stroke-dasharray: 280;
+    stroke-dashoffset: 280;
+    animation: draw-arrow 2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
+  }
+
+  @keyframes draw-arrow {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .arrowhead-main {
+    opacity: 0;
+    animation: fade-in 0.4s ease 2.2s forwards;
+  }
+
+  @keyframes fade-in {
+    to { opacity: 1; }
+  }
+
+  .domain-node-fill {
+    animation: pulse-domain 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-domain {
+    0%, 100% { r: 8; opacity: 0.8; }
+    50% { r: 10; opacity: 1; }
+  }
+
+  .codomain-node-fill {
+    animation: pulse-codomain 3s ease-in-out infinite 1.5s;
+  }
+
+  @keyframes pulse-codomain {
+    0%, 100% { r: 8; opacity: 0.8; }
+    50% { r: 10; opacity: 1; }
+  }
+
+  .branch-group {
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .branch-group.visible {
+    opacity: 1;
+  }
+
+  .branch-line {
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .branch-group.visible .branch-line {
+    stroke-dashoffset: 0;
+  }
+
+  .branch-dot {
+    opacity: 0;
+    transition: opacity 0.4s ease 0.6s;
+  }
+
+  .branch-group.visible .branch-dot {
+    opacity: 1;
+  }
+
+  .branch-label {
+    opacity: 0;
+    transition: opacity 0.4s ease 0.8s;
+  }
+
+  .branch-group.visible .branch-label {
+    opacity: 1;
+  }
+
+  .branch-desc {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .branch-hit:hover ~ .branch-desc {
+    opacity: 1;
+  }
+
+  .tradition-ring {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .tradition-ring.visible {
+    opacity: 1;
+  }
+
+  .f-label {
+    opacity: 0;
+    animation: fade-in 0.6s ease 2.5s forwards;
+  }
+
+  .wordmark {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 2.4rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e0d8cc;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fade-in 0.8s ease 2.8s forwards;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(139, 164, 199, 0.6);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fade-in 0.8s ease 3.1s forwards;
+  }
+
+  .core-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: rgba(186, 163, 112, 0.7);
+    text-align: center;
+    max-width: 500px;
+    line-height: 1.6;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fade-in 1s ease 3.5s forwards;
+  }
+
+  .instruction {
+    position: fixed;
+    bottom: 2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(139, 164, 199, 0.3);
+    opacity: 0;
+    animation: fade-in 0.5s ease 4s forwards;
+  }
+
+  .tradition-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    fill: rgba(139, 164, 199, 0.5);
+  }
+
+  .gradient-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 35% 50%, rgba(26, 36, 64, 0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 65% 50%, rgba(186, 163, 112, 0.06) 0%, transparent 50%);
+    z-index: -1;
+  }
+</style>
+</head>
+<body>
+
+<div class="gradient-bg"></div>
+
+<div class="hero">
+  <div class="arrow-canvas">
+    <svg class="main-svg" viewBox="0 0 700 500">
+      <defs>
+        <linearGradient id="arrow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8ba4c7"/>
+          <stop offset="60%" stop-color="#baa370"/>
+          <stop offset="100%" stop-color="#d4bc7c"/>
+        </linearGradient>
+        <filter id="glow-sm">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="node-glow-blue" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#8ba4c7" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#8ba4c7" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="node-glow-gold" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#baa370" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#baa370" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Tradition ring around domain node -->
+      <g class="tradition-ring" id="traditionRing">
+        <circle cx="170" cy="250" r="60" fill="none" stroke="rgba(139,164,199,0.12)" stroke-width="0.5"/>
+        <text class="tradition-name" x="108" y="210" transform="rotate(-30, 108, 210)">Klir</text>
+        <text class="tradition-name" x="95" y="245">Bunge</text>
+        <text class="tradition-name" x="100" y="280">Mobus</text>
+        <text class="tradition-name" x="118" y="308" transform="rotate(20, 118, 308)">Joslyn</text>
+        <text class="tradition-name" x="195" y="198" transform="rotate(30, 195, 198)">Myers</text>
+        <text class="tradition-name" x="210" y="235">Wymore</text>
+        <text class="tradition-name" x="195" y="305" transform="rotate(-20, 195, 305)">Mesarovi&#263;</text>
+      </g>
+
+      <!-- Domain node glow -->
+      <circle cx="170" cy="250" r="30" fill="url(#node-glow-blue)"/>
+
+      <!-- Codomain node glow -->
+      <circle cx="500" cy="250" r="30" fill="url(#node-glow-gold)"/>
+
+      <!-- Arrow shaft glow (behind) -->
+      <line x1="185" y1="250" x2="485" y2="250"
+            stroke="#baa370" stroke-width="16" stroke-linecap="round" opacity="0.1"/>
+      <!-- The arrow shaft -->
+      <line class="shaft" x1="185" y1="250" x2="485" y2="250"
+            stroke="#baa370" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+
+      <!-- Arrowhead -->
+      <polygon class="arrowhead-main" points="480,241 498,250 480,259" fill="#d4bc7c"/>
+
+      <!-- f label -->
+      <text class="f-label" x="335" y="235"
+            font-family="Cormorant Garamond" font-style="italic" font-size="18"
+            fill="rgba(186,163,112,0.6)" text-anchor="middle">f</text>
+
+      <!-- Domain node -->
+      <g class="node-domain" id="domainNode">
+        <circle cx="170" cy="250" r="12" fill="none" stroke="#8ba4c7" stroke-width="1.5"/>
+        <circle class="domain-node-fill" cx="170" cy="250" r="8" fill="#8ba4c7" opacity="0.8"/>
+      </g>
+
+      <!-- Codomain node -->
+      <g class="node-codomain" id="codomainNode">
+        <circle cx="500" cy="250" r="12" fill="none" stroke="#baa370" stroke-width="1.5"/>
+        <circle class="codomain-node-fill" cx="500" cy="250" r="8" fill="#baa370" opacity="0.8"/>
+      </g>
+
+      <!-- Branch: Political Economy (upper) -->
+      <g class="branch-group" id="branch-pe">
+        <line class="branch-line" x1="508" y1="244" x2="600" y2="170"
+              stroke="rgba(186,163,112,0.3)" stroke-width="1"/>
+        <circle class="branch-dot" cx="600" cy="170" r="4" fill="rgba(186,163,112,0.5)"/>
+        <rect class="branch-hit" x="570" y="140" width="120" height="60" fill="transparent"/>
+        <text class="branch-label" x="612" y="168"
+              font-family="Inter" font-size="10" letter-spacing="0.12em"
+              fill="rgba(186,163,112,0.6)">POLITICAL ECONOMY</text>
+        <text class="branch-desc" x="612" y="185"
+              font-family="Cormorant Garamond" font-style="italic" font-size="12"
+              fill="rgba(139,164,199,0.5)">governance, institutions, civic systems</text>
+      </g>
+
+      <!-- Branch: Neuromorphics (middle) -->
+      <g class="branch-group" id="branch-neuro">
+        <line class="branch-line" x1="512" y1="250" x2="610" y2="250"
+              stroke="rgba(186,163,112,0.3)" stroke-width="1"/>
+        <circle class="branch-dot" cx="610" cy="250" r="4" fill="rgba(186,163,112,0.5)"/>
+        <rect class="branch-hit" x="580" y="220" width="120" height="60" fill="transparent"/>
+        <text class="branch-label" x="622" y="248"
+              font-family="Inter" font-size="10" letter-spacing="0.12em"
+              fill="rgba(186,163,112,0.6)">NEUROMORPHICS</text>
+        <text class="branch-desc" x="622" y="265"
+              font-family="Cormorant Garamond" font-style="italic" font-size="12"
+              fill="rgba(139,164,199,0.5)">brain-inspired computing, biological systems</text>
+      </g>
+
+      <!-- Branch: Protocol Science (lower) -->
+      <g class="branch-group" id="branch-ps">
+        <line class="branch-line" x1="508" y1="256" x2="600" y2="330"
+              stroke="rgba(186,163,112,0.3)" stroke-width="1"/>
+        <circle class="branch-dot" cx="600" cy="330" r="4" fill="rgba(186,163,112,0.5)"/>
+        <rect class="branch-hit" x="570" y="300" width="120" height="60" fill="transparent"/>
+        <text class="branch-label" x="612" y="328"
+              font-family="Inter" font-size="10" letter-spacing="0.12em"
+              fill="rgba(186,163,112,0.6)">PROTOCOL SCIENCE</text>
+        <text class="branch-desc" x="612" y="345"
+              font-family="Cormorant Garamond" font-style="italic" font-size="12"
+              fill="rgba(139,164,199,0.5)">coordination on commitment substrates</text>
+      </g>
+
+      <!-- Node labels (appear on hover) -->
+      <text id="label-0" x="170" y="290" text-anchor="middle"
+            font-family="Cormorant Garamond" font-style="italic" font-size="16"
+            fill="rgba(139,164,199,0)" style="transition: fill 0.4s ease">
+        relations
+      </text>
+      <text id="label-1" x="500" y="290" text-anchor="middle"
+            font-family="Cormorant Garamond" font-style="italic" font-size="16"
+            fill="rgba(186,163,112,0)" style="transition: fill 0.4s ease">
+        things
+      </text>
+    </svg>
+  </div>
+
+  <div class="wordmark">HALCYONIC</div>
+  <div class="subtitle">One arrow. Seven traditions. Three frontiers.</div>
+
+  <div class="core-statement">
+    A system is a morphism f : R &rarr; T<br/>
+    <span style="font-size: 0.85em; color: rgba(139,164,199,0.5);">
+      The walking arrow is the common core of systems science.
+    </span>
+  </div>
+</div>
+
+<div class="instruction">click nodes to explore &middot; hover branches for detail</div>
+
+<script>
+  const domainNode = document.getElementById('domainNode');
+  const codomainNode = document.getElementById('codomainNode');
+  const traditionRing = document.getElementById('traditionRing');
+  const branches = ['branch-pe', 'branch-neuro', 'branch-ps'];
+  const label0 = document.getElementById('label-0');
+  const label1 = document.getElementById('label-1');
+
+  let domainExpanded = false;
+  let codomainExpanded = false;
+
+  function nodeColor(node, alpha) {
+    const fill = node.querySelector('.domain-node-fill, .codomain-node-fill')?.getAttribute('fill')
+              || node.querySelector('circle[fill]')?.getAttribute('fill')
+              || '#8ba4c7';
+    const m = fill.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+    if (m) return 'rgba(' + parseInt(m[1],16) + ',' + parseInt(m[2],16) + ',' + parseInt(m[3],16) + ',' + alpha + ')';
+    const rm = fill.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    if (rm) return 'rgba(' + rm[1] + ',' + rm[2] + ',' + rm[3] + ',' + alpha + ')';
+    return fill;
+  }
+
+  domainNode.addEventListener('click', () => {
+    domainExpanded = !domainExpanded;
+    traditionRing.classList.toggle('visible', domainExpanded);
+    label0.style.fill = domainExpanded ? nodeColor(domainNode, 0.7) : nodeColor(domainNode, 0);
+  });
+
+  domainNode.addEventListener('mouseenter', () => {
+    if (!domainExpanded) label0.style.fill = nodeColor(domainNode, 0.4);
+  });
+  domainNode.addEventListener('mouseleave', () => {
+    if (!domainExpanded) label0.style.fill = nodeColor(domainNode, 0);
+  });
+
+  codomainNode.addEventListener('click', () => {
+    codomainExpanded = !codomainExpanded;
+    branches.forEach((id, i) => {
+      const el = document.getElementById(id);
+      setTimeout(() => {
+        el.classList.toggle('visible', codomainExpanded);
+      }, i * 150);
+    });
+    label1.style.fill = codomainExpanded ? nodeColor(codomainNode, 0.7) : nodeColor(codomainNode, 0);
+  });
+
+  codomainNode.addEventListener('mouseenter', () => {
+    if (!codomainExpanded) label1.style.fill = nodeColor(codomainNode, 0.4);
+  });
+  codomainNode.addEventListener('mouseleave', () => {
+    if (!codomainExpanded) label1.style.fill = nodeColor(codomainNode, 0);
+  });
+</script>
+<script src="scheme-bridge.js"></script>
+</body>
+</html>

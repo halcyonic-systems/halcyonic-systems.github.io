@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halcyonic — Concept 1: H as Morphism</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #060a14;
+    color: #e0d8cc;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  canvas#bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .logo-area {
+    position: relative;
+    width: 320px;
+    height: 400px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+
+  svg.h-logo {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 0 40px rgba(186, 163, 112, 0.15));
+  }
+
+  .crossbar-arrow {
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .logo-area:hover .crossbar-arrow {
+    filter: url(#glow);
+  }
+
+  .logo-area:hover .arrowhead {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .arrowhead {
+    opacity: 0;
+    transition: opacity 0.6s ease 0.2s;
+  }
+
+  .math-notation {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: rgba(186, 163, 112, 0);
+    transition: color 0.8s ease;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .logo-area:hover .math-notation {
+    color: rgba(186, 163, 112, 0.85);
+  }
+
+  .math-zero { top: 42%; left: -60px; }
+  .math-one { top: 42%; right: -40px; }
+  .math-f { top: 30%; left: 50%; transform: translateX(-50%); font-size: 1.1rem; letter-spacing: 0.15em; }
+
+  .traditions {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+
+  .tradition-label {
+    position: absolute;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    color: rgba(139, 164, 199, 0.7);
+  }
+
+  .logo-area.expanded .tradition-label {
+    opacity: 1;
+  }
+
+  .t-klir { top: 10%; left: -80px; }
+  .t-bunge { top: 20%; left: -80px; }
+  .t-mobus { top: 30%; left: -80px; }
+  .t-joslyn { top: 40%; left: -80px; }
+  .t-myers { top: 55%; left: -80px; }
+  .t-wymore { top: 65%; left: -80px; }
+  .t-mesarovic { top: 75%; left: -80px; }
+
+  .tradition-line {
+    position: absolute;
+    height: 1px;
+    background: rgba(139, 164, 199, 0.2);
+    transform-origin: left center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .logo-area.expanded .tradition-line {
+    opacity: 1;
+  }
+
+  .domain-branches {
+    position: absolute;
+    right: 72px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .branch {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .logo-area:hover .branch {
+    opacity: 1;
+  }
+
+  .branch-line {
+    stroke: rgba(186, 163, 112, 0.3);
+    stroke-width: 1;
+    transition: stroke 0.3s ease;
+  }
+
+  .branch-label {
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    fill: rgba(186, 163, 112, 0.6);
+  }
+
+  .wordmark {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 2.4rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #e0d8cc;
+    margin-bottom: 0.75rem;
+  }
+
+  .wordmark span.h-char {
+    font-weight: 500;
+    color: #baa370;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(139, 164, 199, 0.6);
+    letter-spacing: 0.05em;
+    margin-bottom: 3rem;
+  }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: rgba(186, 163, 112, 0.4);
+    letter-spacing: 0.08em;
+    margin-top: 1rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .logo-area.expanded ~ .tagline,
+  .logo-area:hover ~ .tagline {
+    opacity: 1;
+  }
+
+  .insight {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(139, 164, 199, 0.3);
+  }
+
+  .color-bar {
+    display: flex;
+    gap: 1px;
+    margin-top: 3rem;
+    opacity: 0.6;
+  }
+
+  .color-bar div {
+    width: 48px;
+    height: 6px;
+    border-radius: 3px;
+  }
+
+  .cb-1 { background: #baa370; }
+  .cb-2 { background: #8ba4c7; }
+  .cb-3 { background: #1a2440; }
+  .cb-4 { background: #e0d8cc; }
+  .cb-5 { background: #060a14; border: 1px solid rgba(139,164,199,0.2); }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div class="container">
+  <div class="logo-area" id="logoArea">
+    <svg class="h-logo" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8ba4c7"/>
+          <stop offset="40%" stop-color="#baa370"/>
+          <stop offset="100%" stop-color="#d4bc7c"/>
+        </linearGradient>
+        <linearGradient id="vert-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#e0d8cc" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#e0d8cc"/>
+          <stop offset="100%" stop-color="#e0d8cc" stop-opacity="0.9"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Left vertical (domain — 0) -->
+      <rect x="88" y="80" width="3.5" height="240" rx="1.75" fill="url(#vert-grad)" opacity="0.85"/>
+
+      <!-- Right vertical (codomain — 1) -->
+      <rect x="228" y="80" width="3.5" height="240" rx="1.75" fill="url(#vert-grad)" opacity="0.85"/>
+
+      <!-- Crossbar glow (behind) -->
+      <line x1="91" y1="200" x2="228" y2="200"
+            stroke="#baa370" stroke-width="16" stroke-linecap="round" opacity="0.12"/>
+      <!-- Crossbar (the morphism f) -->
+      <line class="crossbar-arrow" x1="91" y1="200" x2="228" y2="200"
+            stroke="#baa370" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+
+      <!-- Arrowhead -->
+      <polygon class="arrowhead" points="224,193 240,200 224,207"
+               fill="#d4bc7c" opacity="0"/>
+
+      <!-- Subtle node markers at crossbar endpoints -->
+      <circle cx="91" cy="200" r="5" fill="#8ba4c7" opacity="0.5"/>
+      <circle cx="228" cy="200" r="5" fill="#baa370" opacity="0.5"/>
+
+      <!-- Domain branches (three applied limbs) -->
+      <g class="branches" opacity="0">
+        <line x1="232" y1="200" x2="290" y2="155" stroke="rgba(186,163,112,0.35)" stroke-width="1"/>
+        <line x1="232" y1="200" x2="295" y2="200" stroke="rgba(186,163,112,0.35)" stroke-width="1"/>
+        <line x1="232" y1="200" x2="290" y2="245" stroke="rgba(186,163,112,0.35)" stroke-width="1"/>
+        <text x="293" y="152" fill="rgba(186,163,112,0.5)" font-size="8" font-family="Inter" letter-spacing="0.1em">POLITICAL ECONOMY</text>
+        <text x="298" y="203" fill="rgba(186,163,112,0.5)" font-size="8" font-family="Inter" letter-spacing="0.1em">NEUROMORPHICS</text>
+        <text x="293" y="248" fill="rgba(186,163,112,0.5)" font-size="8" font-family="Inter" letter-spacing="0.1em">PROTOCOL SCIENCE</text>
+      </g>
+
+      <!-- Subtle node dots -->
+      <circle cx="89.5" cy="200" r="4" fill="none" stroke="rgba(139,164,199,0.4)" stroke-width="1"/>
+      <circle cx="230" cy="200" r="4" fill="none" stroke="rgba(186,163,112,0.4)" stroke-width="1"/>
+    </svg>
+
+    <span class="math-notation math-zero">0</span>
+    <span class="math-notation math-one">1</span>
+    <span class="math-notation math-f">f : R &rarr; T</span>
+
+    <div class="traditions">
+      <span class="tradition-label t-klir">Klir</span>
+      <span class="tradition-label t-bunge">Bunge</span>
+      <span class="tradition-label t-mobus">Mobus</span>
+      <span class="tradition-label t-joslyn">Joslyn</span>
+      <span class="tradition-label t-myers">Myers</span>
+      <span class="tradition-label t-wymore">Wymore</span>
+      <span class="tradition-label t-mesarovic">Mesarovi&#263;</span>
+    </div>
+  </div>
+
+  <div class="wordmark"><span class="h-char">H</span>ALCYONIC</div>
+  <div class="subtitle">Systems science for the applied frontier</div>
+
+  <div class="tagline">A system is a morphism. The arrow is the common core.</div>
+
+  <div class="color-bar">
+    <div class="cb-1"></div>
+    <div class="cb-2"></div>
+    <div class="cb-3"></div>
+    <div class="cb-4"></div>
+    <div class="cb-5"></div>
+  </div>
+</div>
+
+<div class="insight">click to explore &middot; hover to reveal</div>
+
+<script>
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  const logoArea = document.getElementById('logoArea');
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    particles = [];
+    const count = Math.floor((w * h) / 12000);
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        r: Math.random() * 1.5 + 0.3,
+        alpha: Math.random() * 0.3 + 0.05
+      });
+    }
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, w, h);
+
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(139, 164, 199, ${p.alpha})`;
+      ctx.fill();
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(139, 164, 199, ${0.04 * (1 - dist / 100)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(drawParticles);
+  }
+
+  resize();
+  createParticles();
+  drawParticles();
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+
+  let expanded = false;
+  logoArea.addEventListener('click', () => {
+    expanded = !expanded;
+    logoArea.classList.toggle('expanded', expanded);
+    const branches = document.querySelector('.branches');
+    branches.style.opacity = expanded ? '1' : '0';
+    branches.style.transition = 'opacity 0.8s ease';
+  });
+</script>
+<script src="scheme-bridge.js"></script>
+</body>
+</html>
