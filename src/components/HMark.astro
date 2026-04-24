@@ -1,0 +1,33 @@
+---
+interface Props {
+  size?: number;
+  variant?: 'night' | 'frost';
+  class?: string;
+}
+
+const { size = 40, variant = 'night', class: className = '' } = Astro.props;
+
+const colors = variant === 'night'
+  ? { vert: '#e2e8f0', arrow: '#14b8a6', head: '#0f766e', source: '#6366f1', target: '#14b8a6' }
+  : { vert: '#1e293b', arrow: '#0d9488', head: '#0f766e', source: '#6366f1', target: '#0d9488' };
+
+const height = size * (80 / 64);
+---
+
+<svg
+  width={size}
+  height={height}
+  viewBox="0 0 64 80"
+  xmlns="http://www.w3.org/2000/svg"
+  class={className}
+  aria-label="Halcyonic Systems"
+  role="img"
+>
+  <rect x="14" y="10" width="2.5" height="60" rx="1.25" fill={colors.vert} opacity="0.85" />
+  <rect x="47.5" y="10" width="2.5" height="60" rx="1.25" fill={colors.vert} opacity="0.85" />
+  <line x1="16" y1="40" x2="48" y2="40" stroke={colors.arrow} stroke-width="8" stroke-linecap="round" opacity="0.12" />
+  <line x1="16" y1="40" x2="48" y2="40" stroke={colors.arrow} stroke-width="2.5" stroke-linecap="round" opacity="0.9" />
+  <polygon points="45,37 52,40 45,43" fill={colors.head} opacity="0.7" />
+  <circle cx="15.5" cy="40" r="2.5" fill={colors.source} opacity="0.5" />
+  <circle cx="49" cy="40" r="2.5" fill={colors.target} opacity="0.5" />
+</svg>

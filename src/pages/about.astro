@@ -3,32 +3,179 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="About" description="About Shingai Thornton and Halcyonic Systems">
-  <section class="mx-auto max-w-4xl px-6 py-16">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">About</h1>
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="ab-title">About</h1>
 
-    <p class="mt-8 text-lg text-gray-600">
-      I'm Shingai Thornton. I've been immersed in the systems science community for five years and am defending my M.S. thesis in Systems Science at Binghamton in Spring 2026. Before that, I've been researching blockchains, cryptoeconomics, and political economy since 2012.
-    </p>
-
-    <p class="mt-4 text-lg text-gray-600">
-      Halcyonic Systems is where this work comes together — tools and research applying formal systems science to these domains.
-    </p>
-
-    <div class="mt-8">
-      <a
-        href="mailto:shingai@halcyonic.systems"
-        class="link-hover text-lg font-medium text-ocean-600 hover:text-ocean-500 transition-colors"
-      >
-        shingai@halcyonic.systems <span aria-hidden="true">&rarr;</span>
-      </a>
+    <div class="ab-intro">
+      <div class="ab-kingfisher">
+        <img src="/logo.png" alt="Halcyonic kingfisher" class="ab-bird" />
+      </div>
+      <div class="ab-story">
+        <p>
+          The halcyon is the kingfisher of Greek myth — the bird that nests on calm seas.
+          Ancient sailors believed it could still the waves during its brooding days, creating
+          a window of peace in the middle of winter storms. That stillness is what we pursue:
+          a point of formal rigor in the chaos of transdisciplinary complexity.
+        </p>
+      </div>
     </div>
 
-    <div class="mt-12 pt-8 border-t border-gray-200">
-      <h2 class="text-sm font-medium uppercase tracking-widest text-gray-400 mb-4">Connect</h2>
-      <div class="flex flex-wrap gap-6">
-        <a href="https://halcyonic.discourse.group" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-600 hover:text-ocean-600 transition-colors">Forums</a>
-        <a href="https://github.com/halcyonic-systems" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-600 hover:text-ocean-600 transition-colors">GitHub</a>
+    <div class="ab-bio">
+      <p>
+        I'm Shingai Thornton. I defended my M.S. thesis in Systems Science at Binghamton University
+        in April 2026 — passed with no revisions. My committee: Cliff Joslyn (PNNL, categorical systems science
+        and hypergraph theory), Sadamori Kojaku (network science, stochastic block models),
+        and Carlos Gershenson (complexity science, self-organization).
+      </p>
+      <p>
+        Before that, I spent a decade researching blockchains, cryptoeconomics, and political economy.
+        Halcyonic Systems is where this work comes together — formal systems science applied to
+        governance, cryptoeconomics, and brain-inspired computing.
+      </p>
+    </div>
+
+    <div class="ab-lineage">
+      <h2 class="ab-section-header">Intellectual Lineage</h2>
+      <p>
+        Bertalanffy's General System Theory established the field. Mobus formalized it into a
+        rigorous ontology with the 8-tuple system definition. The category theory thread —
+        particularly Joslyn's work on hypergraph-based categorical systems — provides the
+        mathematical foundation. The Common Core Theorem (K &cong; <strong>2</strong>) shows
+        that seven independent traditions of system definition share a single categorical structure:
+        a system is a morphism f : R &rarr; T.
+      </p>
+    </div>
+
+    <div class="ab-body-of-work">
+      <h2 class="ab-section-header">The Body of Work</h2>
+      <p>
+        Four projects span four modes of systems science work: BERT (framework and computational tool),
+        the U.S. Trade Network thesis (quantitative empirical research), Facets (interactive epistemological
+        classification), and the Bitcoin Deep Systems Analysis (theoretical domain application). Together
+        they form a coherent research program — not a random collection.
+      </p>
+    </div>
+
+    <div class="ab-connect">
+      <h2 class="ab-section-header">Connect</h2>
+      <div class="ab-links">
+        <a href="mailto:shingai@halcyonic.systems" class="ab-link">
+          shingai@halcyonic.systems <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="https://github.com/halcyonic-systems" target="_blank" rel="noopener noreferrer" class="ab-link">
+          GitHub <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="https://halcyonic.discourse.group" target="_blank" rel="noopener noreferrer" class="ab-link">
+          Forums <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="https://ideas.halcyonic.systems" target="_blank" rel="noopener noreferrer" class="ab-link">
+          Substack <span aria-hidden="true">&rarr;</span>
+        </a>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .ab-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--color-frost-slate);
+  }
+
+  .ab-intro {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+
+  .ab-kingfisher {
+    flex-shrink: 0;
+  }
+
+  .ab-bird {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .ab-story {
+    flex: 1;
+  }
+
+  .ab-story p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--color-frost-slate-dim);
+  }
+
+  .ab-bio {
+    margin-top: 2.5rem;
+  }
+
+  .ab-bio p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-frost-slate-dim);
+    margin-bottom: 1rem;
+  }
+
+  .ab-section-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-frost-teal-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .ab-lineage, .ab-body-of-work {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-frost-border);
+  }
+
+  .ab-lineage p, .ab-body-of-work p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-frost-slate-dim);
+  }
+
+  .ab-connect {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-frost-border);
+  }
+
+  .ab-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .ab-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-frost-teal);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .ab-link:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 640px) {
+    .ab-intro {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

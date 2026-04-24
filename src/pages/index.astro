@@ -1,36 +1,191 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WalkingArrow from '../components/WalkingArrow.astro';
 ---
 
 <BaseLayout title="Home" description="Systems science research and tools for transdisciplinary analysis">
-  <section class="mx-auto max-w-4xl px-6 py-24 sm:py-32">
-    <div class="text-center">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-        Halcyonic Systems
-      </h1>
-      <p class="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
-        Systemic foundations for transdisciplinary science
-      </p>
+  <section slot="hero" class="hero-zone">
+    <div class="hero-content">
+      <WalkingArrow />
 
-      <p class="mt-8 text-lg text-gray-500 max-w-xl mx-auto">
-        What happens when researchers across disciplines share a common language? Let's find out.
-      </p>
+      <div class="hero-text">
+        <h1 class="hero-wordmark">
+          <span class="h-accent">H</span>ALCYONIC
+        </h1>
+        <p class="hero-tagline">
+          Seven definitions of system. One shared structure.
+        </p>
+        <p class="hero-equation">
+          K &cong; <strong>2</strong> &mdash; f : R &rarr; T
+        </p>
+      </div>
 
-      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a
-          href="/research"
-          class="rounded-lg bg-ocean-700 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-ocean-600 transition-all"
-        >
-          View Research
+      <div class="hero-ctas">
+        <a href="/work" class="cta-primary">
+          Explore the Work <span aria-hidden="true">&rarr;</span>
         </a>
-        <a
-          href="/glossary"
-          class="rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-ocean-700 hover:bg-ocean-50 hover:border-ocean-300 transition-all"
-        >
-          Learn the Language
+        <a href="/writing" class="cta-secondary">
+          Read the Writing <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
+
+      <p class="hero-hint">click nodes to explore &middot; hover branches for detail</p>
     </div>
   </section>
 
+  <section class="mx-auto max-w-3xl px-6 py-16 text-center">
+    <p class="text-lg leading-relaxed" style="color: var(--color-frost-slate-dim);">
+      Halcyonic Systems applies formal systems science to the domains that need it most &mdash;
+      governance, cryptoeconomics, and brain-inspired computing. Built on a categorical foundation
+      where seven independent traditions converge on a single structure.
+    </p>
+  </section>
 </BaseLayout>
+
+<style>
+  .hero-zone {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero-wordmark {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-night-parchment);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease 2.8s forwards;
+  }
+
+  .h-accent {
+    font-weight: 500;
+    color: var(--color-night-gold);
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--color-night-blue-dim);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease 3.1s forwards;
+  }
+
+  .hero-equation {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--color-night-gold-dim);
+    letter-spacing: 0.08em;
+    opacity: 0;
+    animation: fade-up 0.8s ease 3.4s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease 3.7s forwards;
+  }
+
+  .cta-primary {
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-night-bg);
+    background: var(--color-night-gold);
+    transition: opacity 0.2s ease;
+    text-decoration: none;
+  }
+
+  .cta-primary:hover {
+    opacity: 0.85;
+  }
+
+  .cta-secondary {
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-night-parchment);
+    border: 1px solid var(--color-night-border);
+    transition: border-color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .cta-secondary:hover {
+    border-color: var(--color-night-gold-dim);
+  }
+
+  .hero-hint {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(99, 102, 241, 0.3);
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fade-up 0.5s ease 4s forwards;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-wordmark, .hero-tagline, .hero-equation,
+    .hero-ctas, .hero-hint {
+      opacity: 1 !important;
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-zone {
+      min-height: 70vh;
+      padding: 3rem 1rem 2rem;
+    }
+
+    .hero-wordmark {
+      font-size: 1.6rem;
+      letter-spacing: 0.25em;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .cta-primary, .cta-secondary {
+      text-align: center;
+    }
+  }
+</style>

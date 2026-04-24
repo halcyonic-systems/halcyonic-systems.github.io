@@ -1,32 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ocean-50: #f0f9ff;
-  --color-ocean-100: #e0f2fe;
-  --color-ocean-200: #bae6fd;
-  --color-ocean-300: #7dd3fc;
-  --color-ocean-400: #38bdf8;
-  --color-ocean-500: #0ea5e9;
-  --color-ocean-600: #0284c7;
-  --color-ocean-700: #0369a1;
-  --color-ocean-800: #075985;
-  --color-ocean-900: #0c4a6e;
-  --color-ocean-950: #082f49;
+  /* Dark Slate — hero zone */
+  --color-night-bg: #0f172a;
+  --color-night-card: rgba(30, 41, 59, 0.4);
+  --color-night-gold: #14b8a6;
+  --color-night-gold-dim: rgba(20, 184, 166, 0.5);
+  --color-night-blue: #6366f1;
+  --color-night-blue-dim: rgba(99, 102, 241, 0.5);
+  --color-night-parchment: #e2e8f0;
+  --color-night-parchment-dim: rgba(226, 232, 240, 0.6);
+  --color-night-border: rgba(99, 102, 241, 0.12);
 
-  --color-warm-50: #fefce8;
-  --color-warm-100: #fef9c3;
-  --color-warm-200: #fef08a;
-  --color-warm-300: #fde047;
-  --color-warm-400: #facc15;
-  --color-warm-500: #eab308;
+  /* Frost — content zone */
+  --color-frost-bg: #f0f4f8;
+  --color-frost-card: rgba(255, 255, 255, 0.8);
+  --color-frost-teal: #0d9488;
+  --color-frost-teal-dim: rgba(13, 148, 136, 0.55);
+  --color-frost-indigo: #6366f1;
+  --color-frost-indigo-dim: rgba(99, 102, 241, 0.5);
+  --color-frost-slate: #1e293b;
+  --color-frost-slate-dim: rgba(30, 41, 59, 0.6);
+  --color-frost-border: rgba(30, 41, 59, 0.1);
 
+  /* Teal scale (for utility classes) */
   --color-teal-50: #f0fdfa;
   --color-teal-100: #ccfbf1;
   --color-teal-500: #14b8a6;
   --color-teal-600: #0d9488;
 
+  /* Typography */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Fraunces", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 html {
@@ -34,15 +40,15 @@ html {
 }
 
 body {
-  @apply text-gray-900 antialiased;
+  color: var(--color-frost-slate);
   min-height: 100vh;
-  background: #f7f5f0;
+  background: var(--color-frost-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark mode */
-.dark body {
-  @apply text-gray-100;
-  background: #141520;
+h1, h2, h3 {
+  font-family: var(--font-serif);
 }
 
 /* Link underline animation */
@@ -74,52 +80,40 @@ body {
   transform: translateY(-2px);
 }
 
-/* Heading font */
-h1, h2, h3 {
-  font-family: var(--font-serif);
+/* Hero zone (Deep Night) — pulls up under the sticky header */
+.hero-zone {
+  background: var(--color-night-bg);
+  color: var(--color-night-parchment);
+  position: relative;
+  overflow: hidden;
+  margin-top: -49px;
+  padding-top: 49px;
 }
 
-/* Dark mode overrides */
-.dark .bg-white {
-  background-color: #1e1e2e;
+.hero-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(30, 41, 59, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(13, 148, 136, 0.06) 0%, transparent 40%);
+  pointer-events: none;
 }
 
-.dark .bg-\[#f7f5f0\] {
-  background-color: #141520;
+/* Zone cut — clean break between hero and content */
+.zone-cut {
+  border: none;
+  height: 1px;
+  background: var(--color-frost-border);
+  margin: 0;
 }
 
-.dark .border-gray-200 {
-  border-color: rgba(255, 255, 255, 0.1);
+.zone-cut:empty {
+  display: none;
 }
 
-.dark .text-gray-900 {
-  @apply text-gray-100;
-}
-
-.dark .text-gray-700 {
-  @apply text-gray-300;
-}
-
-.dark .text-gray-600 {
-  @apply text-gray-400;
-}
-
-.dark .text-gray-500 {
-  @apply text-gray-400;
-}
-
-.dark .border-ocean-100\/50 {
-  border-color: rgba(14, 165, 233, 0.2);
-}
-
-.dark .border-ocean-100 {
-  border-color: rgba(14, 165, 233, 0.3);
-}
-
-.dark .border-warm-100 {
-  border-color: rgba(234, 179, 8, 0.3);
-}
-
-.dark .border-teal-100 {
-  border-color: rgba(20, 184, 166, 0.3);
+/* Content zone (Frost) */
+.content-zone {
+  background: var(--color-frost-bg);
+  color: var(--color-frost-slate);
 }

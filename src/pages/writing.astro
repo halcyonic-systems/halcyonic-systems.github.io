@@ -8,7 +8,6 @@ const featured = [
     href: '/fourth-paradigm-series.html',
     date: 'March 2026',
     tag: 'Series · 3 parts',
-    tagColor: 'bg-ocean-50 text-ocean-700 border-ocean-200',
     internal: true,
   },
 ];
@@ -25,12 +24,14 @@ const archive = [
     description: 'Why cryptoeconomic systems are uniquely valuable for systems science — permissionless, transparent, open-source, and programmable.',
     href: 'https://ideas.halcyonic.systems/p/the-value-of-cryptoeconomic-systems',
     date: '2024',
+    domain: 'Cryptoeconomics',
   },
   {
     title: 'Notes on Protocol Labs',
     description: 'How a token-powered innovation network bridged the gap between basic research and applied science — and what it means for systems science.',
     href: 'https://ideas.halcyonic.systems/p/notes-on-protocol-labs',
     date: '2025',
+    domain: 'Cryptoeconomics',
   },
   {
     title: 'Humanistic Systems Research',
@@ -55,29 +56,28 @@ const archive = [
 
 <BaseLayout title="Writing" description="Essays on systems science, cryptoeconomics, and transdisciplinary research">
   <section class="mx-auto max-w-4xl px-6 py-16">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Writing</h1>
-    <p class="mt-4 text-lg text-gray-600 max-w-2xl">
+    <h1 class="wr-title">Writing</h1>
+    <p class="wr-intro">
       Systems science applied to the domains that need it most — and the occasional essay on what rigorous thinking actually looks like.
     </p>
 
-    <!-- Featured -->
     <div class="mt-10 grid gap-6">
       {featured.map((piece) => (
         <a
           href={piece.href}
           target={piece.internal ? undefined : "_blank"}
           rel={piece.internal ? undefined : "noopener noreferrer"}
-          class="group card-lift p-6 rounded-xl bg-white border border-gray-200 hover:border-ocean-300 shadow-sm hover:shadow-md transition-all"
+          class="group card-lift wr-featured-card"
         >
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
-                <span class={`text-xs px-2 py-0.5 rounded-full border ${piece.tagColor}`}>{piece.tag}</span>
-                <span class="text-xs text-gray-400">{piece.date}</span>
+                <span class="wr-tag">{piece.tag}</span>
+                <span class="wr-date">{piece.date}</span>
               </div>
-              <h2 class="text-xl font-semibold text-gray-900 group-hover:text-ocean-600 transition-colors">{piece.title}</h2>
-              <p class="mt-2 text-gray-600">{piece.description}</p>
-              <span class="mt-3 inline-block text-sm font-medium text-ocean-600">
+              <h2 class="wr-featured-title">{piece.title}</h2>
+              <p class="wr-featured-desc">{piece.description}</p>
+              <span class="wr-read-link">
                 Read <span aria-hidden="true">&rarr;</span>
               </span>
             </div>
@@ -86,44 +86,213 @@ const archive = [
       ))}
     </div>
 
-    <!-- Archive -->
     {archive.length > 0 && (
       <div class="mt-16">
-        <h2 class="text-sm font-medium uppercase tracking-widest text-gray-400 mb-6">From the archive</h2>
+        <h2 class="wr-archive-header">From the archive</h2>
         <div class="grid gap-4 sm:grid-cols-2">
           {archive.map((piece) => (
             <a
               href={piece.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="group p-4 rounded-lg border border-gray-100 hover:border-ocean-200 hover:bg-white transition-all"
+              class="group wr-archive-card"
             >
               <div class="flex items-baseline justify-between gap-2 mb-1">
-                <h3 class="font-medium text-sm text-gray-900 group-hover:text-ocean-600 transition-colors">{piece.title}</h3>
-                <span class="text-xs text-gray-400 shrink-0">{piece.date}</span>
+                <h3 class="wr-archive-title">{piece.title}</h3>
+                <span class="wr-date shrink-0">{piece.date}</span>
               </div>
-              <p class="text-xs text-gray-500 line-clamp-2">{piece.description}</p>
+              {piece.domain && (
+                <span class="wr-domain-tag">{piece.domain}</span>
+              )}
+              <p class="wr-archive-desc">{piece.description}</p>
             </a>
           ))}
         </div>
       </div>
     )}
 
-    <!-- Subscribe -->
-    <div class="mt-16 rounded-xl bg-white border border-gray-200 p-8 text-center">
-      <h2 class="text-lg font-semibold text-gray-900">Get new essays by email</h2>
-      <p class="mt-2 text-gray-600 text-sm max-w-md mx-auto">
+    <div class="wr-subscribe">
+      <h2 class="wr-subscribe-title">Get new essays by email</h2>
+      <p class="wr-subscribe-desc">
         Infrequent, substantive, no spam. New pieces land when they're ready.
       </p>
       <a
         href="https://ideas.halcyonic.systems"
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-5 inline-flex items-center gap-2 rounded-lg bg-ocean-700 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-ocean-600 transition-all"
+        class="wr-subscribe-cta"
       >
         Subscribe on Substack <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
-
   </section>
 </BaseLayout>
+
+<style>
+  .wr-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--color-frost-slate);
+  }
+
+  .wr-intro {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: var(--color-frost-slate-dim);
+    max-width: 40rem;
+  }
+
+  .wr-featured-card {
+    display: block;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--color-frost-border);
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .wr-featured-card:hover {
+    border-color: var(--color-frost-teal-dim);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .wr-tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-frost-teal-dim);
+    color: var(--color-frost-teal);
+    background: rgba(13, 148, 136, 0.06);
+  }
+
+  .wr-date {
+    font-size: 0.7rem;
+    color: var(--color-frost-slate-dim);
+  }
+
+  .wr-featured-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--color-frost-slate);
+    transition: color 0.2s ease;
+  }
+
+  .group:hover .wr-featured-title {
+    color: var(--color-frost-teal);
+  }
+
+  .wr-featured-desc {
+    margin-top: 0.5rem;
+    color: var(--color-frost-slate-dim);
+    line-height: 1.6;
+  }
+
+  .wr-read-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-frost-teal);
+  }
+
+  .wr-archive-header {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-frost-slate-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .wr-archive-card {
+    display: block;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .wr-archive-card:hover {
+    border-color: var(--color-frost-border);
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .wr-archive-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-frost-slate);
+    transition: color 0.2s ease;
+  }
+
+  .group:hover .wr-archive-title {
+    color: var(--color-frost-teal);
+  }
+
+  .wr-domain-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-frost-indigo-dim);
+    margin-bottom: 0.25rem;
+  }
+
+  .wr-archive-desc {
+    font-size: 0.78rem;
+    color: var(--color-frost-slate-dim);
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .wr-subscribe {
+    margin-top: 4rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--color-frost-border);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .wr-subscribe-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--color-frost-slate);
+  }
+
+  .wr-subscribe-desc {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-frost-slate-dim);
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .wr-subscribe-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    background: var(--color-frost-teal);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .wr-subscribe-cta:hover {
+    opacity: 0.85;
+  }
+</style>
