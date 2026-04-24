@@ -21,19 +21,19 @@ const collection = [
 
     <div class="mt-6 flex flex-wrap gap-3 text-sm">
       <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-700 border border-teal-200">30 Total</span>
-      <span class="px-3 py-1 rounded-full bg-ocean-50 text-ocean-700 border border-ocean-200">Base Network</span>
+      <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-600 border border-teal-100">Base Network</span>
       <span class="px-3 py-1 rounded-full bg-warm-50 text-warm-700 border border-warm-200">ERC-721</span>
     </div>
 
     <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3">
       {collection.map((item) => (
-        <div class="group card-lift rounded-xl bg-white border border-ocean-100 hover:border-ocean-300 shadow-sm hover:shadow-md transition-all overflow-hidden">
-          <div class="aspect-square bg-gradient-to-br from-ocean-100 to-teal-100 flex items-center justify-center">
+        <div class="group card-lift rounded-xl bg-white border border-teal-100 hover:border-teal-500 shadow-sm hover:shadow-md transition-all overflow-hidden">
+          <div class="aspect-square bg-gradient-to-br from-teal-100 to-teal-100 flex items-center justify-center">
             <!-- Replace with: <img src={`/images/${item.id}.png`} alt={item.name} class="w-full h-full object-cover" /> -->
-            <span class="text-4xl text-ocean-300 select-none">◇</span>
+            <span class="text-4xl text-teal-500 select-none">◇</span>
           </div>
           <div class="p-4">
-            <h3 class="font-semibold text-sm text-gray-900 group-hover:text-ocean-600 transition-colors">{item.name}</h3>
+            <h3 class="font-semibold text-sm text-gray-900 group-hover:text-teal-600 transition-colors">{item.name}</h3>
             <p class="mt-1 text-xs text-gray-500">{item.archetype}</p>
           </div>
         </div>
@@ -41,7 +41,7 @@ const collection = [
     </div>
 
     <p class="mt-12 text-center text-sm text-gray-400">
-      <a href="/community" class="link-hover text-gray-500 hover:text-ocean-600 transition-colors">
+      <a href="/community" class="link-hover text-gray-500 hover:text-teal-600 transition-colors">
         &larr; Back to community
       </a>
     </p>

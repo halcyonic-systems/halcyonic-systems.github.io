@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const sections = [
   {
     title: 'The Basics',
-    color: 'ocean',
+    color: 'teal',
     terms: [
       {
         term: 'System',
@@ -22,7 +22,7 @@ const sections = [
   },
   {
     title: 'The Parts',
-    color: 'teal',
+    color: 'indigo',
     terms: [
       {
         term: 'Component',
@@ -40,7 +40,7 @@ const sections = [
   },
   {
     title: 'The Dynamics',
-    color: 'warm',
+    color: 'teal',
     terms: [
       {
         term: 'Flow',
@@ -62,7 +62,7 @@ const sections = [
   },
   {
     title: 'The Patterns',
-    color: 'ocean',
+    color: 'indigo',
     terms: [
       {
         term: 'Structure',
@@ -80,44 +80,42 @@ const sections = [
   },
 ];
 
-const colorClasses = {
-  ocean: {
-    border: 'border-l-ocean-400',
-    bg: 'hover:bg-ocean-50/50',
-    title: 'text-ocean-700',
-  },
+const colorStyles = {
   teal: {
-    border: 'border-l-teal-400',
-    bg: 'hover:bg-teal-50/50',
-    title: 'text-teal-700',
+    border: 'border-color: var(--color-frost-teal-dim)',
+    hover: 'rgba(13, 148, 136, 0.04)',
+    title: 'var(--color-frost-teal)',
   },
-  warm: {
-    border: 'border-l-warm-400',
-    bg: 'hover:bg-warm-50/50',
-    title: 'text-warm-700',
+  indigo: {
+    border: 'border-color: var(--color-frost-indigo-dim)',
+    hover: 'rgba(99, 102, 241, 0.04)',
+    title: 'var(--color-frost-indigo)',
   },
 };
 ---
 
 <BaseLayout title="Glossary" description="Core concepts for understanding systems science">
-  <section class="mx-auto max-w-4xl px-6 py-16">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Glossary</h1>
+  <section class="gl-page mx-auto max-w-4xl px-6 py-16">
+    <h1 class="gl-title">Glossary</h1>
 
-    <p class="mt-4 text-lg text-gray-600">
+    <p class="gl-intro">
       New to systems science? These are the foundational concepts — the shared language for analyzing any complex system.
     </p>
 
     <div class="mt-12 space-y-12">
       {sections.map((section) => (
         <div>
-          <h2 class={`text-sm font-semibold uppercase tracking-wide ${colorClasses[section.color].title}`}>
+          <h2 class="gl-section-title" style={`color: ${colorStyles[section.color].title}`}>
             {section.title}
           </h2>
           <div class="mt-4 space-y-3">
             {section.terms.map((item) => (
-              <div class={`pl-4 py-3 pr-4 border-l-2 ${colorClasses[section.color].border} ${colorClasses[section.color].bg} rounded-r-lg transition-colors`}>
-                <dt class="font-semibold text-gray-900">{item.term}</dt>
-                <dd class="mt-1 text-gray-600 text-sm">{item.definition}</dd>
+              <div
+                class="gl-term-card"
+                style={`${colorStyles[section.color].border}; --hover-bg: ${colorStyles[section.color].hover}`}
+              >
+                <dt class="gl-term">{item.term}</dt>
+                <dd class="gl-def">{item.definition}</dd>
               </div>
             ))}
           </div>
@@ -125,18 +123,92 @@ const colorClasses = {
       ))}
     </div>
 
-    <div class="mt-14 p-6 rounded-xl bg-white border border-gray-200">
-      <h3 class="font-semibold text-gray-900">Go deeper</h3>
-      <p class="mt-2 text-gray-700">
-        Explore 135+ interconnected notes on systems thinking, complexity, and the patterns that connect in the <a href="https://garden.halcyonic.systems" class="font-medium text-ocean-600 hover:text-ocean-500">Halcyonic Garden</a> — a digital garden of ideas from Bateson, Bunge, and beyond.
+    <div class="gl-cta-card">
+      <h3 class="gl-cta-title">Go deeper</h3>
+      <p class="gl-cta-desc">
+        Explore 135+ interconnected notes on systems thinking, complexity, and the patterns that connect in the <a href="https://garden.halcyonic.systems" class="gl-cta-link">Halcyonic Garden</a> — a digital garden of ideas from Bateson, Bunge, and beyond.
       </p>
     </div>
 
-    <div class="mt-6 p-6 rounded-xl bg-white border border-gray-200">
-      <h3 class="font-semibold text-gray-900">Apply it</h3>
-      <p class="mt-2 text-gray-700">
-        Want to see these concepts in practice? <a href="https://bert.systems" target="_blank" rel="noopener noreferrer" class="font-medium text-ocean-600 hover:text-ocean-500">BERT</a> is an open-source toolkit for applying rigorous systems analysis to any domain.
+    <div class="gl-cta-card" style="margin-top: 0.75rem;">
+      <h3 class="gl-cta-title">Apply it</h3>
+      <p class="gl-cta-desc">
+        Want to see these concepts in practice? <a href="https://bert.systems" target="_blank" rel="noopener noreferrer" class="gl-cta-link">BERT</a> is an open-source toolkit for applying rigorous systems analysis to any domain.
       </p>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .gl-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--color-frost-slate);
+  }
+
+  .gl-intro {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: var(--color-frost-slate-dim);
+  }
+
+  .gl-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .gl-term-card {
+    padding: 0.75rem 1rem 0.75rem 1rem;
+    border-left: 2px solid;
+    border-radius: 0 8px 8px 0;
+    transition: background 0.2s ease;
+  }
+
+  .gl-term-card:hover {
+    background: var(--hover-bg);
+  }
+
+  .gl-term {
+    font-weight: 600;
+    color: var(--color-frost-slate);
+  }
+
+  .gl-def {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--color-frost-slate-dim);
+    line-height: 1.6;
+  }
+
+  .gl-cta-card {
+    margin-top: 3.5rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--color-frost-border);
+  }
+
+  .gl-cta-title {
+    font-weight: 600;
+    color: var(--color-frost-slate);
+  }
+
+  .gl-cta-desc {
+    margin-top: 0.5rem;
+    color: var(--color-frost-slate-dim);
+  }
+
+  .gl-cta-link {
+    font-weight: 500;
+    color: var(--color-frost-teal);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .gl-cta-link:hover {
+    opacity: 0.7;
+  }
+</style>
