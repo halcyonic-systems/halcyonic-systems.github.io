@@ -80,39 +80,7 @@ h1, h2, h3 {
   transform: translateY(-2px);
 }
 
-/* Hero zone (Deep Night) — pulls up under the sticky header */
-.hero-zone {
-  background: var(--color-night-bg);
-  color: var(--color-night-parchment);
-  position: relative;
-  overflow: hidden;
-  margin-top: -49px;
-  padding-top: 49px;
-}
-
-.hero-zone::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 30%, rgba(30, 41, 59, 0.5) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(13, 148, 136, 0.06) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-/* Zone cut — clean break between hero and content */
-.zone-cut {
-  border: none;
-  height: 1px;
-  background: var(--color-frost-border);
-  margin: 0;
-}
-
-.zone-cut:empty {
-  display: none;
-}
-
-/* Content zone (Frost) */
+/* Content zone */
 .content-zone {
   background: var(--color-frost-bg);
   color: var(--color-frost-slate);

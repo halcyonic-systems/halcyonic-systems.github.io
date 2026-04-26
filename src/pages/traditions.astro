@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const traditions = [
+  {
+    id: 'mesarovic',
+    name: 'Mihajlo Mesarović',
+    years: '1964–1989',
+    link: 'https://en.wikipedia.org/wiki/Mihajlo_D._Mesarovi%C4%87',
+    stance: 'Extensional',
+    definition: 'A system is a relation on abstract sets: S ⊆ ×{Vᵢ : i ∈ I}. In the canonical input-output case: S ⊆ I × O. The system is the relation — not a thing that has a relation.',
+    contribution: 'The most general and parsimonious base. The decomposition theorem — systems of dimension greater than 2 require internal states — is a foundational result not derived elsewhere. Every other definition on this page can be mapped back to this one.',
+    key_work: 'General Systems Theory: Mathematical Foundations (1975)',
+  },
+  {
+    id: 'wymore',
+    name: 'A. Wayne Wymore',
+    years: '1967–1993',
+    link: 'https://en.wikipedia.org/wiki/A._Wayne_Wymore',
+    stance: 'Operational',
+    definition: 'A system is the 7-tuple Σ = ⟨T, X, Ω, Y, Q, δ, λ⟩ — time set, input values, admissible input functions, output values, states, state transition function, and readout function. A generalized Moore machine over continuous or discrete time.',
+    contribution: 'Admissible input function space Ω as a first-class component — time and trajectory structure are explicit. Coupling theory with closure proofs. Subsumes Turing machines, sequential machines, and ODEs in one definition.',
+    key_work: 'A Mathematical Theory of Systems Engineering (1967)',
+  },
+  {
+    id: 'klir',
+    name: 'George Klir',
+    years: '1969–2001',
+    link: 'https://en.wikipedia.org/wiki/George_Klir',
+    stance: 'Epistemological',
+    definition: 'A system is a structured reconstruction from observed variables and their relationships. Given a set of variables V with ranges S₁, …, Sₙ, a system at the generative level is G = ⟨V, R⟩ where R ⊆ S₁ × … × Sₙ is the constraint relation on their joint state space.',
+    contribution: 'The only full account of inverse system identification — given observed behavior, what system generated it? His epistemological hierarchy (source → data → generative → structure → metasystem) provides a rigorous ladder from raw observation to structural explanation. Integrated uncertainty measures into systems theory.',
+    key_work: 'Facets of Systems Science (1991)',
+  },
+  {
+    id: 'bunge',
+    name: 'Mario Bunge',
+    years: '1979–2003',
+    link: 'https://en.wikipedia.org/wiki/Mario_Bunge',
+    stance: 'Scientific realist',
+    definition: 'A system is the 4-tuple σ = ⟨C, E, S, M⟩ — composition (parts), environment (what it interacts with), structure (relations among parts and between parts and environment), and mechanism (the processes by which the system functions and changes).',
+    contribution: 'The only account that includes mechanism as an ontological primitive — not just what a system does or is made of, but how it works causally. Emergence defined precisely: properties of the whole not present in the parts, derivable from M acting on C under S.',
+    key_work: 'Treatise on Basic Philosophy, Vol. 4 (1979)',
+  },
+  {
+    id: 'joslyn',
+    name: 'Cliff Joslyn',
+    years: '1995–present',
+    link: 'https://en.wikipedia.org/wiki/Cliff_Joslyn',
+    stance: 'Synthetic',
+    definition: 'A system is a cardinal distinction on a variety of dimensional distinctions. Formally: S ⊆ ∏ Xᵢ where the dimensional distinctions (the Xᵢ) are constructivist acts of observation, and the cardinal constraint (S ⊊ X) is classically Boolean.',
+    contribution: 'The only account of what kind of functional relation inhabits a system — rules (contingent, selected) vs. laws (necessary, discovered). Bridges classical realism and constructivism. Proves that active control systems necessarily involve semantic relations, connecting systems theory to biosemiotics.',
+    key_work: 'Semantic Control Systems (1995)',
+  },
+  {
+    id: 'mobus',
+    name: 'George Mobus',
+    years: '2015–present',
+    link: 'https://directory.tacoma.uw.edu/employee/gmobus',
+    stance: 'Realist / pragmatic',
+    definition: 'A system is the 8-tuple Sₗ = {C, N, I, B, K, H}ₗ — components, networks, interfaces, boundary, knowledge (stocks), and hierarchy, indexed by level. Grounded in physical process quantities: stocks, flows, and feedback topology.',
+    contribution: 'The only account grounded in physical process quantities. The strongest alignment with system dynamics and simulation practice. The only one with a developed pedagogy — his textbook is how most contemporary systems scientists first encounter formal definitions.',
+    key_work: 'Principles of Systems Science (2015)',
+  },
+  {
+    id: 'myers',
+    name: 'David Jaz Myers',
+    years: '2023–present',
+    link: 'https://www.davidjaz.com/',
+    stance: 'Agnostic / doctrine-relative',
+    definition: 'A deterministic system is S = ⟨State, Out, In, expose, update⟩ — a lens in a cartesian category. The expose function reads state into outputs; the update function takes state and inputs to the next state. Systems compose via lens composition.',
+    contribution: 'The only account that proves a general compositionality theorem — behaviors of composite systems computed from component behaviors. The doctrine framework is the only meta-level account of why definitions differ. Lens identification makes composition a first-class mathematical operation.',
+    key_work: 'Categorical Systems Theory (2023)',
+  },
+];
+---
+
+<BaseLayout title="Traditions" description="Seven approaches to defining what a system is">
+  <div class="traditions-page">
+    <header class="page-header">
+      <h1>Seven Traditions</h1>
+      <p class="subtitle">
+        Each of these researchers independently developed a formal definition of what a system is.
+        They worked across decades, disciplines, and continents. The definitions are not competing — they are
+        layered, each capturing a different level of abstraction. Their common core is a single morphism:
+        relations depend on things.
+      </p>
+    </header>
+
+    <nav class="tradition-nav">
+      {traditions.map(t => (
+        <a href={`#${t.id}`} class="tradition-nav-link">{t.name.split(' ').pop()}</a>
+      ))}
+    </nav>
+
+    <div class="traditions-list">
+      {traditions.map(t => (
+        <section id={t.id} class="tradition-entry">
+          <div class="tradition-header">
+            <h2>
+              <a href={t.link} target="_blank" rel="noopener">{t.name}</a>
+            </h2>
+            <span class="tradition-years">{t.years}</span>
+          </div>
+          <div class="tradition-stance">{t.stance}</div>
+          <blockquote class="tradition-definition">{t.definition}</blockquote>
+          <p class="tradition-contribution">{t.contribution}</p>
+          <cite class="tradition-work">{t.key_work}</cite>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .traditions-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--color-frost-slate);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-frost-slate-dim);
+  }
+
+  .tradition-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--color-frost-border);
+  }
+
+  .tradition-nav-link {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--color-frost-slate-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .tradition-nav-link:hover {
+    color: var(--color-frost-teal);
+  }
+
+  .traditions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .tradition-entry {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--color-frost-border);
+    scroll-margin-top: 80px;
+  }
+
+  .tradition-entry:last-child {
+    border-bottom: none;
+  }
+
+  .tradition-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .tradition-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .tradition-header h2 a {
+    color: var(--color-frost-slate);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .tradition-header h2 a:hover {
+    color: var(--color-frost-teal);
+  }
+
+  .tradition-years {
+    font-size: 0.85rem;
+    color: var(--color-frost-slate-dim);
+    white-space: nowrap;
+  }
+
+  .tradition-stance {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-frost-teal);
+    margin-bottom: 1rem;
+  }
+
+  .tradition-definition {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--color-frost-slate);
+    border-left: 2px solid var(--color-frost-teal-dim);
+    padding-left: 1.25rem;
+    margin: 0 0 1.25rem 0;
+    font-style: normal;
+  }
+
+  .tradition-contribution {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-frost-slate-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .tradition-work {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(30, 41, 59, 0.4);
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .tradition-header {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

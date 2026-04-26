@@ -4,22 +4,14 @@ import WalkingArrow from '../components/WalkingArrow.astro';
 ---
 
 <BaseLayout title="Home" description="Systems science research and tools for transdisciplinary analysis">
-  <section slot="hero" class="hero-zone">
+  <section class="hero-section">
     <div class="hero-content">
       <WalkingArrow />
-      <p class="hero-hint">click nodes to explore &middot; hover branches for detail</p>
+      <p class="hero-hint">click to explore</p>
 
-      <div class="hero-text">
-        <h1 class="hero-wordmark">
-          <span class="h-accent">H</span>ALCYONIC
-        </h1>
-        <p class="hero-tagline">
-          Seven definitions of system. One shared structure.
-        </p>
-        <p class="hero-equation">
-          K &cong; <strong>2</strong> &mdash; f : R &rarr; T
-        </p>
-      </div>
+      <h1 class="hero-wordmark">
+        <span class="h-accent">H</span>ALCYONIC SYSTEMS
+      </h1>
 
       <div class="hero-ctas">
         <a href="/work" class="cta-primary">
@@ -32,35 +24,22 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     </div>
   </section>
 
-  <section class="mx-auto max-w-3xl px-6 py-16 text-center">
-    <p class="text-lg leading-relaxed" style="color: var(--color-frost-slate-dim);">
-      Halcyonic Systems applies formal systems science to political economy,
-      cryptoeconomics, and brain-inspired computing.
-    </p>
-  </section>
 </BaseLayout>
 
 <style>
-  .hero-zone {
+  .hero-section {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2.5rem 2rem 2rem;
-    position: relative;
+    padding: 3rem 2rem 2rem;
   }
 
   .hero-content {
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
     width: 100%;
-  }
-
-  .hero-text {
-    text-align: center;
   }
 
   .hero-wordmark {
@@ -69,7 +48,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     font-size: 2.2rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: var(--color-night-parchment);
+    color: var(--color-frost-slate);
     margin-bottom: 0.5rem;
     opacity: 0;
     animation: fade-up 0.6s ease 1.5s forwards;
@@ -77,27 +56,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
 
   .h-accent {
     font-weight: 500;
-    color: var(--color-night-gold);
-  }
-
-  .hero-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.25rem;
-    color: rgba(226, 232, 240, 0.72);
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-    opacity: 0;
-    animation: fade-up 0.6s ease 1.7s forwards;
-  }
-
-  .hero-equation {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    color: var(--color-night-gold-dim);
-    letter-spacing: 0.08em;
-    opacity: 0;
-    animation: fade-up 0.6s ease 1.9s forwards;
+    color: var(--color-frost-teal);
   }
 
   .hero-ctas {
@@ -114,8 +73,8 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.03em;
-    color: var(--color-night-bg);
-    background: var(--color-night-gold);
+    color: white;
+    background: var(--color-frost-teal);
     transition: opacity 0.2s ease;
     text-decoration: none;
   }
@@ -130,21 +89,21 @@ import WalkingArrow from '../components/WalkingArrow.astro';
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.03em;
-    color: var(--color-night-parchment);
-    border: 1px solid var(--color-night-border);
+    color: var(--color-frost-slate);
+    border: 1px solid var(--color-frost-border);
     transition: border-color 0.2s ease;
     text-decoration: none;
   }
 
   .cta-secondary:hover {
-    border-color: var(--color-night-gold-dim);
+    border-color: var(--color-frost-teal-dim);
   }
 
   .hero-hint {
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(226, 232, 240, 0.3);
+    color: rgba(30, 41, 59, 0.25);
     margin-top: -0.25rem;
     opacity: 0;
     animation: fade-up 0.5s ease 2.3s forwards;
@@ -156,8 +115,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-wordmark, .hero-tagline, .hero-equation,
-    .hero-ctas, .hero-hint {
+    .hero-wordmark, .hero-ctas, .hero-hint {
       opacity: 1 !important;
       animation: none !important;
       transform: none !important;
@@ -165,7 +123,7 @@ import WalkingArrow from '../components/WalkingArrow.astro';
   }
 
   @media (max-width: 640px) {
-    .hero-zone {
+    .hero-section {
       padding: 2rem 1rem 1.5rem;
     }
 

@@ -8,12 +8,11 @@ const navItems = [
 ];
 ---
 
-<header id="site-header" class="sticky top-0 z-50 transition-colors duration-300">
+<header class="sticky top-0 z-50" style="background: var(--color-frost-bg); border-bottom: 1px solid var(--color-frost-border);">
   <nav class="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
     <a href="/" class="flex items-center gap-3 group">
-      <HMark size={32} variant="night" class="h-mark-night" />
-      <HMark size={32} variant="frost" class="h-mark-frost hidden" />
-      <span class="nav-wordmark text-base sm:text-lg font-semibold transition-colors">
+      <HMark size={40} variant="frost" />
+      <span class="text-base sm:text-lg font-semibold" style="color: var(--color-frost-slate);">
         <span class="hidden sm:inline md:hidden">Halcyonic</span>
         <span class="hidden md:inline">Halcyonic Systems</span>
       </span>
@@ -23,7 +22,10 @@ const navItems = [
         <li>
           <a
             href={item.href}
-            class="link-hover nav-link text-sm sm:text-base font-medium transition-colors"
+            class="link-hover text-sm sm:text-base font-medium transition-colors"
+            style="color: rgba(30, 41, 59, 0.75);"
+            onmouseover="this.style.color='var(--color-frost-teal)'"
+            onmouseout="this.style.color='rgba(30, 41, 59, 0.75)'"
           >
             {item.label}
           </a>
@@ -32,104 +34,3 @@ const navItems = [
     </ul>
   </nav>
 </header>
-
-<style>
-  header {
-    background: transparent;
-    border-bottom: 1px solid transparent;
-  }
-
-  header.in-hero {
-    background: transparent;
-    border-bottom-color: var(--color-night-border);
-  }
-
-  header.in-hero .nav-wordmark {
-    color: var(--color-night-parchment);
-  }
-
-  header.in-hero .nav-link {
-    color: rgba(226, 232, 240, 0.75);
-  }
-
-  header.in-hero .nav-link:hover {
-    color: var(--color-night-parchment);
-  }
-
-  header.scrolled {
-    background: var(--color-frost-bg);
-    border-bottom-color: var(--color-frost-border);
-  }
-
-  header.scrolled .nav-wordmark {
-    color: var(--color-frost-slate);
-  }
-
-  header.scrolled .nav-link {
-    color: rgba(30, 41, 59, 0.75);
-  }
-
-  header.scrolled .nav-link:hover {
-    color: var(--color-frost-teal);
-  }
-
-  header.scrolled .h-mark-night {
-    display: none;
-  }
-
-  header.scrolled .h-mark-frost {
-    display: inline;
-  }
-
-  /* Default (no hero) — frost bg */
-  header.no-hero {
-    background: var(--color-frost-bg);
-    border-bottom-color: var(--color-frost-border);
-  }
-
-  header.no-hero .nav-wordmark {
-    color: var(--color-frost-slate);
-  }
-
-  header.no-hero .nav-link {
-    color: rgba(30, 41, 59, 0.75);
-  }
-
-  header.no-hero .nav-link:hover {
-    color: var(--color-frost-teal);
-  }
-
-  header.no-hero .h-mark-night {
-    display: none;
-  }
-
-  header.no-hero .h-mark-frost {
-    display: inline;
-  }
-</style>
-
-<script>
-  const header = document.getElementById('site-header');
-  const heroZone = document.querySelector('.hero-zone');
-
-  if (heroZone && header) {
-    header.classList.add('in-hero');
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          header.classList.add('in-hero');
-          header.classList.remove('scrolled');
-        } else {
-          header.classList.remove('in-hero');
-          header.classList.add('scrolled');
-        }
-      },
-      { threshold: 0, rootMargin: '-48px 0px 0px 0px' }
-    );
-
-    observer.observe(heroZone);
-  } else if (header) {
-    header.classList.add('no-hero');
-  }
-</script>
