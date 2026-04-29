@@ -3,117 +3,113 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const flagships = [
   {
-    title: 'BERT',
-    subtitle: 'Bounded Entity Reasoning Toolkit',
-    description: 'An open-source framework for rigorous systems modeling across any domain. Decompose complex systems into bounded entities with formal input/output/state relationships grounded in Mobus\'s systems science ontology.',
-    link: 'https://bert.systems',
-    linkText: 'Explore the toolkit',
-    tag: 'Framework',
-    layout: 'full',
-  },
-  {
-    title: 'U.S. Interstate Commerce Network',
-    subtitle: 'M.S. Thesis — Binghamton University',
-    description: 'Network centrality analysis of the full U.S. interstate and international commodity trade network. Three centrality measures, commodity sector filters, domestic/international boundary toggle. ~40% of states diverge by five or more rank positions between GDP and network centrality — structural power is not what GDP says it is.',
-    link: 'https://halcyonic-systems.github.io/cfs-network-analysis/',
-    linkText: 'Launch the interactive app',
-    tag: 'Empirical Research',
-    layout: 'full',
-    dataViz: true,
-  },
-  {
     title: 'Facets',
-    subtitle: 'Systems Science Classifier',
+    subtitle: 'Systems Science Reasoning Engine',
     description: 'Ask a question, see which facets of systems science it touches. 8-tuple dimensional classification grounded in Mobus\'s formal ontology.',
     link: 'https://facets.halcyonic.systems',
     linkText: 'Try the live demo',
     tag: 'Interactive Tool',
-    layout: 'half',
+    hero: true,
+  },
+  {
+    title: 'U.S. Interstate Commerce Network',
+    subtitle: 'M.S. Thesis — Binghamton University',
+    description: 'Network centrality analysis of the full U.S. interstate and international commodity trade network. ~40% of states diverge by five or more rank positions between GDP and network centrality — structural power is not what GDP says it is.',
+    link: 'https://halcyonic-systems.github.io/cfs-network-analysis/',
+    linkText: 'Launch the interactive app',
+    tag: 'Empirical Research',
+  },
+  {
+    title: 'BERT',
+    subtitle: 'Bounded Entity Reasoning Toolkit',
+    description: 'An open-source framework for rigorous systems modeling across any domain. Decompose complex systems into bounded entities with formal relationships grounded in Mobus.',
+    link: 'https://bert.systems',
+    linkText: 'Explore the toolkit',
+    tag: 'Framework',
   },
   {
     title: 'A Deep Systems Analysis of Bitcoin',
-    subtitle: 'Applied Domain Essay',
-    description: 'Bitcoin as a complex adaptive system — boundaries, flows, feedback loops, and emergent behaviors. The longest-form applied systems science writing and the crypto/political economy entry point.',
+    subtitle: 'Foundational essay — v2 in progress',
+    description: 'Bitcoin as a complex adaptive system — boundaries, flows, feedback loops, and emergent behaviors. The crypto/political economy entry point.',
     link: 'https://www.researchhub.com/paper/9310259/a-deep-systems-analysis-of-bitcoin',
     linkText: 'Read the paper',
     tag: 'Domain Analysis',
-    layout: 'half',
   },
 ];
 
 const archive = [
   {
-    title: 'Hayekian Anticipatory Systems',
-    description: 'Interactive visualization of functional closure — Hayek\'s market theory formalized through anticipatory systems science.',
-    link: 'https://halcyonic.systems/hayekian-systems/',
-    linkText: 'Launch explorer',
-  },
-  {
-    title: 'Georgist Network Economy ABM',
-    description: 'Agent-based model of land value taxation and network effects. Mesa, Railway, 450-simulation parameter sweeps.',
-    link: 'https://github.com/halcyonic-systems/georgist-network-economy',
-    linkText: 'View on GitHub',
-  },
-  {
-    title: 'Seven Windows, One Person',
-    description: 'Six therapeutic frameworks examine the same person speaking. What does each one hear?',
-    link: '/experiments/seven-windows/',
-    linkText: 'Enter the experience',
-    internal: true,
-  },
-  {
-    title: 'Formal Systems Ontologies',
-    description: 'A shared language for describing any system, grounded in systems science for rigorous transdisciplinary research.',
-    link: 'https://bert.gitbook.io/bert-documentation/for-researchers/system-ontology',
-    linkText: 'See the foundations',
-  },
-  {
-    title: 'System Language Palette',
-    description: 'An evolving visual vocabulary for systems science. Each icon grounded in Mobus.',
-    link: '/icons',
-    linkText: 'Browse the palette',
-    internal: true,
+    title: 'System Language',
+    description: 'A formal vocabulary for describing any system — ontological foundations and visual primitives grounded in Mobus.',
+    links: [
+      { text: 'Foundations', href: 'https://bert.gitbook.io/bert-documentation/for-researchers/system-ontology' },
+      { text: 'Visual Palette', href: '/icons', internal: true },
+    ],
   },
   {
     title: 'Halcyonic Garden',
     description: '135+ interconnected notes on systems thinking, complexity, and the patterns that connect.',
-    link: 'https://garden.halcyonic.systems',
-    linkText: 'Explore the garden',
+    links: [
+      { text: 'Browse the garden', href: 'https://garden.halcyonic.systems' },
+      { text: 'Glossary', href: '/glossary', internal: true },
+    ],
+  },
+  {
+    title: 'RSC Endowment ABM',
+    description: 'Agent-based model of the ResearchCoin staking system. Validates tokenomic design against live on-chain data.',
+    link: 'https://github.com/halcyonic-systems/rsc-endowment-abm',
+    linkText: 'View on GitHub',
   },
 ];
 ---
 
 <BaseLayout title="Work" description="Systems science research projects, tools, and applied analysis">
-  <section class="w-page mx-auto max-w-3xl px-6 py-16">
+  <section class="w-page mx-auto px-6 py-16">
     <h1 class="w-title">Work</h1>
     <p class="w-intro">
       Tools grounded in formal systems science. Each project is backed by applied research and theoretical foundations.
     </p>
 
     <div class="flagships">
-      {flagships.map((project, i) => {
-        const isHalf = project.layout === 'half';
-        return (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            class:list={['flagship-card', { 'flagship-half': isHalf, 'flagship-full': !isHalf, 'flagship-data': project.dataViz }]}
-          >
-            <div class="flagship-tag">{project.tag}</div>
-            <div class="flagship-title">{project.title}</div>
-            <div class="flagship-subtitle">{project.subtitle}</div>
-            <div class="flagship-desc">{project.description}</div>
-            <span class="flagship-link">{project.linkText} →</span>
-          </a>
-        );
-      })}
+      {flagships.map((project) => (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flagship-card"
+        >
+          {project.hero && <div class="hero-badge">Start here</div>}
+          <div class="flagship-tag">{project.tag}</div>
+          <div class="flagship-title">{project.title}</div>
+          <div class="flagship-subtitle">{project.subtitle}</div>
+          <div class="flagship-desc">{project.description}</div>
+          <span class="flagship-link">{project.linkText} →</span>
+        </a>
+      ))}
     </div>
 
     <div class="archive-section">
-      <h2 class="archive-header">Research Archive</h2>
+      <h2 class="archive-header">Also Building</h2>
       <div class="archive-grid">
-        {archive.map((project) => (
+        {archive.map((project) => project.links ? (
+          <div class="archive-card">
+            <div class="archive-title">{project.title}</div>
+            <div class="archive-desc">{project.description}</div>
+            <div class="archive-links">
+              {project.links.map((l, i) => (
+                <>
+                  {i > 0 && <span class="archive-link-sep">·</span>}
+                  <a
+                    href={l.href}
+                    target={l.internal ? undefined : "_blank"}
+                    rel={l.internal ? undefined : "noopener noreferrer"}
+                    class="archive-link"
+                  >{l.text} →</a>
+                </>
+              ))}
+            </div>
+          </div>
+        ) : (
           <a
             href={project.link}
             target={project.internal ? undefined : "_blank"}
@@ -128,11 +124,6 @@ const archive = [
       </div>
     </div>
 
-    <div class="glossary-link-section">
-      <a href="/glossary" class="glossary-link">
-        Systems Science Glossary <span aria-hidden="true">→</span>
-      </a>
-    </div>
   </section>
 </BaseLayout>
 
@@ -140,10 +131,10 @@ const archive = [
   .w-page {
     --accent: var(--color-frost-teal);
     --accent-dim: var(--color-frost-teal-dim);
-    --secondary: var(--color-frost-indigo);
-    --secondary-dim: var(--color-frost-indigo-dim);
     --ink: var(--color-frost-slate);
     --ink-dim: var(--color-frost-slate-dim);
+    max-width: 1100px;
+    padding: 3rem 2rem 5rem;
   }
 
   .w-title {
@@ -158,95 +149,105 @@ const archive = [
     font-size: 1.05rem;
     color: var(--ink-dim);
     line-height: 1.7;
-    max-width: 580px;
+    max-width: 640px;
     margin-top: 1rem;
+    margin-bottom: 3rem;
   }
 
-  /* Flagship grid: full-width cards + half-width pairs */
+  /* Flagship grid: hero spans full width, others fill 3 columns */
   .flagships {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-    margin-top: 2.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
   }
 
+  .flagships > .flagship-card { grid-column: auto; }
+  .flagships > .flagship-card:first-child { grid-column: 1 / -1; }
+
+  /* Card base */
   .flagship-card {
-    display: block;
-    padding: 1.75rem 2rem;
-    background: rgba(255, 255, 255, 0.7);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem 1.75rem 2rem;
+    background: #FFFFFF;
+    border: none;
+    border-top: 3px solid var(--accent);
+    border-radius: 8px;
     text-decoration: none;
-    transition: background 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   .flagship-card:hover {
-    background: rgba(13, 148, 136, 0.06);
-    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 12px 28px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
   }
 
   .flagship-card:hover .flagship-title {
     color: var(--accent);
   }
 
-  .flagship-full {
-    grid-column: 1 / -1;
+  /* Hero card (Facets — first child) */
+  .flagships > .flagship-card:first-child {
+    background: linear-gradient(135deg, #FFFFFF 0%, #EDF4F3 100%);
+    padding: 2.5rem 2.75rem;
+    border-top-width: 4px;
   }
+  .flagships > .flagship-card:first-child .flagship-title { font-size: 2.5rem; }
+  .flagships > .flagship-card:first-child .flagship-subtitle { font-size: 1.05rem; }
+  .flagships > .flagship-card:first-child .flagship-desc { max-width: 60ch; font-size: 1rem; }
 
-  .flagship-data {
-    border-left-color: var(--secondary);
-    background: rgba(30, 41, 59, 0.04);
-  }
-
-  .flagship-data:hover {
-    background: rgba(99, 102, 241, 0.06);
+  /* "Start here" badge */
+  .hero-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
   }
 
   .flagship-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 0.5rem;
   }
 
-  .flagship-data .flagship-tag {
-    color: var(--secondary);
-  }
-
   .flagship-title {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 400;
     color: var(--ink);
-    line-height: 1.3;
+    line-height: 1.15;
     margin-bottom: 0.25rem;
     transition: color 0.2s ease;
-  }
-
-  .flagship-half .flagship-title {
-    font-size: 1.3rem;
   }
 
   .flagship-subtitle {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--ink-dim);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   .flagship-desc {
     font-size: 0.9rem;
     color: var(--ink-dim);
-    line-height: 1.65;
-    max-width: 600px;
-  }
-
-  .flagship-half .flagship-desc {
-    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex: 1;
   }
 
   .flagship-link {
@@ -254,49 +255,47 @@ const archive = [
     font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-dim);
-    margin-top: 0.75rem;
-    display: inline-block;
-  }
-
-  .flagship-data .flagship-link {
-    color: var(--secondary-dim);
+    color: var(--accent);
   }
 
   /* Archive section */
   .archive-section {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-frost-border);
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(0,0,0,0.08);
   }
 
   .archive-header {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--ink-dim);
-    margin-bottom: 1rem;
+    margin-bottom: 1.75rem;
   }
 
   .archive-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
 
   .archive-card {
     display: block;
-    padding: 1rem 1.25rem;
-    border-left: 1.5px solid var(--color-frost-border);
-    border-radius: 0 4px 4px 0;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    background: transparent;
     text-decoration: none;
-    transition: background 0.2s ease;
+    box-shadow: none;
+    transition: all 0.2s ease;
   }
 
   .archive-card:hover {
-    background: rgba(13, 148, 136, 0.04);
+    background: #FFFFFF;
+    border-color: rgba(58,125,123,0.4);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
 
   .archive-card:hover .archive-title {
@@ -305,18 +304,30 @@ const archive = [
 
   .archive-title {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--ink);
     line-height: 1.3;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
     transition: color 0.2s ease;
   }
 
   .archive-desc {
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     color: var(--ink-dim);
-    line-height: 1.5;
+    line-height: 1.55;
+  }
+
+  .archive-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .archive-link-sep {
+    color: var(--color-frost-border);
+    font-size: 0.7rem;
   }
 
   .archive-link {
@@ -325,37 +336,18 @@ const archive = [
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent-dim);
-    margin-top: 0.4rem;
     display: inline-block;
-  }
-
-  .glossary-link-section {
-    margin-top: 2.5rem;
-    text-align: center;
-  }
-
-  .glossary-link {
-    font-size: 0.85rem;
-    color: var(--accent);
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    transition: color 0.2s ease;
   }
 
-  .glossary-link:hover {
-    opacity: 0.7;
+  .archive-link:hover {
+    color: var(--accent);
   }
 
-  @media (max-width: 640px) {
-    .flagships {
-      grid-template-columns: 1fr;
-    }
-
-    .archive-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .flagship-full {
-      grid-column: 1;
-    }
+  @media (max-width: 768px) {
+    .flagships, .archive-grid { grid-template-columns: 1fr; }
+    .flagships > .flagship-card:first-child { padding: 1.75rem; }
+    .flagships > .flagship-card:first-child .flagship-title { font-size: 1.8rem; }
   }
 </style>
