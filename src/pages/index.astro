@@ -7,7 +7,6 @@ import WalkingArrow from '../components/WalkingArrow.astro';
   <section class="hero-section">
     <div class="hero-content">
       <WalkingArrow />
-      <p class="hero-hint">click to explore</p>
 
       <h1 class="hero-wordmark">
         <span class="h-accent">H</span>ALCYONIC SYSTEMS
@@ -97,16 +96,6 @@ import WalkingArrow from '../components/WalkingArrow.astro';
 
   .cta-secondary:hover {
     border-color: var(--color-frost-teal-dim);
-  }
-
-  .hero-hint {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(30, 41, 59, 0.25);
-    margin-top: -0.25rem;
-    opacity: 0;
-    animation: fade-up 0.5s ease 2.3s forwards;
   }
 
   @keyframes fade-up {

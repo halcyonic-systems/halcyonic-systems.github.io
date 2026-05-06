@@ -65,6 +65,7 @@ Push to `main` → GitHub Actions auto-deploys to GitHub Pages.
 ## Future Work
 
 ### Ready to add
+- **Commuting Triangle** — interactive K≅2 visualization (`src/components/CommutingTriangle.astro`). Hidden from About page 2026-04-28 because Labs/Ventures vertices aren't operational yet. Two paths to resurface: (a) when all three org layers have substance, restore on About with the Labs/Systems/Ventures framing, or (b) reframe as a pure theoretical result (Klir→Bunge→Mobus convergence proof) and add to a dedicated research/foundations page. This is one of the strongest interactive assets on the site — don't delete it, just find the right moment.
 - **Research areas** (Cryptoeconomics, Political Economy, Neuromorphics) - commented out in `research.astro`, restore when ready to show broader scope
 - **Interstate Trade Viz** - lives at ~/Desktop/interstate-trade-viz
 
