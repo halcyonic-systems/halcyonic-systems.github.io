@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halcyonic — Color Scheme Explorer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --tr: 0.6s; }
+  body {
+    background: var(--bg, #060a14);
+    color: var(--text, #e0d8cc);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    transition: background var(--tr) ease, color var(--tr) ease;
+  }
+  .page { max-width: 960px; margin: 0 auto; padding: 3rem 2rem; }
+
+  header { text-align: center; margin-bottom: 1.5rem; }
+  header h1 { font-weight: 300; font-size: 1.4rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  header h1 span { font-weight: 500; color: var(--primary, #baa370); transition: color var(--tr) ease; }
+  header p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-dim); transition: color var(--tr) ease; }
+
+  .scheme-switcher {
+    display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 10; padding: 1rem 0;
+    background: var(--bg, #060a14); transition: background var(--tr) ease;
+    border-bottom: 1px solid var(--border, rgba(139,164,199,0.1));
+  }
+  .scheme-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    padding: 0.6rem 1rem; border-radius: 8px;
+    border: 1px solid var(--border, rgba(139,164,199,0.1));
+    background: var(--bg-card, rgba(26,36,64,0.3));
+    cursor: pointer; transition: all 0.3s ease; min-width: 130px; color: inherit;
+  }
+  .scheme-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+  .scheme-btn.active { border-color: var(--primary, #baa370); box-shadow: 0 0 20px var(--primary-glow, rgba(186,163,112,0.12)); }
+  .scheme-swatches { display: flex; gap: 3px; }
+  .scheme-swatches div { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(128,128,128,0.2); }
+  .scheme-name { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .scheme-desc { font-size: 0.55rem; color: var(--text-faint); font-style: italic; }
+
+  /* Concept sections */
+  .concept-section {
+    margin-bottom: 4rem; padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border, rgba(139,164,199,0.1));
+    transition: border-color var(--tr) ease;
+  }
+  .concept-header {
+    display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.25rem;
+  }
+  .concept-num { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary-dim); transition: color var(--tr) ease; }
+  .concept-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--text); transition: color var(--tr) ease; }
+  .concept-use {
+    display: inline-block; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 1.5rem;
+    background: var(--primary-glow); color: var(--primary-dim); transition: all var(--tr) ease;
+  }
+  .concept-canvas { display: flex; justify-content: center; margin-bottom: 1rem; }
+
+  /* Wordmark below each */
+  .concept-wordmark { text-align: center; margin-top: 1rem; }
+  .concept-wordmark .wm {
+    font-weight: 300; font-size: 1.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+    transition: color var(--tr) ease;
+  }
+  .concept-wordmark .wm span { font-weight: 500; color: var(--primary); transition: color var(--tr) ease; }
+  .concept-wordmark .tl {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem;
+    color: var(--text-dim); margin-top: 0.3rem; transition: color var(--tr) ease;
+  }
+
+  /* Info panel */
+  .info-panel {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--border); transition: border-color var(--tr) ease;
+  }
+  .info-card {
+    padding: 1.25rem; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg-card);
+    transition: all var(--tr) ease;
+  }
+  .info-card h3 { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--primary-dim); margin-bottom: 0.6rem; transition: color var(--tr) ease; }
+  .info-card p { font-size: 0.8rem; line-height: 1.6; color: var(--text-dim); transition: color var(--tr) ease; }
+  .info-full { grid-column: 1 / -1; text-align: center; }
+  .info-full h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--text); letter-spacing: 0; text-transform: none; }
+  .info-full p { max-width: 600px; margin: 0 auto; }
+  .color-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .color-chip { display: flex; align-items: center; gap: 0.35rem; }
+  .chip-dot { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(128,128,128,0.2); transition: background var(--tr) ease; }
+  .chip-label { font-size: 0.6rem; font-family: monospace; color: var(--text-faint); transition: color var(--tr) ease; }
+
+  @media (max-width: 700px) { .info-panel { grid-template-columns: 1fr; } svg { width: 100% !important; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1><span>H</span>ALCYONIC</h1>
+  <p>Three concepts, four palettes. Click a scheme to see them all transform.</p>
+</header>
+
+<div class="scheme-switcher">
+  <button class="scheme-btn active" data-scheme="deep-night">
+    <div class="scheme-swatches">
+      <div style="background:#060a14"></div><div style="background:#8ba4c7"></div>
+      <div style="background:#baa370"></div><div style="background:#e0d8cc"></div>
+    </div>
+    <span class="scheme-name">Deep Night</span>
+    <span class="scheme-desc">current canvas</span>
+  </button>
+  <button class="scheme-btn" data-scheme="ocean">
+    <div class="scheme-swatches">
+      <div style="background:#082f49"></div><div style="background:#0ea5e9"></div>
+      <div style="background:#facc15"></div><div style="background:#f0f9ff"></div>
+    </div>
+    <span class="scheme-name">Ocean</span>
+    <span class="scheme-desc">site dark mode</span>
+  </button>
+  <button class="scheme-btn" data-scheme="warm-ink">
+    <div class="scheme-swatches">
+      <div style="background:#1c1a16"></div><div style="background:#3a6e62"></div>
+      <div style="background:#8a6a3a"></div><div style="background:#e0d8cc"></div>
+    </div>
+    <span class="scheme-name">Warm Ink</span>
+    <span class="scheme-desc">research editorial</span>
+  </button>
+  <button class="scheme-btn" data-scheme="linen">
+    <div class="scheme-swatches">
+      <div style="background:#f7f5f0"></div><div style="background:#075985"></div>
+      <div style="background:#8a6a3a"></div><div style="background:#1c1a16"></div>
+    </div>
+    <span class="scheme-name">Linen</span>
+    <span class="scheme-desc">site light mode</span>
+  </button>
+  <button class="scheme-btn" data-scheme="frost">
+    <div class="scheme-swatches">
+      <div style="background:#f0f4f8"></div><div style="background:#0d9488"></div>
+      <div style="background:#6366f1"></div><div style="background:#1e293b"></div>
+    </div>
+    <span class="scheme-name">Frost</span>
+    <span class="scheme-desc">cool light + teal</span>
+  </button>
+</div>
+
+<!-- CONCEPT 1: H as Morphism -->
+<div class="concept-section">
+  <div class="concept-header">
+    <span class="concept-num">Concept 01</span>
+    <span class="concept-title">The H as Morphism</span>
+  </div>
+  <div class="concept-use">Logo / Mark</div>
+  <div class="concept-canvas">
+    <svg width="320" height="300" viewBox="0 0 320 300">
+      <!-- Left vertical -->
+      <rect class="vert-el" x="95" y="50" width="3.5" height="200" rx="1.75" fill="#e0d8cc" opacity="0.85"/>
+      <!-- Right vertical -->
+      <rect class="vert-el" x="221" y="50" width="3.5" height="200" rx="1.75" fill="#e0d8cc" opacity="0.85"/>
+      <!-- Crossbar glow -->
+      <line class="shaft-glow" x1="98" y1="150" x2="222" y2="150" stroke="#baa370" stroke-width="16" stroke-linecap="round" opacity="0.12"/>
+      <!-- Crossbar -->
+      <line class="shaft-line" x1="98" y1="150" x2="222" y2="150" stroke="#baa370" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+      <!-- Arrowhead -->
+      <polygon class="arrowhead-shape" points="218,143 234,150 218,157" fill="#d4bc7c"/>
+      <!-- Node dots -->
+      <circle class="source-fill" cx="98" cy="150" r="5" fill="#8ba4c7" opacity="0.6"/>
+      <circle class="target-fill" cx="222" cy="150" r="5" fill="#baa370" opacity="0.6"/>
+      <!-- f label -->
+      <text class="f-label-el" x="160" y="135" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="16" fill="rgba(186,163,112,0.6)">f : R &#8594; T</text>
+    </svg>
+  </div>
+  <div class="concept-wordmark">
+    <div class="wm"><span>H</span>ALCYONIC</div>
+    <div class="tl">The morphism hidden in the lettermark</div>
+  </div>
+</div>
+
+<!-- CONCEPT 2: Walking Arrow -->
+<div class="concept-section">
+  <div class="concept-header">
+    <span class="concept-num">Concept 02</span>
+    <span class="concept-title">The Walking Arrow</span>
+  </div>
+  <div class="concept-use">Front Page Hero</div>
+  <div class="concept-canvas">
+    <svg width="700" height="300" viewBox="0 0 700 300">
+      <!-- Shaft glow -->
+      <line class="shaft-glow" x1="185" y1="150" x2="485" y2="150" stroke="#baa370" stroke-width="16" stroke-linecap="round" opacity="0.1"/>
+      <!-- Shaft -->
+      <line class="shaft-line" x1="185" y1="150" x2="485" y2="150" stroke="#baa370" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+      <!-- Arrowhead -->
+      <polygon class="arrowhead-shape" points="480,142 498,150 480,158" fill="#d4bc7c"/>
+      <!-- f label -->
+      <text class="f-label-el" x="335" y="133" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="18" fill="rgba(186,163,112,0.6)">f</text>
+      <!-- Source node -->
+      <circle class="source-ring" cx="170" cy="150" r="14" fill="none" stroke="#8ba4c7" stroke-width="1.5" opacity="0.4"/>
+      <circle class="source-fill" cx="170" cy="150" r="8" fill="#8ba4c7" opacity="0.8"/>
+      <text class="node-label-source" x="170" y="185" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="15" fill="rgba(139,164,199,0.6)">relations</text>
+      <!-- Target node -->
+      <circle class="target-ring" cx="500" cy="150" r="14" fill="none" stroke="#baa370" stroke-width="1.5" opacity="0.4"/>
+      <circle class="target-fill" cx="500" cy="150" r="8" fill="#baa370" opacity="0.8"/>
+      <text class="node-label-target" x="500" y="185" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="15" fill="rgba(186,163,112,0.6)">things</text>
+      <!-- Branches -->
+      <line class="branch-line-el" x1="510" y1="143" x2="600" y2="80" stroke="rgba(186,163,112,0.35)" stroke-width="1.2"/>
+      <circle class="branch-dot-el" cx="600" cy="80" r="4" fill="rgba(186,163,112,0.5)"/>
+      <text class="branch-label-el" x="612" y="78" font-family="Inter" font-size="10" letter-spacing="0.1em" fill="rgba(186,163,112,0.6)">POLITICAL ECONOMY</text>
+      <line class="branch-line-el" x1="514" y1="150" x2="610" y2="150" stroke="rgba(186,163,112,0.35)" stroke-width="1.2"/>
+      <circle class="branch-dot-el" cx="610" cy="150" r="4" fill="rgba(186,163,112,0.5)"/>
+      <text class="branch-label-el" x="622" y="148" font-family="Inter" font-size="10" letter-spacing="0.1em" fill="rgba(186,163,112,0.6)">NEUROMORPHICS</text>
+      <line class="branch-line-el" x1="510" y1="157" x2="600" y2="220" stroke="rgba(186,163,112,0.35)" stroke-width="1.2"/>
+      <circle class="branch-dot-el" cx="600" cy="220" r="4" fill="rgba(186,163,112,0.5)"/>
+      <text class="branch-label-el" x="612" y="218" font-family="Inter" font-size="10" letter-spacing="0.1em" fill="rgba(186,163,112,0.6)">PROTOCOL SCIENCE</text>
+    </svg>
+  </div>
+  <div class="concept-wordmark">
+    <div class="wm"><span>H</span>ALCYONIC</div>
+    <div class="tl">One arrow, seven traditions, three frontiers</div>
+  </div>
+</div>
+
+<!-- CONCEPT 3: Commuting Triangle -->
+<div class="concept-section">
+  <div class="concept-header">
+    <span class="concept-num">Concept 03</span>
+    <span class="concept-title">The Commuting Triangle</span>
+  </div>
+  <div class="concept-use">About / Architecture</div>
+  <div class="concept-canvas">
+    <svg width="500" height="380" viewBox="0 0 500 380">
+      <!-- Edge glows -->
+      <line class="shaft-glow" x1="250" y1="65" x2="100" y2="310" stroke="#8ba4c7" stroke-width="10" stroke-linecap="round" opacity="0.08"/>
+      <line class="shaft-glow" x1="250" y1="65" x2="400" y2="310" stroke="#baa370" stroke-width="10" stroke-linecap="round" opacity="0.06"/>
+      <line class="shaft-glow" x1="100" y1="310" x2="400" y2="310" stroke="#e0d8cc" stroke-width="10" stroke-linecap="round" opacity="0.04"/>
+      <!-- Edges -->
+      <line class="edge-left" x1="242" y1="78" x2="110" y2="298" stroke="#8ba4c7" stroke-width="1.8" opacity="0.7"/>
+      <line class="edge-right" x1="258" y1="78" x2="390" y2="298" stroke="#baa370" stroke-width="1.8" opacity="0.7"/>
+      <line class="edge-bottom" x1="118" y1="315" x2="382" y2="315" stroke="#e0d8cc" stroke-width="1.8" opacity="0.5"/>
+      <!-- Arrowheads (small triangles at edge ends) -->
+      <polygon class="arrowhead-shape" points="113,290 105,304 119,300" fill="#8ba4c7" opacity="0.7"/>
+      <polygon class="arrowhead-shape" points="387,290 395,304 381,300" fill="#baa370" opacity="0.7"/>
+      <polygon class="arrowhead-tri" points="375,308 389,315 375,322" fill="#e0d8cc" opacity="0.5"/>
+      <!-- Edge labels -->
+      <text class="f-label-el" x="155" y="185" transform="rotate(-58,155,185)" font-family="Cormorant Garamond" font-style="italic" font-size="14" fill="rgba(139,164,199,0.55)">research</text>
+      <text class="f-label-el" x="355" y="185" transform="rotate(58,355,185)" font-family="Cormorant Garamond" font-style="italic" font-size="14" fill="rgba(186,163,112,0.55)">apply</text>
+      <text class="f-label-el" x="250" y="345" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="14" fill="rgba(224,216,204,0.4)">operationalize</text>
+      <!-- Commutation symbol -->
+      <text class="f-label-el" x="250" y="240" text-anchor="middle" font-family="Cormorant Garamond" font-size="28" fill="rgba(186,163,112,0.25)">&#x21BB;</text>
+      <!-- Vertices -->
+      <circle class="source-fill" cx="250" cy="58" r="8" fill="#8ba4c7" opacity="0.8"/>
+      <circle class="vert-fill-3" cx="95" cy="315" r="8" fill="#e0d8cc" opacity="0.6"/>
+      <circle class="target-fill" cx="405" cy="315" r="8" fill="#baa370" opacity="0.8"/>
+      <!-- Vertex labels -->
+      <text class="node-label-source" x="250" y="38" text-anchor="middle" font-family="Inter" font-size="11" letter-spacing="0.12em" fill="rgba(139,164,199,0.7)">LABS</text>
+      <text class="node-label-vert3" x="55" y="318" text-anchor="end" font-family="Inter" font-size="11" letter-spacing="0.12em" fill="rgba(224,216,204,0.55)">SYSTEMS</text>
+      <text class="node-label-target" x="445" y="318" text-anchor="start" font-family="Inter" font-size="11" letter-spacing="0.12em" fill="rgba(186,163,112,0.7)">VENTURES</text>
+    </svg>
+  </div>
+  <div class="concept-wordmark">
+    <div class="wm"><span>H</span>ALCYONIC</div>
+    <div class="tl">Labs generate. Ventures apply. The diagram commutes.</div>
+  </div>
+</div>
+
+<!-- Info Panel -->
+<div class="info-panel">
+  <div class="info-card">
+    <h3>Active Palette</h3>
+    <div class="color-row" id="colorChips"></div>
+  </div>
+  <div class="info-card">
+    <h3>Site Mapping</h3>
+    <p id="mappingText"></p>
+  </div>
+  <div class="info-card info-full">
+    <h3 id="integrationTitle"></h3>
+    <p id="integrationDesc"></p>
+  </div>
+</div>
+
+</div>
+
+<script>
+const schemes = {
+  'deep-night': {
+    vars: {
+      '--bg':'#060a14','--bg-card':'rgba(26,36,64,0.3)',
+      '--primary':'#baa370','--primary-dim':'rgba(186,163,112,0.5)','--primary-glow':'rgba(186,163,112,0.12)',
+      '--secondary':'#8ba4c7','--secondary-dim':'rgba(139,164,199,0.5)',
+      '--text':'#e0d8cc','--text-dim':'rgba(224,216,204,0.6)','--text-faint':'rgba(224,216,204,0.3)',
+      '--border':'rgba(139,164,199,0.1)',
+    },
+    svg: {
+      arrow:'#baa370', arrowhead:'#d4bc7c', source:'#8ba4c7', target:'#baa370',
+      vert:'#e0d8cc', vert3:'#e0d8cc',
+      branch:'rgba(186,163,112,0.35)', branchDot:'rgba(186,163,112,0.5)', branchLabel:'rgba(186,163,112,0.6)',
+      fLabel:'rgba(186,163,112,0.6)', fLabel2:'rgba(139,164,199,0.55)', fLabel3:'rgba(224,216,204,0.4)',
+      nodeSource:'rgba(139,164,199,0.7)', nodeTarget:'rgba(186,163,112,0.7)', nodeVert3:'rgba(224,216,204,0.55)',
+      edgeLeft:'#8ba4c7', edgeRight:'#baa370', edgeBottom:'#e0d8cc', triArrow:'#e0d8cc',
+      commuteSymbol:'rgba(186,163,112,0.25)',
+    },
+    colors:[{hex:'#060a14',name:'Deep Navy'},{hex:'#1a2440',name:'Midnight'},{hex:'#8ba4c7',name:'Soft Blue'},{hex:'#baa370',name:'Warm Gold'},{hex:'#d4bc7c',name:'Light Gold'},{hex:'#e0d8cc',name:'Parchment'}],
+    mapping:'Independent palette. Dark mode bg close to site\'s #141520. Gold and blue are unique to canvas system.',
+    title:'The Original Canvas',
+    desc:'The palette you fell in love with. More atmospheric and dramatic than the current site. Integration: use as dark hero section contrasting with scholarly content below.',
+  },
+  'ocean': {
+    vars: {
+      '--bg':'#082f49','--bg-card':'rgba(8,47,73,0.5)',
+      '--primary':'#facc15','--primary-dim':'rgba(250,204,21,0.5)','--primary-glow':'rgba(250,204,21,0.1)',
+      '--secondary':'#38bdf8','--secondary-dim':'rgba(56,189,248,0.5)',
+      '--text':'#f0f9ff','--text-dim':'rgba(240,249,255,0.65)','--text-faint':'rgba(240,249,255,0.3)',
+      '--border':'rgba(56,189,248,0.15)',
+    },
+    svg: {
+      arrow:'#facc15', arrowhead:'#fde047', source:'#38bdf8', target:'#facc15',
+      vert:'#f0f9ff', vert3:'#f0f9ff',
+      branch:'rgba(250,204,21,0.3)', branchDot:'rgba(250,204,21,0.5)', branchLabel:'rgba(250,204,21,0.55)',
+      fLabel:'rgba(250,204,21,0.5)', fLabel2:'rgba(56,189,248,0.55)', fLabel3:'rgba(240,249,255,0.35)',
+      nodeSource:'rgba(56,189,248,0.7)', nodeTarget:'rgba(250,204,21,0.65)', nodeVert3:'rgba(240,249,255,0.5)',
+      edgeLeft:'#38bdf8', edgeRight:'#facc15', edgeBottom:'#f0f9ff', triArrow:'#f0f9ff',
+      commuteSymbol:'rgba(250,204,21,0.2)',
+    },
+    colors:[{hex:'#082f49',name:'Ocean 950'},{hex:'#0c4a6e',name:'Ocean 900'},{hex:'#38bdf8',name:'Ocean 400'},{hex:'#facc15',name:'Warm 400'},{hex:'#fde047',name:'Warm 300'},{hex:'#f0f9ff',name:'Ocean 50'}],
+    mapping:'Direct mapping to halcyonic-site @theme tokens. Ocean scale primary, warm scale accent.',
+    title:'Native Site Integration',
+    desc:'Uses exact color tokens from your Tailwind @theme. Slots directly into site dark mode. Tradeoff: colder, more "tech" than canvas feel.',
+  },
+  'warm-ink': {
+    vars: {
+      '--bg':'#1c1a16','--bg-card':'rgba(42,38,32,0.5)',
+      '--primary':'#8a6a3a','--primary-dim':'rgba(138,106,58,0.5)','--primary-glow':'rgba(138,106,58,0.12)',
+      '--secondary':'#3a6e62','--secondary-dim':'rgba(58,110,98,0.5)',
+      '--text':'#e0d8cc','--text-dim':'rgba(224,216,204,0.6)','--text-faint':'rgba(154,148,137,0.6)',
+      '--border':'rgba(221,216,207,0.12)',
+    },
+    svg: {
+      arrow:'#8a6a3a', arrowhead:'#b08a50', source:'#3a6e62', target:'#8a6a3a',
+      vert:'#e0d8cc', vert3:'#e0d8cc',
+      branch:'rgba(138,106,58,0.35)', branchDot:'rgba(138,106,58,0.5)', branchLabel:'rgba(138,106,58,0.6)',
+      fLabel:'rgba(138,106,58,0.55)', fLabel2:'rgba(58,110,98,0.55)', fLabel3:'rgba(224,216,204,0.35)',
+      nodeSource:'rgba(58,110,98,0.7)', nodeTarget:'rgba(138,106,58,0.65)', nodeVert3:'rgba(224,216,204,0.5)',
+      edgeLeft:'#3a6e62', edgeRight:'#8a6a3a', edgeBottom:'#e0d8cc', triArrow:'#e0d8cc',
+      commuteSymbol:'rgba(138,106,58,0.2)',
+    },
+    colors:[{hex:'#1c1a16',name:'Ink'},{hex:'#2a2620',name:'Ink Light'},{hex:'#3a6e62',name:'Flow'},{hex:'#8a6a3a',name:'Accent'},{hex:'#b08a50',name:'Accent Light'},{hex:'#e0d8cc',name:'Parchment'}],
+    mapping:'Matches Research page inline palette: --accent #8a6a3a, --flow #3a6e62, --ink #1c1a16.',
+    title:'Research Page Bridge',
+    desc:'Your Research page already uses this palette with Cormorant Garamond and editorial cards. Makes the hero feel native to that page. Warmer than Deep Night, less cold than Ocean.',
+  },
+  'linen': {
+    vars: {
+      '--bg':'#f7f5f0','--bg-card':'rgba(255,255,255,0.7)',
+      '--primary':'#8a6a3a','--primary-dim':'rgba(138,106,58,0.5)','--primary-glow':'rgba(138,106,58,0.08)',
+      '--secondary':'#075985','--secondary-dim':'rgba(7,89,133,0.5)',
+      '--text':'#1c1a16','--text-dim':'rgba(28,26,22,0.6)','--text-faint':'rgba(28,26,22,0.3)',
+      '--border':'rgba(28,26,22,0.1)',
+    },
+    svg: {
+      arrow:'#8a6a3a', arrowhead:'#6b5230', source:'#075985', target:'#8a6a3a',
+      vert:'#1c1a16', vert3:'#1c1a16',
+      branch:'rgba(138,106,58,0.3)', branchDot:'rgba(138,106,58,0.45)', branchLabel:'rgba(138,106,58,0.55)',
+      fLabel:'rgba(138,106,58,0.5)', fLabel2:'rgba(7,89,133,0.55)', fLabel3:'rgba(28,26,22,0.3)',
+      nodeSource:'rgba(7,89,133,0.7)', nodeTarget:'rgba(138,106,58,0.6)', nodeVert3:'rgba(28,26,22,0.45)',
+      edgeLeft:'#075985', edgeRight:'#8a6a3a', edgeBottom:'#1c1a16', triArrow:'#1c1a16',
+      commuteSymbol:'rgba(138,106,58,0.18)',
+    },
+    colors:[{hex:'#f7f5f0',name:'Linen'},{hex:'#ffffff',name:'White'},{hex:'#075985',name:'Ocean 800'},{hex:'#8a6a3a',name:'Warm Accent'},{hex:'#6b5230',name:'Warm Dark'},{hex:'#1c1a16',name:'Ink'}],
+    mapping:'Direct match to halcyonic-site light mode. Linen background, ocean-800 brand blue, warm accent.',
+    title:'Light Mode Native',
+    desc:'What all three concepts look like on the current site\'s light background. The arrow reads as an elegant diagram rather than an atmospheric experience. Consider: light body with dark hero transition.',
+  },
+  'frost': {
+    vars: {
+      '--bg':'#f0f4f8','--bg-card':'rgba(255,255,255,0.8)',
+      '--primary':'#0d9488','--primary-dim':'rgba(13,148,136,0.55)','--primary-glow':'rgba(13,148,136,0.1)',
+      '--secondary':'#6366f1','--secondary-dim':'rgba(99,102,241,0.5)',
+      '--text':'#1e293b','--text-dim':'rgba(30,41,59,0.6)','--text-faint':'rgba(30,41,59,0.3)',
+      '--border':'rgba(30,41,59,0.1)',
+    },
+    svg: {
+      arrow:'#0d9488', arrowhead:'#0f766e', source:'#6366f1', target:'#0d9488',
+      vert:'#1e293b', vert3:'#1e293b',
+      branch:'rgba(13,148,136,0.3)', branchDot:'rgba(13,148,136,0.5)', branchLabel:'rgba(13,148,136,0.6)',
+      fLabel:'rgba(13,148,136,0.5)', fLabel2:'rgba(99,102,241,0.5)', fLabel3:'rgba(30,41,59,0.3)',
+      nodeSource:'rgba(99,102,241,0.65)', nodeTarget:'rgba(13,148,136,0.65)', nodeVert3:'rgba(30,41,59,0.45)',
+      edgeLeft:'#6366f1', edgeRight:'#0d9488', edgeBottom:'#1e293b', triArrow:'#1e293b',
+      commuteSymbol:'rgba(13,148,136,0.18)',
+    },
+    colors:[{hex:'#f0f4f8',name:'Frost'},{hex:'#ffffff',name:'White'},{hex:'#6366f1',name:'Indigo'},{hex:'#0d9488',name:'Teal 600'},{hex:'#14b8a6',name:'Teal 500'},{hex:'#1e293b',name:'Slate 800'}],
+    mapping:'Cool alternative to linen. Uses site\'s existing teal scale (#0d9488, #14b8a6) as primary, with indigo as the source/Labs color. Blue-white background reads modern and clean.',
+    title:'Cool Light Alternative',
+    desc:'What happens when the brand leans cool instead of warm. The teal scale already exists in your site\'s @theme but isn\'t prominent. Indigo source node gives Labs a distinct identity. Feels more "tech research institute" than "scholarly archive." The contrast with Deep Night hero would be striking.',
+  },
+};
+
+function applyScheme(name) {
+  const s = schemes[name];
+  const root = document.documentElement;
+
+  Object.entries(s.vars).forEach(([k,v]) => root.style.setProperty(k,v));
+
+  document.querySelectorAll('.shaft-glow').forEach(el => el.setAttribute('stroke', s.svg.arrow));
+  document.querySelectorAll('.shaft-line').forEach(el => el.setAttribute('stroke', s.svg.arrow));
+  document.querySelectorAll('.arrowhead-shape').forEach(el => el.setAttribute('fill', s.svg.arrowhead));
+  document.querySelectorAll('.source-ring').forEach(el => el.setAttribute('stroke', s.svg.source));
+  document.querySelectorAll('.source-fill').forEach(el => el.setAttribute('fill', s.svg.source));
+  document.querySelectorAll('.target-ring').forEach(el => el.setAttribute('stroke', s.svg.target));
+  document.querySelectorAll('.target-fill').forEach(el => el.setAttribute('fill', s.svg.target));
+  document.querySelectorAll('.vert-el').forEach(el => el.setAttribute('fill', s.svg.vert));
+  document.querySelectorAll('.vert-fill-3').forEach(el => el.setAttribute('fill', s.svg.vert3));
+  document.querySelectorAll('.branch-line-el').forEach(el => el.setAttribute('stroke', s.svg.branch));
+  document.querySelectorAll('.branch-dot-el').forEach(el => el.setAttribute('fill', s.svg.branchDot));
+  document.querySelectorAll('.branch-label-el').forEach(el => el.setAttribute('fill', s.svg.branchLabel));
+  document.querySelectorAll('.f-label-el').forEach(el => el.setAttribute('fill', s.svg.fLabel));
+  document.querySelectorAll('.node-label-source').forEach(el => el.setAttribute('fill', s.svg.nodeSource));
+  document.querySelectorAll('.node-label-target').forEach(el => el.setAttribute('fill', s.svg.nodeTarget));
+  document.querySelectorAll('.node-label-vert3').forEach(el => el.setAttribute('fill', s.svg.nodeVert3));
+  document.querySelectorAll('.edge-left').forEach(el => el.setAttribute('stroke', s.svg.edgeLeft));
+  document.querySelectorAll('.edge-right').forEach(el => el.setAttribute('stroke', s.svg.edgeRight));
+  document.querySelectorAll('.edge-bottom').forEach(el => el.setAttribute('stroke', s.svg.edgeBottom));
+  document.querySelectorAll('.arrowhead-tri').forEach(el => el.setAttribute('fill', s.svg.triArrow));
+
+  // Edge arrowheads in triangle need per-scheme coloring
+  const triArrowheads = document.querySelectorAll('.concept-section:nth-child(5) .arrowhead-shape');
+  if (triArrowheads[0]) triArrowheads[0].setAttribute('fill', s.svg.edgeLeft);
+  if (triArrowheads[1]) triArrowheads[1].setAttribute('fill', s.svg.edgeRight);
+
+  document.getElementById('colorChips').innerHTML = s.colors.map(c =>
+    `<div class="color-chip"><div class="chip-dot" style="background:${c.hex}"></div><span class="chip-label">${c.hex}</span></div>`
+  ).join('');
+  document.getElementById('mappingText').textContent = s.mapping;
+  document.getElementById('integrationTitle').textContent = s.title;
+  document.getElementById('integrationDesc').textContent = s.desc;
+
+  document.querySelectorAll('.scheme-btn').forEach(btn =>
+    btn.classList.toggle('active', btn.dataset.scheme === name));
+}
+
+document.querySelectorAll('.scheme-btn').forEach(btn =>
+  btn.addEventListener('click', () => applyScheme(btn.dataset.scheme)));
+
+applyScheme('deep-night');
+</script>
+</body>
+</html>
