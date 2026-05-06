@@ -5,35 +5,39 @@ const flagships = [
   {
     title: 'Facets',
     subtitle: 'Systems Science Reasoning Engine',
-    description: 'Ask a question, see which facets of systems science it touches. 8-tuple dimensional classification grounded in Mobus\'s formal ontology.',
+    description: 'Ask a question, see which facets of systems science it touches. 8-tuple dimensional classification grounded in formal systems ontology.',
     link: 'https://facets.halcyonic.systems',
     linkText: 'Try the live demo',
     tag: 'Interactive Tool',
     hero: true,
+    color: 'var(--color-frost-teal)',
   },
   {
     title: 'U.S. Interstate Commerce Network',
     subtitle: 'M.S. Thesis — Binghamton University',
     description: 'Network centrality analysis of the full U.S. interstate and international commodity trade network. ~40% of states diverge by five or more rank positions between GDP and network centrality — structural power is not what GDP says it is.',
-    link: 'https://halcyonic-systems.github.io/cfs-network-analysis/',
+    link: 'https://us-trade.plotly.app/',
     linkText: 'Launch the interactive app',
     tag: 'Empirical Research',
+    color: 'var(--color-frost-indigo)',
   },
   {
     title: 'BERT',
     subtitle: 'Bounded Entity Reasoning Toolkit',
-    description: 'An open-source framework for rigorous systems modeling across any domain. Decompose complex systems into bounded entities with formal relationships grounded in Mobus.',
+    description: 'An open-source framework for rigorous systems modeling across any domain. Decompose complex systems into bounded entities with formal relationships.',
     link: 'https://bert.systems',
     linkText: 'Explore the toolkit',
     tag: 'Framework',
+    color: 'var(--color-frost-amber)',
   },
   {
     title: 'A Deep Systems Analysis of Bitcoin',
     subtitle: 'Foundational essay — v2 in progress',
-    description: 'Bitcoin as a complex adaptive system — boundaries, flows, feedback loops, and emergent behaviors. The crypto/political economy entry point.',
+    description: 'Bitcoin as a complex adaptive system — boundaries, flows, feedback loops, and emergent behaviors.',
     link: 'https://www.researchhub.com/paper/9310259/a-deep-systems-analysis-of-bitcoin',
     linkText: 'Read the paper',
     tag: 'Domain Analysis',
+    color: 'var(--color-frost-rose)',
   },
 ];
 
@@ -67,7 +71,7 @@ const archive = [
   <section class="w-page mx-auto px-6 py-16">
     <h1 class="w-title">Work</h1>
     <p class="w-intro">
-      Tools grounded in formal systems science. Each project is backed by applied research and theoretical foundations.
+      Tools grounded in formal systems science.
     </p>
 
     <div class="flagships">
@@ -77,6 +81,7 @@ const archive = [
           target="_blank"
           rel="noopener noreferrer"
           class="flagship-card"
+          style={`--card-accent: ${project.color}`}
         >
           {project.hero && <div class="hero-badge">Start here</div>}
           <div class="flagship-tag">{project.tag}</div>
@@ -88,6 +93,11 @@ const archive = [
       ))}
     </div>
 
+    <!-- "Also Building" hidden for launch 2026-05-04. Three items need cleanup
+         before presentation: System Language (links stale), Halcyonic Garden (content audit),
+         RSC Endowment ABM (needs v4 frontend). Resurface once each has a clean landing.
+         Tasknote: halcyonic-site-also-building-polish.md -->
+    <!--
     <div class="archive-section">
       <h2 class="archive-header">Also Building</h2>
       <div class="archive-grid">
@@ -123,6 +133,7 @@ const archive = [
         ))}
       </div>
     </div>
+    -->
 
   </section>
 </BaseLayout>
@@ -170,9 +181,9 @@ const archive = [
     display: flex;
     flex-direction: column;
     padding: 1.75rem 1.75rem 2rem;
-    background: #FFFFFF;
+    background: linear-gradient(135deg, #FFFFFF 0%, color-mix(in srgb, var(--card-accent, var(--accent)) 5%, #FFFFFF) 100%);
     border: none;
-    border-top: 3px solid var(--accent);
+    border-top: 3px solid var(--card-accent, var(--accent));
     border-radius: 8px;
     text-decoration: none;
     box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.05);
@@ -185,12 +196,11 @@ const archive = [
   }
 
   .flagship-card:hover .flagship-title {
-    color: var(--accent);
+    color: var(--card-accent, var(--accent));
   }
 
   /* Hero card (Facets — first child) */
   .flagships > .flagship-card:first-child {
-    background: linear-gradient(135deg, #FFFFFF 0%, #EDF4F3 100%);
     padding: 2.5rem 2.75rem;
     border-top-width: 4px;
   }

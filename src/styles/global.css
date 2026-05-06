@@ -21,6 +21,8 @@
   --color-frost-indigo-dim: rgba(99, 102, 241, 0.5);
   --color-frost-slate: #1e293b;
   --color-frost-slate-dim: rgba(30, 41, 59, 0.6);
+  --color-frost-rose: #be185d;
+  --color-frost-amber: #b45309;
   --color-frost-border: rgba(30, 41, 59, 0.1);
 
   /* Teal scale (for utility classes) */
