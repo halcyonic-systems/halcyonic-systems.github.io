@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="64" fill="#0f172a"/>
+  <!-- Left vertical (domain) -->
+  <rect x="168" y="96" width="20" height="320" rx="10" fill="#e0d8cc" opacity="0.85"/>
+  <!-- Right vertical (codomain) -->
+  <rect x="324" y="96" width="20" height="320" rx="10" fill="#e0d8cc" opacity="0.85"/>
+  <!-- Crossbar glow -->
+  <line x1="186" y1="256" x2="336" y2="256" stroke="#baa370" stroke-width="48" stroke-linecap="round" opacity="0.12"/>
+  <!-- Crossbar (morphism) -->
+  <line x1="186" y1="256" x2="336" y2="256" stroke="#baa370" stroke-width="16" stroke-linecap="round" opacity="0.9"/>
+  <!-- Arrowhead -->
+  <polygon points="318,236 368,256 318,276" fill="#d4bc7c" opacity="0.7"/>
+  <!-- Source node -->
+  <circle cx="178" cy="256" r="16" fill="#8ba4c7" opacity="0.5"/>
+  <!-- Target node -->
+  <circle cx="340" cy="256" r="16" fill="#baa370" opacity="0.5"/>
+</svg>
