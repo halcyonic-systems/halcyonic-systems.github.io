@@ -102,17 +102,17 @@ const colorStyles = {
       New to systems science? These are the foundational concepts — the shared language for analyzing any complex system.
     </p>
 
-    <div class="mt-12 space-y-12">
+    <div class="mt-12 space-y-10">
       {sections.map((section) => (
         <div>
           <h2 class="gl-section-title" style={`color: ${colorStyles[section.color].title}`}>
             {section.title}
           </h2>
-          <div class="mt-4 space-y-3">
+          <div class="gl-grid">
             {section.terms.map((item) => (
               <div
                 class="gl-term-card"
-                style={`${colorStyles[section.color].border}; --hover-bg: ${colorStyles[section.color].hover}`}
+                style={`${colorStyles[section.color].border}; --hover-bg: ${colorStyles[section.color].hover}; --term-color: ${colorStyles[section.color].title}`}
               >
                 <dt class="gl-term">{item.term}</dt>
                 <dd class="gl-def">{item.definition}</dd>
@@ -123,19 +123,6 @@ const colorStyles = {
       ))}
     </div>
 
-    <div class="gl-cta-card">
-      <h3 class="gl-cta-title">Go deeper</h3>
-      <p class="gl-cta-desc">
-        Explore 135+ interconnected notes on systems thinking, complexity, and the patterns that connect in the <a href="https://garden.halcyonic.systems" class="gl-cta-link">Halcyonic Garden</a> — a digital garden of ideas from Bateson, Bunge, and beyond.
-      </p>
-    </div>
-
-    <div class="gl-cta-card" style="margin-top: 0.75rem;">
-      <h3 class="gl-cta-title">Apply it</h3>
-      <p class="gl-cta-desc">
-        Want to see these concepts in practice? <a href="https://bert.systems" target="_blank" rel="noopener noreferrer" class="gl-cta-link">BERT</a> is an open-source toolkit for applying rigorous systems analysis to any domain.
-      </p>
-    </div>
   </section>
 </BaseLayout>
 
@@ -154,14 +141,20 @@ const colorStyles = {
   }
 
   .gl-section-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .gl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
   .gl-term-card {
-    padding: 0.75rem 1rem 0.75rem 1rem;
+    padding: 0.75rem 1rem;
     border-left: 2px solid;
     border-radius: 0 8px 8px 0;
     transition: background 0.2s ease;
@@ -173,14 +166,20 @@ const colorStyles = {
 
   .gl-term {
     font-weight: 600;
-    color: var(--color-frost-slate);
+    color: var(--term-color, var(--color-frost-slate));
   }
 
   .gl-def {
     margin-top: 0.25rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--color-frost-slate-dim);
-    line-height: 1.6;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .gl-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .gl-cta-card {
