@@ -24,25 +24,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <div class="ab-bio">
       <p>
-        I'm Shingai Thornton. I defended my M.S. thesis in Systems Science at Binghamton University
-        in April 2026.
+        I'm Shingai Thornton, founder of Halcyonic Systems. We build tools that help people reason about complex systems.
       </p>
       <p>
-        Before that, I spent a decade researching blockchains, cryptoeconomics, and political economy.
-        Halcyonic Systems is where this work comes together — formal systems science applied to
-        governance, cryptoeconomics, and brain-inspired computing.
+        In 2017, I stumbled across <a href="https://www.amazon.com/Principles-Systems-Science-Understanding-Complex/dp/1493919199" target="_blank" rel="noopener noreferrer">systems science</a>, a field that promised to ground my work
+        across every domain I'd touched and give me the scaffolding to learn sciences I'd
+        written off as beyond my reach. I quickly discovered that the field barely exists,
+        other than as a <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/sres.2215" target="_blank" rel="noopener noreferrer">fragmented set of theories, frameworks, and methodologies</a>. So I
+        started learning and building: the theory, the tools, and the infrastructure
+        necessary to integrate the fractured systems sciences.
+      </p>
+      <p>
+        What I do day-to-day: take abstract ideas and turn them into interactive models, software,
+        and visualizations that make those ideas more real. Usually for myself, to better understand
+        something I couldn't otherwise. Sometimes for clients. Always toward making rigorous systems
+        reasoning more broadly accessible. A growing part of Halcyonic's work is building infrastructure that
+        makes LLMs useful: structured ontologies, retrieval pipelines, and fine-tuned models
+        trained on formal systems science.
       </p>
     </div>
 
     <div class="ab-lineage">
       <h2 class="ab-section-header">Intellectual Lineage</h2>
-      <p>
-        Mobus convinced me systems science is a real discipline worth a life's work.
-        Joslyn showed me that mathematics isn't notation &mdash; it's a language precise
-        enough to say what systems actually are. Bertalanffy's philosophy reminds me why
-        the field exists: we've reached diminishing returns on fragmentation and have
-        barely scratched the surface of what integration and composition can reveal.
-      </p>
+      <dl class="ab-lineage-list">
+        <div class="ab-lineage-entry">
+          <dt>Mobus</dt>
+          <dd>Systems science is a real discipline worth a life's work.</dd>
+        </div>
+        <div class="ab-lineage-entry">
+          <dt>Joslyn</dt>
+          <dd>Mathematics isn't notation and numbers, it's a language precise enough to say what systems actually are.</dd>
+        </div>
+        <div class="ab-lineage-entry">
+          <dt>Bunge</dt>
+          <dd>Philosophical clarity and mathematical precision are the same demand. Their absence may be why general systems theory fragmented.</dd>
+        </div>
+        <div class="ab-lineage-entry">
+          <dt>Bertalanffy</dt>
+          <dd>Fragmentation of the sciences has diminishing returns. Thinking in wholes has barely begun.</dd>
+        </div>
+      </dl>
     </div>
 
     <!-- CommutingTriangle hidden 2026-04-28: Labs/Ventures vertices not yet operational.
@@ -60,10 +81,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <a href="https://github.com/halcyonic-systems" target="_blank" rel="noopener noreferrer" class="ab-link">
           GitHub <span aria-hidden="true">&rarr;</span>
         </a>
-        <a href="https://halcyonic.discourse.group" target="_blank" rel="noopener noreferrer" class="ab-link">
-          Forums <span aria-hidden="true">&rarr;</span>
-        </a>
-        <a href="https://ideas.halcyonic.systems" target="_blank" rel="noopener noreferrer" class="ab-link">
+<a href="https://ideas.halcyonic.systems" target="_blank" rel="noopener noreferrer" class="ab-link">
           Substack <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
@@ -113,6 +131,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-top: 2.5rem;
   }
 
+  .ab-bio a {
+    color: var(--color-frost-teal);
+    text-decoration: underline;
+    text-decoration-color: rgba(13, 148, 136, 0.3);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .ab-bio a:hover {
+    text-decoration-color: var(--color-frost-teal);
+  }
+
   .ab-bio p {
     font-size: 1rem;
     line-height: 1.7;
@@ -136,9 +166,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-top: 1px solid var(--color-frost-border);
   }
 
-  .ab-lineage p {
+  .ab-lineage-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .ab-lineage-entry {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .ab-lineage-entry dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 6.5rem;
+    flex-shrink: 0;
+  }
+
+  .ab-lineage-entry:nth-child(1) dt { color: var(--color-frost-teal); }
+  .ab-lineage-entry:nth-child(2) dt { color: var(--color-frost-indigo); }
+  .ab-lineage-entry:nth-child(3) dt { color: var(--color-frost-rose); }
+  .ab-lineage-entry:nth-child(4) dt { color: var(--color-frost-amber); }
+
+  .ab-lineage-entry dd {
+    margin: 0;
     font-size: 0.95rem;
-    line-height: 1.7;
+    line-height: 1.6;
     color: var(--color-frost-slate-dim);
   }
 
